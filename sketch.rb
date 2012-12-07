@@ -13,8 +13,10 @@ class Parser < Parslet::Parser
   rule(:ex_command_aborted) { ex_start >> ex_typing >> terminate }
 
   rule(:one_key_motion) { match('[hjklwbe]').as(:motion) }
+  rule(:two_key_motion) { (str('g') >> match('[hjkl]')).as(:motion) }
+  rule(:motion) { one_key_motion | two_key_motion }
 
-  rule(:normal) { (insertion | ex_command | ex_command_aborted | one_key_motion).repeat }
+  rule(:normal) { (insertion | ex_command | ex_command_aborted | motion).repeat }
   root(:normal)
 end
 
@@ -40,7 +42,7 @@ class Trans < Parslet::Transform
 end
 
 begin
-  tree = Parser.new.parse("IHello, World!\ebbbe:write\e:q!\r")
+  tree = Parser.new.parse("IHello, World!\ebbbegl:write\e:q!\r")
   puts tree
   result = Trans.new.apply(tree)
   puts result
