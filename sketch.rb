@@ -3,12 +3,12 @@ require 'parslet'
 class Parser < Parslet::Parser
   rule(:start) { match('[iIaAoOsS]').as(:switch) }
   rule(:typing) { match('[^\e]').repeat.as(:typing) }
-  rule(:terminate) { match('\e').as(:escape) }
+  rule(:terminate) { match('\e') }
   rule(:insertion) { start >> typing >> terminate }
 
   rule(:ex_start) { match(':').as(:prompt) }
   rule(:ex_typing) { match('[^\r]').repeat.as(:ex_typing) }
-  rule(:enter) { match('\r').as(:enter) }
+  rule(:enter) { match('\r') }
   rule(:ex_command) { ex_start >> ex_typing >> enter }
 
   rule(:normal) { (insertion | ex_command).repeat }
@@ -18,13 +18,11 @@ end
 class Trans < Parslet::Transform
   rule(
     :switch => simple(:s),
-    :typing => simple(:t),
-    :escape => simple(:term)
+    :typing => simple(:t)
   ) { s+"{"+t+"}" }
   rule(
     :prompt => simple(:p),
-    :ex_typing => simple(:t),
-    :enter => simple(:cr)
+    :ex_typing => simple(:t)
   ) { p+t }
 end
 
