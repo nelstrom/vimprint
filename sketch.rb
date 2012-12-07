@@ -18,9 +18,10 @@ class Parser < Parslet::Parser
   rule(:motion) { one_key_motion | two_key_motion | find_char_motion }
 
   rule(:operator) { match('[dcy]').as(:operator) }
+  rule(:l_operation) { (operator.as(:op1) >> operator.as(:op2)).as(:l_operation) }
   rule(:operation) { (operator >> motion).as(:operation) }
 
-  rule(:normal) { (insertion | ex_command | ex_command_aborted | motion | operation).repeat }
+  rule(:normal) { (insertion | ex_command | ex_command_aborted | motion | operation | l_operation).repeat }
   root(:normal)
 end
 
@@ -38,13 +39,25 @@ class Trans < Parslet::Transform
   rule(
     :motion => simple(:m)
   ) { m }
+
   rule(
     :operator => simple(:o),
     :motion => simple(:m)
   ) { o+m }
   rule(
+    :op1 => simple(:o1),
+    :op2 => simple(:o2)
+  ) { o1+o2 }
+  rule(
+    :operator => simple(:o)
+  ) { o }
+  rule(
+    :l_operation => simple(:o)
+  ) { o }
+  rule(
     :operation => simple(:o)
   ) { o }
+
   rule(
     :prompt => simple(:p),
     :ex_typing => simple(:t),
@@ -53,7 +66,7 @@ class Trans < Parslet::Transform
 end
 
 begin
-  tree = Parser.new.parse("IHello, World!\e0$g0f,0dw:write\e:q!\r")
+  tree = Parser.new.parse("IHello, World!\e0$g0f,0dwyy:write\e:q!\r")
   puts tree
   result = Trans.new.apply(tree)
   puts result.compact
