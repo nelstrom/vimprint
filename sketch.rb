@@ -30,7 +30,7 @@ class Trans < Parslet::Transform
     :prompt => simple(:p),
     :ex_typing => simple(:t),
     :escape => simple(:esc)
-  ) { '' }
+  ) { nil }
   rule(
     :motion => simple(:m)
   ) { m }
@@ -45,7 +45,7 @@ begin
   tree = Parser.new.parse("IHello, World!\ebbbegl:write\e:q!\r")
   puts tree
   result = Trans.new.apply(tree)
-  puts result
+  puts result.compact
 rescue Parslet::ParseFailed => error
   puts error.cause.ascii_tree
 end
