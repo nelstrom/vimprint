@@ -29,7 +29,7 @@ class Trans < Parslet::Transform
 end
 
 begin
-  tree = Parser.new.parse("IHello, World!\eoYou look great today!\e:wq\r")
+  tree = Parser.new.parse("IHello, World!oYou look great today!:write:quit!")
   puts tree
   result = Trans.new.apply(tree)
   puts result
