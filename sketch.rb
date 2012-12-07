@@ -3,31 +3,39 @@ require 'parslet'
 class Parser < Parslet::Parser
   rule(:start) { match('[iIaAoOsS]').as(:switch) }
   rule(:typing) { match('[^\e]').repeat.as(:typing) }
-  rule(:terminate) { match('\e') }
+  rule(:terminate) { match('\e').as(:escape) }
   rule(:insertion) { start >> typing >> terminate }
 
   rule(:ex_start) { match(':').as(:prompt) }
-  rule(:ex_typing) { match('[^\r]').repeat.as(:ex_typing) }
-  rule(:enter) { match('\r') }
+  rule(:ex_typing) { match('[^\r\e]').repeat.as(:ex_typing) }
+  rule(:enter) { match('\r').as(:enter) }
   rule(:ex_command) { ex_start >> ex_typing >> enter }
+  rule(:ex_command_aborted) { ex_start >> ex_typing >> terminate }
 
-  rule(:normal) { (insertion | ex_command).repeat }
+  rule(:normal) { (insertion | ex_command | ex_command_aborted).repeat }
   root(:normal)
 end
 
 class Trans < Parslet::Transform
   rule(
     :switch => simple(:s),
-    :typing => simple(:t)
+    :typing => simple(:t),
+    :escape => simple(:esc)
   ) { s+"{"+t+"}" }
   rule(
     :prompt => simple(:p),
-    :ex_typing => simple(:t)
+    :ex_typing => simple(:t),
+    :escape => simple(:esc)
+  ) { '' }
+  rule(
+    :prompt => simple(:p),
+    :ex_typing => simple(:t),
+    :enter => simple(:carriage_return)
   ) { p+t }
 end
 
 begin
-  tree = Parser.new.parse("IHello, World!oYou look great today!:write:quit!")
+  tree = Parser.new.parse("IHello, World!\e:write\e:q!\r")
   puts tree
   result = Trans.new.apply(tree)
   puts result
