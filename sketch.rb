@@ -11,7 +11,7 @@ class Parser < Parslet::Parser
   rule(:enter) { match('\r').as(:enter) }
   rule(:ex_command) { ex_start >> ex_typing >> enter }
 
-  rule(:normal) { ex_command.repeat }
+  rule(:normal) { (insertion | ex_command).repeat }
   root(:normal)
 end
 
@@ -29,8 +29,7 @@ class Trans < Parslet::Transform
 end
 
 begin
-  # tree = Parser.new.parse("IHello, World!\eoYou look great today!\e:wq\r")
-  tree = Parser.new.parse(":w\r:q\r")
+  tree = Parser.new.parse("IHello, World!\eoYou look great today!\e:wq\r")
   puts tree
   result = Trans.new.apply(tree)
   puts result
