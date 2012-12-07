@@ -5,7 +5,13 @@ class Parser < Parslet::Parser
   rule(:typing) { match('[^\e]').repeat.as(:typing) }
   rule(:terminate) { match('\e').as(:escape) }
   rule(:insertion) { start >> typing >> terminate }
-  rule(:normal) { insertion.repeat }
+
+  rule(:ex_start) { match(':').as(:prompt) }
+  rule(:ex_typing) { match('[^\r]').repeat.as(:ex_typing) }
+  rule(:enter) { match('\r').as(:enter) }
+  rule(:ex_command) { ex_start >> ex_typing >> enter }
+
+  rule(:normal) { ex_command.repeat }
   root(:normal)
 end
 
@@ -15,10 +21,16 @@ class Trans < Parslet::Transform
     :typing => simple(:t),
     :escape => simple(:term)
   ) { s+"{"+t+"}" }
+  rule(
+    :prompt => simple(:p),
+    :ex_typing => simple(:t),
+    :enter => simple(:cr)
+  ) { p+t }
 end
 
 begin
-  tree = Parser.new.parse("IHello, World!\eoYou look great today!\e")
+  # tree = Parser.new.parse("IHello, World!\eoYou look great today!\e:wq\r")
+  tree = Parser.new.parse(":w\r:q\r")
   puts tree
   result = Trans.new.apply(tree)
   puts result
