@@ -1,5 +1,3 @@
 require "vimprint/version"
-
-module Vimprint
-  # Your code goes here...
-end
+require "vimprint/parser"
+require "vimprint/transform"
