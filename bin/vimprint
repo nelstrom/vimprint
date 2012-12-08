@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'vimprint'
+file = File.open(ARGV[0])
+puts Vimprint.parse(file.read.strip)

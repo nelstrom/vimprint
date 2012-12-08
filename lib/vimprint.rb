@@ -8,7 +8,7 @@ module Vimprint
     transformer = Transform.new
 
     tree = parser.parse(input)
-    puts; p tree; puts
+    # puts; p tree; puts
 
     transformer.apply(tree)
   end
