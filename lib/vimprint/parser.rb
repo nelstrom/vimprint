@@ -41,9 +41,15 @@ module Vimprint
     rule(:motion) { motion_once | motion_with_count }
 
     # Operators
-    rule(:operator) { match('[dcy><]') }
-    rule(:operation) {
+    rule(:operator) { match('[dcy><=]') }
+    rule(:operation_motionwise) {
       (operator.as(:operator) >> motion)
+    }
+    rule(:operation_linewise) {
+      (operator.repeat(2,2).as(:operation_linewise))
+    }
+    rule(:operation) {
+      (operation_motionwise | operation_linewise)
     }
 
     # Catch aborted 2-keystroke commands (a.k.a. 'distrokes')
