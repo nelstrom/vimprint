@@ -8,10 +8,17 @@ describe Vimprint::Parser do
   end
 
   it "matches an insertion" do
-    tree = @parser.parse("IHello, World!\e")
+    tree = @parser.parse("IHello, World!\e").first
     tree.keys.must_equal [:switch, :typing, :escape]
     tree[:switch].must_equal "I"
     tree[:typing].must_equal "Hello, World!"
+  end
+
+  it "matches an Ex command" do
+    tree = @parser.parse(":write\r").first
+    tree.keys.must_equal [:prompt, :ex_typing, :enter]
+    tree[:prompt].must_equal ":"
+    tree[:ex_typing].must_equal "write"
   end
 
 end
