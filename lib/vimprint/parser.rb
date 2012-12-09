@@ -41,7 +41,9 @@ module Vimprint
     rule(:motion) { motion_once | motion_with_count }
 
     # Operators
-    rule(:operator) { match('[dcy><=]') }
+    rule(:operator) {
+      (match('[dcy><=]') | str('g') >> match('[~uUq?w]'))
+    }
     rule(:operation_motionwise) {
       (operator.as(:operator) >> motion)
     }
