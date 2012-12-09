@@ -13,10 +13,16 @@ module Vimprint
       match('[^\r\e]').repeat.as(:typing)
     }
 
-    # Insertion
+    # Simple insertion
     rule(:begin_insert) { match('[iIaAoOsS]').as(:switch) }
     rule(:insertion) {
       begin_insert >> type_into_document >> escape
+    }
+
+    # Simple motion
+    ONE_KEY_MOTIONS = 'hHjklLMwbeWBEnNG$0^%'
+    rule(:motion) {
+      match("[#{ONE_KEY_MOTIONS}]").as(:motion)
     }
 
     # Ex Command
@@ -29,7 +35,7 @@ module Vimprint
     }
     rule(:ex_command) { (run_ex_cmd | abort_ex_cmd) }
 
-    rule(:normal) { (insertion | ex_command).repeat }
+    rule(:normal) { (insertion | ex_command | motion).repeat }
     root(:normal)
   end
 end
