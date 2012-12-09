@@ -21,7 +21,7 @@ module Vimprint
     }
 
     # Simple motion
-    ONE_KEY_MOTIONS = 'hHjklLMwbeWBEnNG$0^%*#'
+    ONE_KEY_MOTIONS = 'hHjklLMwbeWBEnNG$0^%*#;,|'
     rule(:one_key_motion) {
       match("[#{ONE_KEY_MOTIONS}]").as(:motion)
     }
@@ -29,10 +29,15 @@ module Vimprint
     rule(:g_key_motion) {
       (str('g') >> match("[#{G_KEY_MOTIONS}]")).as(:motion)
     }
+    rule(:find_char_motion) {
+      (match('[fFtT]') >> match('[^\e]') ).as(:motion)
+    }
 
-    rule(:motion_once) { one_key_motion | g_key_motion }
+    rule(:motion_once) {
+      one_key_motion | g_key_motion | find_char_motion
+    }
     rule(:motion_with_count) {
-      count.maybe >> (one_key_motion | g_key_motion)
+      count >> motion_once
     }
     rule(:motion) { motion_once | motion_with_count }
 

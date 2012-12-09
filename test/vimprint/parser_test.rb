@@ -58,12 +58,24 @@ describe Vimprint::Parser do
     end
   end
 
+  it "matches f{char} motions" do
+    %w{f F t T}.each do |initial|
+      %w{a 1 .}.each do |target|
+        tree = @parser.parse(initial + target).first
+        tree.keys.must_equal [:motion]
+        tree[:motion].must_equal initial + target
+      end
+    end
+  end
+
   it "matches motions with a count" do
     [5, 42].each do |num|
-      tree = @parser.parse("#{num}j").first
-      tree.keys.must_equal [:count, :motion]
-      tree[:count].must_equal num.to_s
-      tree[:motion].must_equal 'j'
+      %w{w gj fa}.each do |motion|
+        tree = @parser.parse("#{num}#{motion}").first
+        tree.keys.must_equal [:count, :motion]
+        tree[:count].must_equal num.to_s
+        tree[:motion].must_equal motion
+      end
     end
   end
 
