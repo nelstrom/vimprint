@@ -45,7 +45,7 @@ module Vimprint
     # e.g. g* and ]m commands require 2 keystrokes
     #      pressing <Esc> after g or ] aborts the command
     rule(:aborted_distroke) {
-      ( match('[gz\]\[]') >> match('[\e]') ).as(:aborted_distroke)
+      ( match('[gzfFtT\]\[]') >> match('[\e]') ).as(:aborted_distroke)
     }
     rule(:aborted_cmd) { aborted_distroke }
 

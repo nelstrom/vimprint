@@ -79,7 +79,7 @@ describe Vimprint::Parser do
     end
   end
 
-  %w{g z [ ]}.each do |char|
+  %w{g z [ ] f F t T}.each do |char|
     it "matches aborted #{char}-prefixed commands" do
       tree = @parser.parse("#{char}\e").first
       tree.keys.must_equal [:aborted_distroke]
