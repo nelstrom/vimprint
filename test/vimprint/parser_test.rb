@@ -64,4 +64,10 @@ describe Vimprint::Parser do
       tree[:aborted_distroke].must_equal "g\e"
   end
 
+  it "matches aborted z-prefixed commands" do
+      tree = @parser.parse("z\e").first
+      tree.keys.must_equal [:aborted_distroke]
+      tree[:aborted_distroke].must_equal "z\e"
+  end
+
 end

@@ -30,7 +30,7 @@ module Vimprint
     }
 
     rule(:aborted_distroke) {
-      ( str('g') >> match('[\e]') ).as(:aborted_distroke)
+      ( match('[gz]') >> match('[\e]') ).as(:aborted_distroke)
     }
     rule(:motion) { one_key_motion | g_key_motion | aborted_distroke }
 
