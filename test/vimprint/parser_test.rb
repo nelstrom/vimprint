@@ -7,11 +7,18 @@ describe Vimprint::Parser do
     @parser = Vimprint::Parser.new
   end
 
-  it "matches an insertion" do
+  it "matches text insertion" do
     tree = @parser.parse("IHello, World!\e").first
     tree.keys.must_equal [:switch, :typing, :escape]
     tree[:switch].must_equal "I"
     tree[:typing].must_equal "Hello, World!"
+  end
+
+  it "matches insertion of nothing" do
+    tree = @parser.parse("i\e").first
+    tree.keys.must_equal [:switch, :typing, :escape]
+    tree[:switch].must_equal "i"
+    tree[:typing].must_equal []
   end
 
   it "matches an Ex command" do
