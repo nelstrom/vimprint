@@ -47,11 +47,14 @@ module Vimprint
     rule(:operation_motionwise) {
       (operator.as(:operator) >> motion)
     }
+    rule(:op_linewise) {
+      ( str('g') >> match('[~uUq?w]').repeat(2,2) ).as(:op_linewise)
+    }
     rule(:operation_linewise) {
       (operator.repeat(2,2).as(:operation_linewise))
     }
     rule(:operation) {
-      (operation_motionwise | operation_linewise)
+      (operation_motionwise | operation_linewise | op_linewise)
     }
 
     # Catch aborted 2-keystroke commands (a.k.a. 'distrokes')

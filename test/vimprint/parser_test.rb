@@ -98,11 +98,19 @@ describe Vimprint::Parser do
     end
   end
 
-  it "matches {operator}{motion} commands" do
+  it "matches {operator}{operator} commands" do
     %w{d c y > < = g~ gu gU gq g? gw}.each do |op|
       tree = @parser.parse("#{op}#{op}").first
       tree.keys.must_equal [:operation_linewise]
       tree[:operation_linewise].must_equal op*2
+    end
+  end
+
+  it "matches g~~ commands" do
+    %w{~ u U q ?}.each do |op|
+      tree = @parser.parse("g#{op}#{op}").first
+      tree.keys.must_equal [:op_linewise]
+      tree[:op_linewise].must_equal "g#{op}#{op}"
     end
   end
 
