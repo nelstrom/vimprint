@@ -20,7 +20,7 @@ module Vimprint
       begin_insert >> type_into_document >> escape
     }
 
-    # Simple motion
+    # Simple motions
     ONE_KEY_MOTIONS = 'hHjklLMwbeWBEnNG$0^%*#;,|'
     rule(:one_key_motion) {
       match("[#{ONE_KEY_MOTIONS}]").as(:motion)
@@ -32,7 +32,6 @@ module Vimprint
     rule(:find_char_motion) {
       (match('[fFtT]') >> match('[^\e]') ).as(:motion)
     }
-
     rule(:motion_once) {
       one_key_motion | g_key_motion | find_char_motion
     }
@@ -40,6 +39,12 @@ module Vimprint
       count >> motion_once
     }
     rule(:motion) { motion_once | motion_with_count }
+
+    # Operators
+    rule(:operator) { match('[dcy><]') }
+    rule(:operation) {
+      (operator.as(:operator) >> motion)
+    }
 
     # Catch aborted 2-keystroke commands (a.k.a. 'distrokes')
     # e.g. g* and ]m commands require 2 keystrokes
@@ -59,7 +64,9 @@ module Vimprint
     }
     rule(:ex_command) { (run_ex_cmd | abort_ex_cmd) }
 
-    rule(:normal) { (insertion | ex_command | motion | aborted_cmd).repeat }
+    rule(:normal) {
+      (insertion | ex_command | motion | operation | aborted_cmd).repeat
+    }
     root(:normal)
   end
 end
