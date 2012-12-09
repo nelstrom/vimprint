@@ -58,4 +58,10 @@ describe Vimprint::Parser do
     end
   end
 
+  it "matches aborted g-prefixed commands" do
+      tree = @parser.parse("g\e").first
+      tree.keys.must_equal [:aborted_distroke]
+      tree[:aborted_distroke].must_equal "g\e"
+  end
+
 end

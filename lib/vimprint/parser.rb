@@ -28,7 +28,11 @@ module Vimprint
     rule(:g_key_motion) {
       (str('g') >> match("[#{G_KEY_MOTIONS}]")).as(:motion)
     }
-    rule(:motion) { one_key_motion | g_key_motion }
+
+    rule(:aborted_distroke) {
+      ( str('g') >> match('[\e]') ).as(:aborted_distroke)
+    }
+    rule(:motion) { one_key_motion | g_key_motion | aborted_distroke }
 
     # Ex Command
     rule(:begin_ex_cmd) { match(':').as(:prompt) }
