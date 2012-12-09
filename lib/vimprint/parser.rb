@@ -12,8 +12,10 @@ module Vimprint
 
     # Ex Command
     rule(:ex_start) { match(':').as(:prompt) }
-    rule(:ex_typing) { match('[^\r]').repeat.as(:ex_typing) }
-    rule(:ex_command) { ex_start >> ex_typing >> enter }
+    rule(:ex_typing) { match('[^\r\e]').repeat.as(:ex_typing) }
+    rule(:run_ex_cmd) { ex_start >> ex_typing >> enter }
+    rule(:abort_ex_cmd) { ex_start >> ex_typing >> escape }
+    rule(:ex_command) { (run_ex_cmd | abort_ex_cmd) }
 
     rule(:normal) { (insertion | ex_command).repeat }
     root(:normal)

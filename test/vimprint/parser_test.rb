@@ -28,4 +28,18 @@ describe Vimprint::Parser do
     tree[:ex_typing].must_equal "write"
   end
 
+  it "matches an aborted Ex command" do
+    tree = @parser.parse(":write\e").first
+    tree.keys.must_equal [:prompt, :ex_typing, :escape]
+    tree[:prompt].must_equal ":"
+    tree[:ex_typing].must_equal "write"
+  end
+
+  it "matches an empty aborted Ex command" do
+    tree = @parser.parse(":\e").first
+    tree.keys.must_equal [:prompt, :ex_typing, :escape]
+    tree[:prompt].must_equal ":"
+    tree[:ex_typing].must_equal []
+  end
+
 end
