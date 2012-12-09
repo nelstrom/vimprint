@@ -23,23 +23,23 @@ describe Vimprint::Parser do
 
   it "matches an Ex command" do
     tree = @parser.parse(":write\r").first
-    tree.keys.must_equal [:prompt, :ex_typing, :enter]
+    tree.keys.must_equal [:prompt, :typing, :enter]
     tree[:prompt].must_equal ":"
-    tree[:ex_typing].must_equal "write"
+    tree[:typing].must_equal "write"
   end
 
   it "matches an aborted Ex command" do
     tree = @parser.parse(":write\e").first
-    tree.keys.must_equal [:prompt, :ex_typing, :escape]
+    tree.keys.must_equal [:prompt, :typing, :escape]
     tree[:prompt].must_equal ":"
-    tree[:ex_typing].must_equal "write"
+    tree[:typing].must_equal "write"
   end
 
   it "matches an empty aborted Ex command" do
     tree = @parser.parse(":\e").first
-    tree.keys.must_equal [:prompt, :ex_typing, :escape]
+    tree.keys.must_equal [:prompt, :typing, :escape]
     tree[:prompt].must_equal ":"
-    tree[:ex_typing].must_equal []
+    tree[:typing].must_equal []
   end
 
 end
