@@ -20,10 +20,15 @@ module Vimprint
     }
 
     # Simple motion
-    ONE_KEY_MOTIONS = 'hHjklLMwbeWBEnNG$0^%'
-    rule(:motion) {
+    ONE_KEY_MOTIONS = 'hHjklLMwbeWBEnNG$0^%*#'
+    rule(:one_key_motion) {
       match("[#{ONE_KEY_MOTIONS}]").as(:motion)
     }
+    G_KEY_MOTIONS = 'geEhjklm*#0^$'
+    rule(:g_key_motion) {
+      (str('g') >> match("[#{G_KEY_MOTIONS}]")).as(:motion)
+    }
+    rule(:motion) { one_key_motion | g_key_motion }
 
     # Ex Command
     rule(:begin_ex_cmd) { match(':').as(:prompt) }

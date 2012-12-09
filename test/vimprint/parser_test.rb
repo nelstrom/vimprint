@@ -50,4 +50,12 @@ describe Vimprint::Parser do
     end
   end
 
+  it "matches g-prefixed motions" do
+    Vimprint::Parser::G_KEY_MOTIONS.split(//).each do |char|
+      tree = @parser.parse("g#{char}").first
+      tree.keys.must_equal [:motion]
+      tree[:motion].must_equal "g#{char}"
+    end
+  end
+
 end
