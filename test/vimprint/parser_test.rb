@@ -58,6 +58,15 @@ describe Vimprint::Parser do
     end
   end
 
+  it "matches motions with a count" do
+    [5, 42].each do |num|
+      tree = @parser.parse("#{num}j").first
+      tree.keys.must_equal [:count, :motion]
+      tree[:count].must_equal num.to_s
+      tree[:motion].must_equal 'j'
+    end
+  end
+
   %w{g z [ ]}.each do |char|
     it "matches aborted #{char}-prefixed commands" do
       tree = @parser.parse("#{char}\e").first

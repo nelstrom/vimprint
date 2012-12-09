@@ -4,6 +4,7 @@ module Vimprint
   class Parser < Parslet::Parser
     rule(:escape) { match('\e').as(:escape) }
     rule(:enter) { match('\r').as(:enter) }
+    rule(:count) { match('\d').repeat(1).as(:count) }
 
     # Ways of typing
     rule(:type_into_document) {
@@ -29,13 +30,19 @@ module Vimprint
       (str('g') >> match("[#{G_KEY_MOTIONS}]")).as(:motion)
     }
 
+    rule(:motion_once) { one_key_motion | g_key_motion }
+    rule(:motion_with_count) {
+      count.maybe >> (one_key_motion | g_key_motion)
+    }
+    rule(:motion) { motion_once | motion_with_count }
+
     # Catch aborted 2-keystroke commands (a.k.a. 'distrokes')
     # e.g. g* and ]m commands require 2 keystrokes
     #      pressing <Esc> after g or ] aborts the command
     rule(:aborted_distroke) {
       ( match('[gz\]\[]') >> match('[\e]') ).as(:aborted_distroke)
     }
-    rule(:motion) { one_key_motion | g_key_motion | aborted_distroke }
+    rule(:aborted_cmd) { aborted_distroke }
 
     # Ex Command
     rule(:begin_ex_cmd) { match(':').as(:prompt) }
@@ -47,7 +54,7 @@ module Vimprint
     }
     rule(:ex_command) { (run_ex_cmd | abort_ex_cmd) }
 
-    rule(:normal) { (insertion | ex_command | motion).repeat }
+    rule(:normal) { (insertion | ex_command | motion | aborted_cmd).repeat }
     root(:normal)
   end
 end
