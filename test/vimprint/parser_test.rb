@@ -58,28 +58,12 @@ describe Vimprint::Parser do
     end
   end
 
-  it "matches aborted g-prefixed commands" do
-    tree = @parser.parse("g\e").first
-    tree.keys.must_equal [:aborted_distroke]
-    tree[:aborted_distroke].must_equal "g\e"
-  end
-
-  it "matches aborted z-prefixed commands" do
-    tree = @parser.parse("z\e").first
-    tree.keys.must_equal [:aborted_distroke]
-    tree[:aborted_distroke].must_equal "z\e"
-  end
-
-  it "matches aborted ]-prefixed commands" do
-    tree = @parser.parse("]\e").first
-    tree.keys.must_equal [:aborted_distroke]
-    tree[:aborted_distroke].must_equal "]\e"
-  end
-
-  it "matches aborted [-prefixed commands" do
-    tree = @parser.parse("[\e").first
-    tree.keys.must_equal [:aborted_distroke]
-    tree[:aborted_distroke].must_equal "[\e"
+  %w{g z [ ]}.each do |char|
+    it "matches aborted #{char}-prefixed commands" do
+      tree = @parser.parse("#{char}\e").first
+      tree.keys.must_equal [:aborted_distroke]
+      tree[:aborted_distroke].must_equal "#{char}\e"
+    end
   end
 
 end

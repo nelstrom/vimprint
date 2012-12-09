@@ -29,6 +29,9 @@ module Vimprint
       (str('g') >> match("[#{G_KEY_MOTIONS}]")).as(:motion)
     }
 
+    # Catch aborted 2-keystroke commands (a.k.a. 'distrokes')
+    # e.g. g* and ]m commands require 2 keystrokes
+    #      pressing <Esc> after g or ] aborts the command
     rule(:aborted_distroke) {
       ( match('[gz\]\[]') >> match('[\e]') ).as(:aborted_distroke)
     }
