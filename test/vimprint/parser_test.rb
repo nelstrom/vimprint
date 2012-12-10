@@ -14,6 +14,19 @@ describe Vimprint::Parser do
     tree[:typing].must_equal "Hello, World!"
   end
 
+  it "matches text insertion with control char" do
+    tree = @parser.parse("IHello, World!:cq")
+    insertion = tree[0]
+    insertion.keys.must_equal [:switch, :typing, :escape]
+    insertion[:switch].must_equal "I"
+    insertion[:typing].must_equal "Hello, World!"
+    ex_command = tree[1]
+    ex_command.keys.must_equal [:prompt, :typing, :enter]
+    ex_command[:prompt].must_equal ":"
+    ex_command[:typing].must_equal "cq"
+    ex_command[:enter].must_equal "\r"
+  end
+
   it "matches insertion of nothing" do
     tree = @parser.parse("i\e").first
     tree.keys.must_equal [:switch, :typing, :escape]
