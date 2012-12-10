@@ -107,8 +107,8 @@ describe Vimprint::Parser do
     #       gw       (g)w
     # Vim uses the latter interpretation (see :help gww)
     tree = @parser.parse("gww").first
-    tree.keys.must_equal [:op_linewise]
-    tree[:op_linewise].must_equal "gww"
+    tree.keys.must_equal [:operation_linewise]
+    tree[:operation_linewise].must_equal "gww"
   end
 
   it "matches {operator}{operator} commands" do
@@ -122,8 +122,8 @@ describe Vimprint::Parser do
   it "matches g~~ commands" do
     %w{~ u U q ? w}.each do |op|
       tree = @parser.parse("g#{op}#{op}").first
-      tree.keys.must_equal [:op_linewise]
-      tree[:op_linewise].must_equal "g#{op}#{op}"
+      tree.keys.must_equal [:operation_linewise]
+      tree[:operation_linewise].must_equal "g#{op}#{op}"
     end
   end
 

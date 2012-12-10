@@ -44,17 +44,17 @@ module Vimprint
     rule(:operator) {
       (match('[dcy><=]') | str('g') >> match('[~uUq?w]'))
     }
-    rule(:op_linewise) {
-      ( str('g') >> match('[~uUq?w]').repeat(2,2) ).as(:op_linewise)
-    }
     rule(:operation_linewise) {
-      (operator.repeat(2,2).as(:operation_linewise))
+      (
+        operator.repeat(2,2) |
+        str('g') >> match('[~uUq?w]').repeat(2,2)
+      ).as(:operation_linewise)
     }
     rule(:operation_motionwise) {
       (operator.as(:operator) >> motion)
     }
     rule(:operation) {
-      (op_linewise | operation_linewise | operation_motionwise )
+      (operation_linewise | operation_motionwise )
     }
 
     # Catch aborted 2-keystroke commands (a.k.a. 'distrokes')
