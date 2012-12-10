@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'vimprint'
-file = File.open(ARGV[0])
-puts Vimprint.parse(file.read.strip)
+log = ARGF.read.sub(/\n$/, '')
+$stderr.puts log.inspect if $DEBUG
+puts Vimprint.parse(log)
