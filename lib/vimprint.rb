@@ -8,8 +8,6 @@ module Vimprint
     transformer = Transform.new
 
     tree = parser.parse(input)
-    # puts; p tree; puts
-
-    transformer.apply(tree)
+    transformer.apply(tree).map {|o| o.to_s }
   end
 end
