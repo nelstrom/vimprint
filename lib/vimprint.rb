@@ -2,6 +2,7 @@ require "vimprint/version"
 require "vimprint/parser"
 require "vimprint/transform"
 require "vimprint/html_presenter"
+require "nokogiri"
 
 module Vimprint
   def self.parse(input)

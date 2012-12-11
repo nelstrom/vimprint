@@ -1,6 +1,5 @@
 require "minitest/autorun"
 require "vimprint"
-require "nokogiri"
 
 describe Vimprint::HtmlPresenter do
 
