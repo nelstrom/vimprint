@@ -111,19 +111,6 @@ describe Vimprint::Parser do
     end
   end
 
-  it "matches the special case: gww as linewise operation" do
-    # gww could be seen as either:
-    #   {operator}{motion}
-    #       gw       w
-    # or
-    #   {operator}{operator}
-    #       gw       (g)w
-    # Vim uses the latter interpretation (see :help gww)
-    tree = @parser.parse("gww").first
-    tree.keys.must_equal [:operation_linewise]
-    tree[:operation_linewise].must_equal "gww"
-  end
-
   it "matches {operator}{operator} commands" do
     %w{d c y > < = g~ gu gU gq g? gw}.each do |op|
       tree = @parser.parse("#{op}#{op}").first
@@ -138,6 +125,19 @@ describe Vimprint::Parser do
       tree.keys.must_equal [:operation_linewise]
       tree[:operation_linewise].must_equal "g#{op}#{op}"
     end
+  end
+
+  it "matches the special case: gww as linewise operation" do
+    # gww could be seen as either:
+    #   {operator}{motion}
+    #       gw       w
+    # or
+    #   {operator}{operator}
+    #       gw       (g)w
+    # Vim uses the latter interpretation (see :help gww)
+    tree = @parser.parse("gww").first
+    tree.keys.must_equal [:operation_linewise]
+    tree[:operation_linewise].must_equal "gww"
   end
 
   it "matches {operator}[count]{motion}" do

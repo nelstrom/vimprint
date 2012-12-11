@@ -8,6 +8,7 @@ module Vimprint
       rule(subtree, &klass)
     end
 
+
     generate :Insertion,
       :switch => simple(:switch),
       :typing => simple(:text),
@@ -24,6 +25,10 @@ module Vimprint
     generate :Motion,
       :motion => simple(:motion),
       :count  => simple(:count)
+
+    generate :Operation,
+      :operator => simple(:operator),
+      :motion   => simple(:motion)
 
   end
 end

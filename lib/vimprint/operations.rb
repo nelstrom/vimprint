@@ -45,5 +45,14 @@ module Vimprint
       end
     end
 
+    class Operation < Base
+      attr_accessor :operator, :motion
+
+      def to_s
+        '%s%s' % [ operator, motion ]
+      end
+
+    end
+
   end
 end

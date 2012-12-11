@@ -80,4 +80,24 @@ describe Vimprint::Operations do
 
   end
 
+  describe "Operation with simple motion" do
+
+    before do
+      @operation = Vimprint::Operations::Operation.new({
+        :operator => "d",
+        :motion   => "w"
+      })
+    end
+
+    it "has string representation" do
+      @operation.to_s.must_equal "dw"
+    end
+
+    it "gets marked up" do
+      skip
+      @operation.to_html.must_equal ""
+    end
+
+  end
+
 end
