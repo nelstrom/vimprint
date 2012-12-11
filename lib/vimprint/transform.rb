@@ -17,5 +17,8 @@ module Vimprint
       :prompt => simple(:prompt),
       :typing => simple(:text),
       :enter => simple(:enter)
+
+    generate :Motion,
+      :motion => simple(:motion)
   end
 end

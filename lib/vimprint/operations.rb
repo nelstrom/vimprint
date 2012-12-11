@@ -33,5 +33,17 @@ module Vimprint
       def to_html
       end
     end
+
+    class Motion < Base
+      attr_accessor :motion
+
+      def to_s
+        '%s' % [ motion ]
+      end
+
+      def to_html
+      end
+    end
+
   end
 end

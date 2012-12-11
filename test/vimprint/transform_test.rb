@@ -13,9 +13,9 @@ describe Vimprint::Transform do
     assert_equal expected_name, got_name
   end
 
-  MiniTest::Expectations.module_eval do
-    infect_an_assertion :assert_operation, :must_be_operation
-  end
+  # MiniTest::Expectations.module_eval do
+  #   infect_an_assertion :assert_operation, :must_be_operation
+  # end
 
   it "is a no-op for empty tree" do
     transform([]).must_equal []
@@ -27,7 +27,7 @@ describe Vimprint::Transform do
       :typing => 'cq',
       :enter  => "\r",
     }
-    transform(cmd).must_be_operation :ExCommand
+    assert_operation :ExCommand, transform(cmd)
   end
 
   it "generates an insertion" do
@@ -36,7 +36,12 @@ describe Vimprint::Transform do
       :typing => 'Hello, World!',
       :escape => "\e",
     }
-    transform(cmd).must_be_operation :Insertion
+    assert_operation :Insertion, transform(cmd)
+  end
+
+  it "generates a motion" do
+    cmd = { :motion => 'j' }
+    assert_operation :Motion, transform(cmd)
   end
 
 end
