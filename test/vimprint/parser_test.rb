@@ -140,4 +140,29 @@ describe Vimprint::Parser do
     end
   end
 
+  it "matches {operator}[count]{motion}" do
+    tree = @parser.parse("d3w").first
+    tree.keys.must_equal [:operator, :count, :motion]
+    tree[:operator].must_equal "d"
+    tree[:count].must_equal "3"
+    tree[:motion].must_equal "w"
+  end
+
+  it "matches [count]{operator}{motion}" do
+    tree = @parser.parse("2dw").first
+    tree.keys.must_equal [:op_count, :operator, :motion]
+    tree[:op_count][:count].must_equal "2"
+    tree[:operator].must_equal "d"
+    tree[:motion].must_equal "w"
+  end
+
+  it "matches [count]{operator}[count]{motion}" do
+    tree = @parser.parse("2d3w").first
+    tree.keys.must_equal [:op_count, :operator, :count, :motion]
+    tree[:op_count][:count].must_equal "2"
+    tree[:operator].must_equal "d"
+    tree[:count].must_equal "3"
+    tree[:motion].must_equal "w"
+  end
+
 end
