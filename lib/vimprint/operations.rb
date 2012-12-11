@@ -48,6 +48,11 @@ module Vimprint
     class Operation < Base
       attr_accessor :operator, :motion
 
+      def initialize(options)
+         @motion = Motion.new({:motion => options[:motion]})
+         @operator = options[:operator]
+      end
+
       def to_s
         '%s%s' % [ operator, motion ]
       end

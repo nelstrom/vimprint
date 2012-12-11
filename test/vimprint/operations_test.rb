@@ -89,6 +89,10 @@ describe Vimprint::Operations do
       })
     end
 
+    it "represents the motion as a Motion object" do
+      @operation.motion.must_be_instance_of Vimprint::Operations::Motion
+    end
+
     it "has string representation" do
       @operation.to_s.must_equal "dw"
     end
