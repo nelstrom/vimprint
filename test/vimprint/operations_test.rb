@@ -3,51 +3,41 @@ require 'vimprint'
 
 describe Vimprint::Operations do
 
-  def generate name, dict
-    Vimprint::Operations.const_get(name).new(dict)
-  end
-
-  def text
-    generate(name, dict).to_s
-  end
-
-  def markup
-    generate(name, dict).to_html
-  end
-
   describe "Insertion" do
-    let(:name) { :Insertion }
-    let(:dict) {
-      { :switch => 'I',
-        :text => 'Hello, World!',
-      }
-    }
+
+    before do
+      @insertion = Vimprint::Operations::Insertion.new({
+        :switch => 'I',
+        :text => 'Hello, World!'
+      })
+    end
 
     it "has string representation" do
-      text.must_equal "I{Hello, World!}"
+      @insertion.to_s.must_equal "I{Hello, World!}"
     end
 
     it "gets marked up" do
       skip
-      markup.must_equal ""
+      @insertion.to_html.must_equal ""
     end
   end
 
   describe "ExCommand" do
-    let(:name) { :ExCommand }
-    let(:dict) {
-      { :prompt => ':',
+
+    before do
+      @ex_cmd = Vimprint::Operations::ExCommand.new({
+        :prompt => ':',
         :text => 'cq',
-      }
-    }
+      })
+    end
 
     it "has string representation" do
-      text.must_equal ":cq"
+      @ex_cmd.to_s.must_equal ":cq"
     end
 
     it "gets marked up" do
       skip
-      markup.must_equal ""
+      @ex_cmd.to_html.must_equal ""
     end
   end
 
