@@ -1,20 +1,30 @@
 require "minitest/autorun"
 require "vimprint"
+require "nokogiri"
 
 describe Vimprint::HtmlPresenter do
+
+  def dom(fragment)
+    Nokogiri::HTML.fragment(fragment)
+  end
+
+  def presenter
+    @p ||= Vimprint::HtmlPresenter.new 
+  end
 
   describe "#visit_motion" do
 
     it "displays the motion" do
-      presenter = Vimprint::HtmlPresenter.new
       motion = Vimprint::Operations::Motion.new({:motion => 'j'})
-      presenter.visit_motion(motion).must_equal "<div><span class='motion'>j</span><div>"
+      html = presenter.visit_motion(motion)
+      dom(html).at_css('div .motion').text.must_equal 'j'
     end
 
     it "displays the motion with a count" do
-      presenter = Vimprint::HtmlPresenter.new
       motion = Vimprint::Operations::Motion.new({:motion => 'j', :count => 42})
-      presenter.visit_motion(motion).must_equal "<div><span class='count'>42</span><span class='motion'>j</span><div>"
+      html = presenter.visit_motion(motion)
+      dom(html).at_css('div .motion').text.must_equal 'j'
+      dom(html).at_css('div .count').text.must_equal '42'
     end
 
   end
