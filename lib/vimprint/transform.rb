@@ -26,10 +26,9 @@ module Vimprint
       :motion => simple(:motion),
       :count  => simple(:count)
 
-    rule(
+    generate :Operation,
       :operator => simple(:operator),
       :motion   => simple(:motion)
-    ) { Operation.new(operator, motion) }
 
   end
 end

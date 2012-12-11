@@ -1,6 +1,7 @@
 require "vimprint/version"
 require "vimprint/parser"
 require "vimprint/transform"
+require "vimprint/html_presenter"
 
 module Vimprint
   def self.parse(input)

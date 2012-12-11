@@ -18,8 +18,10 @@ module Vimprint
         '%s{%s}' % [ switch, text ]
       end
 
-      def to_html
+      def accept(visitor)
+        visitor.visit_insertion(self)
       end
+
     end
 
     class ExCommand < Base
@@ -30,8 +32,10 @@ module Vimprint
         '%s%s' % [ prompt, text ]
       end
 
-      def to_html
+      def accept(visitor)
+        visitor.visit_ex_command(self)
       end
+
     end
 
     class Motion < Base
@@ -41,8 +45,10 @@ module Vimprint
         '%s%s' % [ count, motion ]
       end
 
-      def to_html
+      def accept(visitor)
+        visitor.visit_motion(self)
       end
+
     end
 
     class Operation < Base
@@ -55,6 +61,10 @@ module Vimprint
 
       def to_s
         '%s%s' % [ operator, motion ]
+      end
+
+      def accept(visitor)
+        visitor.visit_operation(self)
       end
 
     end
