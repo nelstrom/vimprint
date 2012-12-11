@@ -20,5 +20,10 @@ module Vimprint
 
     generate :Motion,
       :motion => simple(:motion)
+
+    generate :Motion,
+      :motion => simple(:motion),
+      :count  => simple(:count)
+
   end
 end

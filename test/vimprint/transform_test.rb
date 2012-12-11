@@ -44,4 +44,9 @@ describe Vimprint::Transform do
     assert_operation :Motion, transform(cmd)
   end
 
+  it "generates a motion with a count" do
+    cmd = { :motion => 'j', :count => 42 }
+    assert_operation :Motion, transform(cmd)
+  end
+
 end

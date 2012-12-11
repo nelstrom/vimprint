@@ -35,10 +35,10 @@ module Vimprint
     end
 
     class Motion < Base
-      attr_accessor :motion
+      attr_accessor :motion, :count
 
       def to_s
-        '%s' % [ motion ]
+        '%s%s' % [ count, motion ]
       end
 
       def to_html
