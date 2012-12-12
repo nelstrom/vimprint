@@ -64,7 +64,9 @@ module Vimprint
       end
 
       def accept(visitor)
-        visitor.visit_operation(self)
+        visitor.visit_operation(self) do
+          motion.accept(visitor)
+        end
       end
 
     end

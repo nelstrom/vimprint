@@ -10,9 +10,18 @@ module Vimprint
     def visit_motion(motion)
       h.div do
         if motion.count
-          h.span.count motion.count
+          span.count motion.count
         end
-        h.span.motion motion.motion
+        span.motion motion.motion
+        yield if block_given?
+      end
+    end
+
+    def visit_operation(operation)
+      # {operator}{motion}
+      h.div do
+        span.operator operation.operator
+        yield if block_given?
       end
     end
 
