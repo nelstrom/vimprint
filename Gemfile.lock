@@ -1,0 +1,22 @@
+PATH
+  remote: .
+  specs:
+    vimprint (0.0.1)
+      nokogiri (~> 1.5)
+      parslet
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    blankslate (2.1.2.4)
+    nokogiri (1.5.5)
+    parslet (1.4.0)
+      blankslate (~> 2.0)
+    rake (10.0.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rake
+  vimprint!
