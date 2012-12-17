@@ -8,7 +8,7 @@ describe Vimprint::HtmlPresenter do
   end
 
   def presenter
-    @p ||= Vimprint::HtmlPresenter.new 
+    @p ||= Vimprint::HtmlPresenter.new
   end
 
   describe "#visit_motion" do
@@ -38,9 +38,8 @@ describe Vimprint::HtmlPresenter do
 
     it "displays the operator with the motion" do
       operation = Vimprint::Operations::Operation.new({:operator => "d", :motion => "w"})
-      presenter.visit_operation(operation)
+      operation.accept(presenter)
       dom.at_css('div span.operator').text.must_equal 'd'
-      p dom.to_html
       dom.at_css('div span.motion').text.must_equal 'w'
     end
 

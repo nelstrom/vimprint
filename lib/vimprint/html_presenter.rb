@@ -18,7 +18,7 @@ module Vimprint
     end
 
     def visit_operation(operation)
-      # {operator}{motion}
+      # {operator}{motion}
       h.div do
         span.operator operation.operator
         yield if block_given?
