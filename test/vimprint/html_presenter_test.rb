@@ -11,6 +11,18 @@ describe Vimprint::HtmlPresenter do
     @p ||= Vimprint::HtmlPresenter.new
   end
 
+  describe "#visit_insertion" do
+
+    it "displays the insertion" do
+      insertion = Vimprint::Operations::Insertion.new({:switch => 'I', :text => 'Hello, World!'})
+      insertion.accept(presenter)
+      dom.at_css('div span.switch').text.must_equal 'I'
+      dom.at_css('div span.text').text.must_equal 'Hello, World!'
+      dom.at_css('div span.escape').text.must_equal '&lt;Esc&gt;'
+    end
+
+  end
+
   describe "#visit_motion" do
 
     it "displays the motion" do

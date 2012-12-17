@@ -25,6 +25,15 @@ module Vimprint
       end
     end
 
+    def visit_insertion(insertion)
+      h.div do
+        span.switch insertion.switch
+        span.text insertion.text
+        yield if block_given?
+        span.escape "&lt;Esc&gt;"
+      end
+    end
+
     def to_html
       h.to_html
     end
