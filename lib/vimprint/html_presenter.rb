@@ -4,7 +4,7 @@ module Vimprint
   class HtmlPresenter
 
     def initialize
-      @h = Nokogiri::HTML::Builder.new
+      @body = Nokogiri::HTML::Builder.new { |html| html.body }
     end
 
     def visit_motion(motion)
@@ -39,7 +39,11 @@ module Vimprint
     end
 
     private
-    attr_reader :h
+    attr_reader :body
+
+    def h
+      Nokogiri::HTML::Builder.with(body.doc.at('body'))
+    end
 
   end
 end
