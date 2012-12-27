@@ -8,7 +8,7 @@ module Vimprint
     end
 
     def visit_motion(motion)
-      h.div do
+      h.span do
         if motion.count
           span.count motion.count
         end

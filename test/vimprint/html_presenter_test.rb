@@ -28,14 +28,14 @@ describe Vimprint::HtmlPresenter do
     it "displays the motion" do
       motion = Vimprint::Operations::Motion.new({:motion => 'j'})
       motion.accept(presenter)
-      dom.at_css('div span.motion').text.must_equal 'j'
+      dom.at_css('span span.motion').text.must_equal 'j'
     end
 
     it "displays the motion with a count" do
       motion = Vimprint::Operations::Motion.new({:motion => 'j', :count => 42})
       motion.accept(presenter)
-      dom.at_css('div span.motion').text.must_equal 'j'
-      dom.at_css('div span.count').text.must_equal '42'
+      dom.at_css('span span.motion').text.must_equal 'j'
+      dom.at_css('span span.count').text.must_equal '42'
     end
 
   end
@@ -52,7 +52,7 @@ describe Vimprint::HtmlPresenter do
       operation = Vimprint::Operations::Operation.new({:operator => "d", :motion => "w"})
       operation.accept(presenter)
       dom.at_css('div span.operator').text.must_equal 'd'
-      dom.at_css('div span.motion').text.must_equal 'w'
+      dom.at_css('span span.motion').text.must_equal 'w'
     end
 
   end
