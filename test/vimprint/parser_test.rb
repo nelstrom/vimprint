@@ -14,6 +14,13 @@ describe Vimprint::Parser do
     tree[:typing].must_equal "Hello, World!"
   end
 
+  it "matches unfinished text insertion" do
+    tree = @parser.parse("IHello, World!").first
+    tree.keys.must_equal [:switch, :typing]
+    tree[:switch].must_equal "I"
+    tree[:typing].must_equal "Hello, World!"
+  end
+
   it "matches text insertion with control char" do
     tree = @parser.parse("IHello, World!:cq")
     insertion = tree[0]

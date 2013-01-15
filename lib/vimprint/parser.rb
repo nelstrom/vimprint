@@ -16,8 +16,14 @@ module Vimprint
 
     # Simple insertion
     rule(:begin_insert) { match('[iIaAoOsS]').as(:switch) }
-    rule(:insertion) {
+    rule(:full_insertion) {
       begin_insert >> type_into_document >> escape
+    }
+    rule(:part_insertion) {
+      begin_insert >> type_into_document
+    }
+    rule(:insertion) {
+      full_insertion | part_insertion
     }
 
     # Simple motions
