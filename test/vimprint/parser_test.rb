@@ -27,6 +27,14 @@ describe Vimprint::Parser do
     ex_command[:enter].must_equal "\r"
   end
 
+  it "matches text insertion with ^N control char" do
+    tree = @parser.parse("A s shore:q!")
+    insertion = tree[0]
+    insertion.keys.must_equal [:switch , :typing, :escape]
+    insertion[:switch].must_equal "A"
+    insertion[:typing].must_equal " s shore"
+  end
+
   it "matches insertion of nothing" do
     tree = @parser.parse("i\e").first
     tree.keys.must_equal [:switch, :typing, :escape]
