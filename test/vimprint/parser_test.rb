@@ -271,8 +271,10 @@ describe Vimprint::Parser do
       tree = @parser.parse("2#{paste}").first
       tree.keys.must_equal [:count, :put]
     end
-    it "matches paste command with a register: \"a#{paste}" do
-      tree = @parser.parse("\"a#{paste}").first
+  end
+  %w{a m z A M Z 0 1 9 " : . % # * + ~ _ / -}.each do |register|
+    it "matches paste command with a register: \"#{register}p" do
+      tree = @parser.parse("\"#{register}p").first
       tree.keys.must_equal [:reg, :put]
     end
   end

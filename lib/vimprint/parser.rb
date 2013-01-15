@@ -35,7 +35,7 @@ module Vimprint
 
     # Register setters and getters (cut, copy and paste)
     rule(:register) {
-      (str('"') >> match('[a-zA-Z]')).as(:reg)
+      (str('"') >> match('[a-zA-Z0-9":.%#*+~_/-]')).as(:reg)
     }
     rule(:put_command) {
       count.maybe >>
