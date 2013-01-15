@@ -33,6 +33,20 @@ module Vimprint
       (one_key_motion | g_key_motion | find_char_motion)
     }
 
+    # Register setters and getters (cut, copy and paste)
+    rule(:register) {
+      (str('"') >> match('[a-zA-Z]')).as(:reg)
+    }
+    rule(:put_command) {
+      count.maybe >>
+      register.maybe >>
+      (
+        match('[g\]\[]').maybe >>
+        match('[pP]')
+      )
+      .as(:put)
+    }
+
     # Operators
     rule(:operator) {
       (match('[dy><=]') | str('g') >> match('[~uUq?w]'))
@@ -91,7 +105,7 @@ module Vimprint
     rule(:ex_command) { (run_ex_cmd | abort_ex_cmd | part_ex_cmd) }
 
     rule(:normal) {
-      (insertion | ex_command | motion | operation | aborted_cmd | unfinished_distroke).repeat
+      (insertion | ex_command | motion | put_command | operation | aborted_cmd | unfinished_distroke).repeat
     }
     root(:normal)
   end

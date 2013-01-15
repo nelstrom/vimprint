@@ -262,4 +262,19 @@ describe Vimprint::Parser do
     tree[:operation_linewise].must_equal "cc"
   end
 
+  %w{p P gp gP [p [P ]p ]P}.each do |paste|
+    it "matches naked paste command: #{paste}" do
+      tree = @parser.parse(paste).first
+      tree.keys.must_equal [:put]
+    end
+    it "matches paste command with count: 2#{paste}" do
+      tree = @parser.parse("2#{paste}").first
+      tree.keys.must_equal [:count, :put]
+    end
+    it "matches paste command with a register: \"a#{paste}" do
+      tree = @parser.parse("\"a#{paste}").first
+      tree.keys.must_equal [:reg, :put]
+    end
+  end
+
 end
