@@ -278,5 +278,13 @@ describe Vimprint::Parser do
       tree.keys.must_equal [:reg, :put]
     end
   end
+  it 'matches [count]["x]paste' do
+    tree = @parser.parse('2"ap').first
+    tree.keys.must_equal [:count, :reg, :put]
+  end
+  it 'matches ["x][count]paste' do
+    tree = @parser.parse('"a2p').first
+    tree.keys.must_equal [:reg, :count, :put]
+  end
 
 end

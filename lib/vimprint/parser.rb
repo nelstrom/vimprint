@@ -40,6 +40,7 @@ module Vimprint
     rule(:put_command) {
       count.maybe >>
       register.maybe >>
+      count.maybe >>
       (
         match('[g\]\[]').maybe >>
         match('[pP]')
