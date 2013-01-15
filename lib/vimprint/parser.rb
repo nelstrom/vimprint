@@ -47,14 +47,9 @@ module Vimprint
     rule(:operation_motionwise) {
       (operator.as(:operator) >> motion)
     }
-    rule(:operation_once) {
-      (operation_linewise | operation_motionwise )
-    }
-    rule(:operation_with_count) {
-      count.as(:op_count) >> (operation_linewise | operation_motionwise )
-    }
     rule(:operation) {
-      operation_with_count | operation_once
+      count.as(:op_count).maybe >>
+      (operation_linewise | operation_motionwise )
     }
 
     # Insertion
