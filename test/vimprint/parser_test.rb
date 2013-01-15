@@ -266,16 +266,20 @@ describe Vimprint::Parser do
     it "matches naked paste command: #{paste}" do
       tree = @parser.parse(paste).first
       tree.keys.must_equal [:put]
+      tree[:put].must_equal paste
     end
     it "matches paste command with count: 2#{paste}" do
       tree = @parser.parse("2#{paste}").first
       tree.keys.must_equal [:count, :put]
+      tree[:count].must_equal "2"
+      tree[:put].must_equal paste
     end
   end
   %w{a m z A M Z 0 1 9 " : . % # * + ~ _ / -}.each do |register|
     it "matches paste command with a register: \"#{register}p" do
       tree = @parser.parse("\"#{register}p").first
       tree.keys.must_equal [:reg, :put]
+      tree[:reg].must_equal register
     end
   end
   it 'matches [count]["x]paste' do
