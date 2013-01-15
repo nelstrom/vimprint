@@ -7,10 +7,19 @@ describe Vimprint::Parser do
     @parser = Vimprint::Parser.new
   end
 
-  it "matches text insertion" do
-    tree = @parser.parse("IHello, World!\e").first
+  'iIaAoOsSC'.split(//).each do |char|
+    it "matches text insertion initiated with #{char} switch" do
+      tree = @parser.parse("#{char}Hello, World!\e").first
+      tree.keys.must_equal [:switch, :typing, :escape]
+      tree[:switch].must_equal char
+      tree[:typing].must_equal "Hello, World!"
+    end
+  end
+
+  it "matches text insertion initiated with gi switch" do
+    tree = @parser.parse("giHello, World!\e").first
     tree.keys.must_equal [:switch, :typing, :escape]
-    tree[:switch].must_equal "I"
+    tree[:switch].must_equal "gi"
     tree[:typing].must_equal "Hello, World!"
   end
 

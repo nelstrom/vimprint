@@ -56,6 +56,7 @@ module Vimprint
       count.maybe >>
       (
         match('[iIaAoOsSC]').as(:switch) |
+        str('gi').as(:switch) |
         str('c').as(:operator) >> motion |
         str('cc').as(:operation_linewise)
       )
