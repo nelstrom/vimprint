@@ -58,13 +58,17 @@ module Vimprint
     }
 
     # Insertion
-    rule(:begin_insert) {
+    rule(:begin_insert_once) {
       (
         match('[iIaAoOsSC]').as(:switch) |
         str('c').as(:operator) >> motion |
         str('cc').as(:operation_linewise)
       )
     }
+    rule(:begin_insert_with_count) {
+      count >> begin_insert_once
+    }
+    rule(:begin_insert) { begin_insert_once | begin_insert_with_count }
     rule(:full_insertion) {
       begin_insert >> type_into_document >> escape
     }

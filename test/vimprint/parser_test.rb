@@ -196,6 +196,22 @@ describe Vimprint::Parser do
     end
   end
 
+  it "matches c[count]{motion}[full_insertion] commands" do
+    tree = @parser.parse("c3whello, world\e").first
+    tree.keys.must_equal [:operator, :count, :motion, :typing, :escape]
+    tree[:operator].must_equal "c"
+    tree[:count].must_equal "3"
+    tree[:motion].must_equal "w"
+  end
+
+  it "matches [count]c{motion}[full_insertion] commands" do
+    tree = @parser.parse("3cwhello, world\e").first
+    tree.keys.must_equal [:count, :operator, :motion, :typing, :escape]
+    tree[:count].must_equal "3"
+    tree[:operator].must_equal "c"
+    tree[:motion].must_equal "w"
+  end
+
   it "matches cc[full_insertion] commands" do
     tree = @parser.parse("cchello, world\e").first
     tree.keys.must_equal [:operation_linewise, :typing, :escape]
