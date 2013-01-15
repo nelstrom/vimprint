@@ -4,7 +4,9 @@ module Vimprint
   class Parser < Parslet::Parser
     rule(:escape) { match('\e').as(:escape) }
     rule(:enter) { match('\r').as(:enter) }
-    rule(:count) { match('\d').repeat(1).as(:count) }
+    rule(:count) {
+      (match('[0-9]').repeat(2) | match('[1-9]')).as(:count)
+    }
 
     # Ways of typing
     rule(:type_into_document) {
@@ -26,13 +28,10 @@ module Vimprint
     rule(:find_char_motion) {
       (match('[fFtT]') >> match('[^\e]') ).as(:motion)
     }
-    rule(:motion_once) {
-      one_key_motion | g_key_motion | find_char_motion
+    rule(:motion) {
+      count.maybe >>
+      (one_key_motion | g_key_motion | find_char_motion)
     }
-    rule(:motion_with_count) {
-      count >> motion_once
-    }
-    rule(:motion) { motion_once | motion_with_count }
 
     # Operators
     rule(:operator) {
