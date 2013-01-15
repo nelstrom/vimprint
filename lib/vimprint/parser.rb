@@ -80,6 +80,9 @@ module Vimprint
     # Catch aborted 2-keystroke commands (a.k.a. 'distrokes')
     # e.g. g* and ]m commands require 2 keystrokes
     #      pressing <Esc> after g or ] aborts the command
+    rule(:unfinished_distroke) {
+      ( match('[gzfFtT\]\[]') ).as(:part_distroke)
+    }
     rule(:aborted_distroke) {
       ( match('[gzfFtT\]\[]') >> match('[\e]') ).as(:aborted_distroke)
     }
@@ -99,7 +102,7 @@ module Vimprint
     rule(:ex_command) { (run_ex_cmd | abort_ex_cmd | part_ex_cmd) }
 
     rule(:normal) {
-      (insertion | ex_command | motion | operation | aborted_cmd).repeat
+      (insertion | ex_command | motion | operation | aborted_cmd | unfinished_distroke).repeat
     }
     root(:normal)
   end

@@ -120,6 +120,18 @@ describe Vimprint::Parser do
       tree.keys.must_equal [:aborted_distroke]
       tree[:aborted_distroke].must_equal "#{char}\e"
     end
+
+    it "matches unfinished #{char}-prefixed commands" do
+      tree = @parser.parse("#{char}").first
+      tree.keys.must_equal [:part_distroke]
+      tree[:part_distroke].must_equal "#{char}"
+    end
+  end
+
+  it "can handle unfinished distrokes" do
+    tree = @parser.parse("g").first
+    tree.keys.must_equal [:part_distroke]
+    tree[:part_distroke].must_equal "g"
   end
 
   it "matches {operator}{motion} commands" do
