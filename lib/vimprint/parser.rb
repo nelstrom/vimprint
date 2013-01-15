@@ -61,13 +61,9 @@ module Vimprint
       )
     }
 
-    rule(:full_insertion) {
-      begin_insert >> type_into_document >> escape
+    rule(:insertion) {
+      begin_insert >> type_into_document >> escape.maybe
     }
-    rule(:part_insertion) {
-      begin_insert >> type_into_document
-    }
-    rule(:insertion) { full_insertion | part_insertion }
 
     # Catch aborted 2-keystroke commands (a.k.a. 'distrokes')
     # e.g. g* and ]m commands require 2 keystrokes
