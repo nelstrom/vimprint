@@ -14,18 +14,6 @@ module Vimprint
       match('[^\r\e]').repeat.as(:typing)
     }
 
-    # Simple insertion
-    rule(:begin_insert) { match('[iIaAoOsS]').as(:switch) }
-    rule(:full_insertion) {
-      begin_insert >> type_into_document >> escape
-    }
-    rule(:part_insertion) {
-      begin_insert >> type_into_document
-    }
-    rule(:insertion) {
-      full_insertion | part_insertion
-    }
-
     # Simple motions
     ONE_KEY_MOTIONS = 'hHjklLMwbeWBEnNG$0^%*#;,|'
     rule(:one_key_motion) {
@@ -48,7 +36,7 @@ module Vimprint
 
     # Operators
     rule(:operator) {
-      (match('[dcy><=]') | str('g') >> match('[~uUq?w]'))
+      (match('[dy><=]') | str('g') >> match('[~uUq?w]'))
     }
     rule(:operation_linewise) {
       (
@@ -68,6 +56,22 @@ module Vimprint
     rule(:operation) {
       operation_with_count | operation_once
     }
+
+    # Insertion
+    rule(:begin_insert) {
+      (
+        match('[iIaAoOsSC]').as(:switch) |
+        str('c').as(:operator) >> motion |
+        str('cc').as(:operation_linewise)
+      )
+    }
+    rule(:full_insertion) {
+      begin_insert >> type_into_document >> escape
+    }
+    rule(:part_insertion) {
+      begin_insert >> type_into_document
+    }
+    rule(:insertion) { full_insertion | part_insertion }
 
     # Catch aborted 2-keystroke commands (a.k.a. 'distrokes')
     # e.g. g* and ]m commands require 2 keystrokes

@@ -123,7 +123,7 @@ describe Vimprint::Parser do
   end
 
   it "matches {operator}{motion} commands" do
-    %w{d c y > < = g~ gu gU gq g? gw}.each do |op|
+    %w{d y > < = g~ gu gU gq g? gw}.each do |op|
       %w{e gj fa}.each do |mo|
         tree = @parser.parse("#{op}#{mo}").first
         tree.keys.must_equal [:operator, :motion]
@@ -134,7 +134,7 @@ describe Vimprint::Parser do
   end
 
   it "matches {operator}{operator} commands" do
-    %w{d c y > < = g~ gu gU gq g? gw}.each do |op|
+    %w{d y > < = g~ gu gU gq g? gw}.each do |op|
       tree = @parser.parse("#{op}#{op}").first
       tree.keys.must_equal [:operation_linewise]
       tree[:operation_linewise].must_equal op*2
@@ -185,6 +185,36 @@ describe Vimprint::Parser do
     tree[:operator].must_equal "d"
     tree[:count].must_equal "3"
     tree[:motion].must_equal "w"
+  end
+
+  it "matches c{motion}[full_insertion] commands" do
+    %w{e gj fa}.each do |motion|
+      tree = @parser.parse("c#{motion}hello, world\e").first
+      tree.keys.must_equal [:operator, :motion, :typing, :escape]
+      tree[:operator].must_equal "c"
+      tree[:motion].must_equal motion
+    end
+  end
+
+  it "matches cc[full_insertion] commands" do
+    tree = @parser.parse("cchello, world\e").first
+    tree.keys.must_equal [:operation_linewise, :typing, :escape]
+    tree[:operation_linewise].must_equal "cc"
+  end
+
+  it "matches c{motion}[part_insertion] commands" do
+    %w{e gj fa}.each do |motion|
+      tree = @parser.parse("c#{motion}hello, world").first
+      tree.keys.must_equal [:operator, :motion, :typing]
+      tree[:operator].must_equal "c"
+      tree[:motion].must_equal motion
+    end
+  end
+
+  it "matches cc[part_insertion] commands" do
+    tree = @parser.parse("cchello, world").first
+    tree.keys.must_equal [:operation_linewise, :typing]
+    tree[:operation_linewise].must_equal "cc"
   end
 
 end
