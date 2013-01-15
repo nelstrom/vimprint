@@ -70,6 +70,13 @@ describe Vimprint::Parser do
     tree[:typing].must_equal []
   end
 
+  it "matches an incomplete Ex command" do
+    tree = @parser.parse(":write").first
+    tree.keys.must_equal [:prompt, :typing]
+    tree[:prompt].must_equal ":"
+    tree[:typing].must_equal "write"
+  end
+
   it "matches simple motions" do
     Vimprint::Parser::ONE_KEY_MOTIONS.split(//).each do |char|
       tree = @parser.parse(char).first

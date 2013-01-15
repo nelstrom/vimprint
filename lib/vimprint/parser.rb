@@ -85,7 +85,10 @@ module Vimprint
     rule(:abort_ex_cmd) {
       begin_ex_cmd >> type_into_cmdline >> escape
     }
-    rule(:ex_command) { (run_ex_cmd | abort_ex_cmd) }
+    rule(:part_ex_cmd) {
+      begin_ex_cmd >> type_into_cmdline
+    }
+    rule(:ex_command) { (run_ex_cmd | abort_ex_cmd | part_ex_cmd) }
 
     rule(:normal) {
       (insertion | ex_command | motion | operation | aborted_cmd).repeat
