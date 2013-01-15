@@ -103,6 +103,14 @@ describe Vimprint::Parser do
     end
   end
 
+  it "matches 0w as two motions (not w motion with 0 count)" do
+    zero, word = @parser.parse("0w")
+    zero.keys.must_equal [:motion]
+    word.keys.must_equal [:motion]
+    zero[:motion].must_equal "0"
+    word[:motion].must_equal "w"
+  end
+
   it "matches motions with a count" do
     [5, 42].each do |num|
       %w{w gj fa}.each do |motion|
