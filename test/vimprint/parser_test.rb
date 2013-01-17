@@ -262,6 +262,11 @@ describe Vimprint::Parser do
     tree[:operation_linewise].must_equal "cc"
   end
 
+  it "matches an aborted register followed by p" do
+    tree = @parser.parse("\"\ep").first
+    tree.keys.must_equal [:aborted_register, :put]
+  end
+
   %w{p P gp gP [p [P ]p ]P}.each do |paste|
     it "matches naked paste command: #{paste}" do
       tree = @parser.parse(paste).first

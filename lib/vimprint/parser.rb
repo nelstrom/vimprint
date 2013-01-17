@@ -34,12 +34,16 @@ module Vimprint
     }
 
     # Register setters and getters (cut, copy and paste)
+    rule(:aborted_register) {
+      count.maybe >>
+      (str('"') >> match('\e')).as(:aborted_register)
+    }
     rule(:register) {
-      (str('"') >> match('[a-zA-Z0-9":.%#*+~_/-]').as(:reg))
+      count.maybe >>
+      str('"') >> match('[a-zA-Z0-9":.%#*+~_/-]').as(:reg)
     }
     rule(:put_command) {
-      count.maybe >>
-      register.maybe >>
+      (aborted_register | register).maybe >>
       count.maybe >>
       (
         match('[g\]\[]').maybe >>
