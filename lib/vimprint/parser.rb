@@ -80,20 +80,23 @@ module Vimprint
     }
 
     # Insertion
-    rule(:begin_insert) {
+    rule(:switch_to_insert) {
       count.maybe >>
       (
-        (
-          (aborted_register | register).maybe >>
-          count.maybe >>
-          match('[sSC]').as(:switch)
-        ) |
         match('[iIaAoO]').as(:switch) |
-        str('gi').as(:switch) |
+        str('gi').as(:switch)
+      )
+    }
+    rule(:change_to_insert) {
+      (aborted_register | register).maybe >>
+      count.maybe >>
+      (
+        match('[sSC]').as(:switch) |
         str('c').as(:operator) >> motion |
         str('cc').as(:operation_linewise)
       )
     }
+    rule(:begin_insert) { switch_to_insert | change_to_insert }
 
     rule(:insertion) {
       begin_insert >> type_into_document >> escape.maybe

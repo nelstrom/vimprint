@@ -323,4 +323,16 @@ describe Vimprint::Parser do
     end
   end
 
+  it 'matches ["x]c{motion}' do
+    tree = @parser.parse("\"acwhello\e").first
+    tree.keys.must_equal [:reg, :operator, :motion, :typing, :escape]
+    tree[:reg].must_equal "a"
+    tree[:operator].must_equal "c"
+  end
+
+  it 'matches ["x]cc' do
+    tree = @parser.parse("\"acchello\e").first
+    tree.keys.must_equal [:reg, :operation_linewise, :typing, :escape]
+  end
+
 end
