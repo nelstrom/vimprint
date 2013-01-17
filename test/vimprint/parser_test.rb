@@ -262,38 +262,37 @@ describe Vimprint::Parser do
     tree[:operation_linewise].must_equal "cc"
   end
 
-  it "matches an aborted register followed by p" do
-    tree = @parser.parse("\"\ep").first
-    tree.keys.must_equal [:aborted_register, :put]
-  end
-
-  %w{p P gp gP [p [P ]p ]P}.each do |paste|
-    it "matches naked paste command: #{paste}" do
-      tree = @parser.parse(paste).first
+  %w{p P gp gP [p [P ]p ]P}.each do |cmd|
+    it "matches naked cmd command: #{cmd}" do
+      tree = @parser.parse(cmd).first
       tree.keys.must_equal [:put]
-      tree[:put].must_equal paste
+      tree[:put].must_equal cmd
     end
-    it "matches paste command with count: 2#{paste}" do
-      tree = @parser.parse("2#{paste}").first
+    it "matches cmd command with count: 2#{cmd}" do
+      tree = @parser.parse("2#{cmd}").first
       tree.keys.must_equal [:count, :put]
       tree[:count].must_equal "2"
-      tree[:put].must_equal paste
+      tree[:put].must_equal cmd
+    end
+    it "matches an aborted register followed by #{cmd}" do
+      tree = @parser.parse("\"\e#{cmd}").first
+      tree.keys.must_equal [:aborted_register, :put]
+    end
+    it 'matches [count]["x]cmd' do
+      tree = @parser.parse("2\"a#{cmd}").first
+      tree.keys.must_equal [:count, :reg, :put]
+    end
+    it 'matches ["x][count]cmd' do
+      tree = @parser.parse("\"a2#{cmd}").first
+      tree.keys.must_equal [:reg, :count, :put]
     end
   end
   %w{a m z A M Z 0 1 9 " : . % # * + ~ _ / -}.each do |register|
-    it "matches paste command with a register: \"#{register}p" do
+    it "matches cmd command with a register: \"#{register}p" do
       tree = @parser.parse("\"#{register}p").first
       tree.keys.must_equal [:reg, :put]
       tree[:reg].must_equal register
     end
-  end
-  it 'matches [count]["x]paste' do
-    tree = @parser.parse('2"ap').first
-    tree.keys.must_equal [:count, :reg, :put]
-  end
-  it 'matches ["x][count]paste' do
-    tree = @parser.parse('"a2p').first
-    tree.keys.must_equal [:reg, :count, :put]
   end
 
   %w{x X}.each do |cut|
@@ -309,4 +308,5 @@ describe Vimprint::Parser do
       tree[:cut].must_equal cut
     end
   end
+
 end

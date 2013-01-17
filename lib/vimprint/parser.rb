@@ -59,6 +59,7 @@ module Vimprint
       )
       .as(:cut)
     }
+    rule(:reg_accessor) { cut_command | put_command }
 
     # Operators
     rule(:operator) {
@@ -118,7 +119,7 @@ module Vimprint
     rule(:ex_command) { (run_ex_cmd | abort_ex_cmd | part_ex_cmd) }
 
     rule(:normal) {
-      (insertion | ex_command | motion | put_command | cut_command | operation | aborted_cmd | unfinished_distroke).repeat
+      (insertion | ex_command | motion | reg_accessor | operation | aborted_cmd | unfinished_distroke).repeat
     }
     root(:normal)
   end
