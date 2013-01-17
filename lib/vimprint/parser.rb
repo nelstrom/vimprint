@@ -83,7 +83,12 @@ module Vimprint
     rule(:begin_insert) {
       count.maybe >>
       (
-        match('[iIaAoOsSC]').as(:switch) |
+        (
+          (aborted_register | register).maybe >>
+          count.maybe >>
+          match('[sSC]').as(:switch)
+        ) |
+        match('[iIaAoO]').as(:switch) |
         str('gi').as(:switch) |
         str('c').as(:operator) >> motion |
         str('cc').as(:operation_linewise)

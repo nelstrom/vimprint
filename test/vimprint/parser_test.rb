@@ -309,4 +309,18 @@ describe Vimprint::Parser do
     end
   end
 
+  %w{s S C}.each do |change|
+    it "matches naked change command: #{change}" do
+      tree = @parser.parse("#{change}hello\e").first
+      tree.keys.must_equal [:switch, :typing, :escape]
+      tree[:switch].must_equal change
+    end
+    it "matches change command with count: 2#{change}" do
+      tree = @parser.parse("2#{change}hello\e").first
+      tree.keys.must_equal [:count, :switch, :typing, :escape]
+      tree[:count].must_equal "2"
+      tree[:switch].must_equal change
+    end
+  end
+
 end
