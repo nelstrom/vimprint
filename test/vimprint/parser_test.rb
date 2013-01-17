@@ -296,4 +296,17 @@ describe Vimprint::Parser do
     tree.keys.must_equal [:reg, :count, :put]
   end
 
+  %w{x X}.each do |cut|
+    it "matches naked cut command: #{cut}" do
+      tree = @parser.parse(cut).first
+      tree.keys.must_equal [:cut]
+      tree[:cut].must_equal cut
+    end
+    it "matches cut command with count: 2#{cut}" do
+      tree = @parser.parse("2#{cut}").first
+      tree.keys.must_equal [:count, :cut]
+      tree[:count].must_equal "2"
+      tree[:cut].must_equal cut
+    end
+  end
 end
