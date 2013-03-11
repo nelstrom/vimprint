@@ -16,6 +16,30 @@ describe Vimprint::Parser do
     end
   end
 
+  it "matches 2 character hexadecimal insertion" do
+    tree = @parser.parse("i\cvo276\e").first
+    tree.keys.must_equal [:switch, :symbol, :escape]
+    tree[:symbol].must_equal "\cvo276"
+  end
+
+  it "matches 3 character octal insertion" do
+    tree = @parser.parse("i\cvo276\e").first
+    tree.keys.must_equal [:switch, :symbol, :escape]
+    tree[:symbol].must_equal "\cvo276"
+  end
+
+  it "matches 4 character unicode insertion" do
+    tree = @parser.parse("i\cvu2764\e").first
+    tree.keys.must_equal [:switch, :symbol, :escape]
+    tree[:symbol].must_equal "\cvu2764"
+  end
+
+  it "matches 8 character unicode insertion" do
+    tree = @parser.parse("i\cvU27642764\e").first
+    tree.keys.must_equal [:switch, :symbol, :escape]
+    tree[:symbol].must_equal "\cvU27642764"
+  end
+
   it "matches text insertion initiated with gi switch" do
     tree = @parser.parse("giHello, World!\e").first
     tree.keys.must_equal [:switch, :typing, :escape]

@@ -98,8 +98,27 @@ module Vimprint
     }
     rule(:begin_insert) { switch_to_insert | change_to_insert }
 
+    rule(:decimal) { match('\d') }
+    rule(:hexadecimal) { match('[0-9a-fA-F]') }
+    rule(:octal) { match('[0-7]') }
+    rule(:symbol_insert) {
+      match('\cv') >>
+      (
+        (match('[xX]') >> hexadecimal.repeat(2,2)) |
+        (match('[oO]') >> octal.repeat(3,3)) |
+        (str('u') >> hexadecimal.repeat(4,4)) |
+        (str('U') >> hexadecimal.repeat(8,8)) |
+        (decimal.repeat(3,3))
+      )
+    }
+
     rule(:insertion) {
-      begin_insert >> type_into_document >> escape.maybe
+      begin_insert >>
+      (
+        symbol_insert.as(:symbol) |
+        match('[^\e]').repeat.as(:typing)
+      ) >>
+      escape.maybe
     }
 
     # Catch aborted 2-keystroke commands (a.k.a. 'distrokes')
