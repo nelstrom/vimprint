@@ -1,3 +1,4 @@
 #!/usr/bin/env ruby
 
 system 'ragel -R lib/ragel/vim_parser.rl'
+system 'ragel -R lib/ragel/insert_parser.rl'
