@@ -1,5 +1,5 @@
-require 'minitest/autorun'
-require_relative '../../lib/ragel/insert_parser'
+require_relative '../helper'
+require_compiled_ragel '../../lib/ragel/insert_parser'
 require_relative '../../lib/vimprint/event_list'
 
 describe InsertParser do
