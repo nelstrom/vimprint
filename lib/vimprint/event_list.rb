@@ -28,6 +28,9 @@ end
 class Switch < BaseCommand
 end
 
+class Prompt < BaseCommand
+end
+
 class InputRegister < BaseCommand
 end
 

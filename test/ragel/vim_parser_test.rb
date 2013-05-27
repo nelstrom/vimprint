@@ -38,4 +38,21 @@ describe VimParser do
     ]
   end
 
+  it 'parses : as a prompt' do
+    scan("hj:write\r")
+    @events.root.must_equal NormalMode[
+      Motion.new('h'),
+      Motion.new('j'),
+      Prompt.new(':'),
+      CmdlineMode[
+        Input.new('w'),
+        Input.new('r'),
+        Input.new('i'),
+        Input.new('t'),
+        Input.new('e'),
+        Terminator.new("\r")
+      ]
+    ]
+  end
+
 end
