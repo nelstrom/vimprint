@@ -24,7 +24,7 @@ describe VimParser do
     ]
   end
 
-  it 'parses i as a switch' do
+  it 'parses i as a switch to InsertMode' do
     scan("hjihi\e")
     @events.root.must_equal NormalMode[
       Motion.new('h'),
@@ -38,7 +38,7 @@ describe VimParser do
     ]
   end
 
-  it 'parses : as a prompt' do
+  it 'parses : as a switch to CmdlineMode' do
     scan("hj:write\r")
     @events.root.must_equal NormalMode[
       Motion.new('h'),
