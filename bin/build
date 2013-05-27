@@ -1,3 +1,3 @@
 #!/usr/bin/env ruby
 
-system 'ragel -R -o lib/vimprint/vim_parser.rb lib/ragel/vim_parser.rl'
+system 'ragel -R lib/ragel/vim_parser.rl'
