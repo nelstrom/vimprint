@@ -1,3 +1,5 @@
+require_relative 'event_list'
+
 %%{
   machine vim_parser;
   include characters "characters.rl";
@@ -7,7 +9,7 @@
   action EmitSwitch {
     @listener << Switch.new(strokes)
     @listener << InsertMode.new
-    fcall insert
+    fcall insert;
   }
 
   motion = ([hjklbwe0] | 'gj' | 'gk') >H@T @EmitMotion;
