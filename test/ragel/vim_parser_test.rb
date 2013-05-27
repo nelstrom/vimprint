@@ -1,5 +1,6 @@
 require 'minitest/autorun'
-require_relative '../../lib/vimprint/vim_parser'
+require_relative '../../lib/ragel/vim_parser'
+require_relative '../../lib/vimprint/event_list'
 
 describe VimParser do
 

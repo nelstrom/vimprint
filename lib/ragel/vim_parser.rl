@@ -1,5 +1,3 @@
-require_relative 'event_list'
-
 %%{
   machine vim_parser;
   include characters "characters.rl";
