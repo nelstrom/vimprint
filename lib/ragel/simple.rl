@@ -1,14 +1,12 @@
 %%{
   machine vim_print;
-  action H { @head = p }
-  action T { @tail = p }
   action return { fret; }
   action push_insert_mode { fcall insert_mode; }
 
-  escape = 27 >H@T;
-  input = (any - escape) >H@T;
-  motion = [hjklbwe0] >H@T;
-  switch = [iIaAsSoO] >H@T;
+  escape = 27;
+  input = (any - escape);
+  motion = [hjklbwe0];
+  switch = [iIaAsSoO];
 
   insert_mode  := (
     input*
@@ -24,7 +22,7 @@
 
 class VimParser
 
-  attr_accessor :head, :tail, :data
+  attr_accessor :data
 
   def initialize(listener)
     @listener = listener
@@ -39,11 +37,6 @@ class VimParser
     %% write exec;
   end
 
-  def strokes
-    @data[@head..@tail].pack('c*')
-  end
-
 end
 
-vi = VimParser.new([])
-vi.process("ihello\e")
+VimParser.new([]).process("ihello\e")
