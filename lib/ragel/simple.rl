@@ -1,19 +1,21 @@
 %%{
   machine vim_print;
+  action H { @head = p }
+  action T { @tail = p }
 
-  escape = 27;
-  input = (any - escape);
-  motion = [hjklbwe0];
-  switch = [iIaAsSoO];
+  escape = 27 >H@T;
+  input = (any - escape) >H@T;
+  motion = [hjklbwe0] >H@T;
+  switch = [iIaAsSoO] >H@T;
 
-  insert  := (
+  insert_mode  := (
     input*
-    escape
+    escape @{ fret; }
   );
 
-  normal  := (
+  normal_mode  := (
     motion |
-    switch
+    switch @{ fcall insert_mode; }
   )*;
 
 }%%
