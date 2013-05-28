@@ -46,4 +46,4 @@ class VimParser
 end
 
 vi = VimParser.new([])
-puts vi.process("ihello\e")
+vi.process("ihello\e")
