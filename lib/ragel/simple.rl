@@ -2,6 +2,8 @@
   machine vim_print;
   action H { @head = p }
   action T { @tail = p }
+  action return { fret; }
+  action push_insert_mode { fcall insert_mode; }
 
   escape = 27 >H@T;
   input = (any - escape) >H@T;
@@ -10,12 +12,12 @@
 
   insert_mode  := (
     input*
-    escape @{ fret; }
+    escape @return
   );
 
   normal_mode  := (
     motion |
-    switch @{ fcall insert_mode; }
+    switch @push_insert_mode
   )*;
 
 }%%
