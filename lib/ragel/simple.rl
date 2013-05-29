@@ -52,3 +52,13 @@ end
 
 VimParser.new(recorder = []).process("helihello\e")
 puts recorder
+# {:motion=>"h"}
+# {:motion=>"e"}
+# {:motion=>"l"}
+# {:switch=>"i"}
+# {:input=>"h"}
+# {:input=>"e"}
+# {:input=>"l"}
+# {:input=>"l"}
+# {:input=>"o"}
+# {:escape=>"<Esc>"}
