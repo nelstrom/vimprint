@@ -28,6 +28,17 @@ module Vimprint
         tree.root.must_equal ['a','b']
       end
 
+      it 'appends to the top-most entry point' do
+        tree = CommandTree.new
+        tree << 'a'
+        tree.push_mode
+        tree << 'b'
+        tree << 'c'
+        tree.pop_mode
+        tree << 'd'
+        tree.root.must_equal ['a',['b','c'],'d']
+      end
+
     end
 
   end
