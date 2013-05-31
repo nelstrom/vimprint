@@ -62,9 +62,10 @@ module Vimprint
         @tree.<<('b')
         @tree.push_mode
         @tree.<<('c'.extend Vimprint::ModeCloser)
-        @tree.<<('d'.extend Vimprint::ModeCloser)
-        @tree.<<('e')
-        @tree.root.must_equal ['a',['b', ['c'], 'd'], 'e']
+        @tree.<<('d')
+        @tree.<<('e'.extend Vimprint::ModeCloser)
+        @tree.<<('f')
+        @tree.root.must_equal ['a',['b', ['c'], 'd', 'e'], 'f']
       end
 
       it 'appends ModalCommands to the current entry_point'
