@@ -23,8 +23,6 @@ module Vimprint
 
       before do
         @tree = CommandTree.new
-        @a = ['a']
-        @b = ['b']
       end
 
       it 'appends to the root-level entry point' do
@@ -44,14 +42,26 @@ module Vimprint
       end
 
       it 'pushes a new mode when receiving a ModeOpener' do
-        @a.extend Vimprint::ModeOpener
-        @b.extend Vimprint::ModeOpener
-        @tree << @a
-        @tree << @b
+        a = ['a'].extend Vimprint::ModeOpener
+        b = ['b'].extend Vimprint::ModeOpener
+        @tree << a
+        @tree << b
         @tree.root.must_equal [['a',['b']]]
       end
 
-      it 'pops the top-most entry_point when receiving a ModeCloser'
+      it 'pops the top-most entry_point when receiving a ModeCloser' do
+        c = 'c'.extend Vimprint::ModeCloser
+        d = 'd'.extend Vimprint::ModeCloser
+        @tree.push_mode
+        @tree << 'a'
+        @tree.push_mode
+        @tree << 'b'
+        @tree << c
+        @tree << d
+        @tree << 'e'
+        @tree.root.must_equal [['a',['b', 'c'], 'd'], 'e']
+      end
+
       it 'appends ModalCommands to the current entry_point'
     end
 
