@@ -9,5 +9,10 @@ module Vimprint
     def entry_point
       root
     end
+
+    def << (item)
+      root << item
+    end
+
   end
 end

@@ -19,5 +19,16 @@ module Vimprint
 
     end
 
+    describe '#<<' do
+
+      it 'appends to the root-level entry point' do
+        tree = CommandTree.new
+        tree << 'a'
+        tree << 'b'
+        tree.root.must_equal ['a','b']
+      end
+
+    end
+
   end
 end
