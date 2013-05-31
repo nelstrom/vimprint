@@ -21,25 +21,40 @@ module Vimprint
 
     describe '#<<' do
 
+      before do
+        @tree = CommandTree.new
+        @a = ['a']
+        @b = ['b']
+      end
+
       it 'appends to the root-level entry point' do
-        tree = CommandTree.new
-        tree << 'a'
-        tree << 'b'
-        tree.root.must_equal ['a','b']
+        @tree << 'a'
+        @tree << 'b'
+        @tree.root.must_equal ['a','b']
       end
 
       it 'appends to the top-most entry point' do
-        tree = CommandTree.new
-        tree << 'a'
-        tree.push_mode
-        tree << 'b'
-        tree << 'c'
-        tree.pop_mode
-        tree << 'd'
-        tree.root.must_equal ['a',['b','c'],'d']
+        @tree << 'a'
+        @tree.push_mode
+        @tree << 'b'
+        @tree << 'c'
+        @tree.pop_mode
+        @tree << 'd'
+        @tree.root.must_equal ['a',['b','c'],'d']
       end
 
+      it 'pushes a new mode when receiving a ModeOpener' do
+        @a.extend Vimprint::ModeOpener
+        @b.extend Vimprint::ModeOpener
+        @tree << @a
+        @tree << @b
+        @tree.root.must_equal [['a',['b']]]
+      end
+
+      it 'pops the top-most entry_point when receiving a ModeCloser'
+      it 'appends ModalCommands to the current entry_point'
     end
+
 
   end
 end

@@ -1,6 +1,20 @@
 module Vimprint
+
+  module ModeOpener
+    def add_to(list, modestack)
+      list << self
+      modestack << self
+    end
+  end
+
+  module ModalCommand
+  end
+
+  module ModeCloser
+  end
+
   class CommandTree
-    attr_reader :root
+    attr_reader :root, :stack
 
     def initialize(root=[])
       @root = root
@@ -12,7 +26,11 @@ module Vimprint
     end
 
     def << (item)
-      entry_point << item
+      if item.respond_to?(:add_to)
+        item.add_to(self.entry_point, self.stack)
+      else
+        entry_point << item
+      end
     end
 
     def push_mode(mode=[])
