@@ -11,6 +11,10 @@ module Vimprint
   end
 
   module ModeCloser
+    def add_to(list, modestack)
+      list << self
+      modestack.pop
+    end
   end
 
   class CommandTree

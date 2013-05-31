@@ -50,16 +50,12 @@ module Vimprint
       end
 
       it 'pops the top-most entry_point when receiving a ModeCloser' do
-        c = 'c'.extend Vimprint::ModeCloser
-        d = 'd'.extend Vimprint::ModeCloser
+        @tree.<<('a')
         @tree.push_mode
-        @tree << 'a'
-        @tree.push_mode
-        @tree << 'b'
-        @tree << c
-        @tree << d
-        @tree << 'e'
-        @tree.root.must_equal [['a',['b', 'c'], 'd'], 'e']
+        @tree.<<('b')
+        @tree.<<('c'.extend Vimprint::ModeCloser)
+        @tree.<<('d')
+        @tree.root.must_equal ['a',['b', 'c'], 'd']
       end
 
       it 'appends ModalCommands to the current entry_point'
