@@ -38,8 +38,8 @@ module Vimprint
     end
 
     def push_mode(mode=[])
+      entry_point.push(mode)
       @stack.push(mode)
-      @root.push(mode)
     end
 
     def pop_mode()

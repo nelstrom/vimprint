@@ -62,7 +62,7 @@ module Vimprint
         @tree.<<('b')
         @tree.push_mode
         @tree.<<('c'.extend Vimprint::ModeCloser)
-        @tree.<<('d')
+        @tree.<<('d'.extend Vimprint::ModeCloser)
         @tree.<<('e')
         @tree.root.must_equal ['a',['b', ['c'], 'd'], 'e']
       end
