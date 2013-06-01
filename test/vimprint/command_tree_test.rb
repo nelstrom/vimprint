@@ -68,19 +68,6 @@ module Vimprint
         @tree.root.must_equal ['a',['b', ['c'], 'd', 'e'], 'f']
       end
 
-      it 'appends ModalCommands to the current entry_point' do
-        @tree.<<('a'.extend Vimprint::ModalCommand)
-        @tree.push_mode
-        @tree.<<('b'.extend Vimprint::ModalCommand)
-        @tree.push_mode
-        @tree.<<('c'.extend Vimprint::ModalCommand)
-        @tree.pop_mode
-        @tree.<<('d'.extend Vimprint::ModalCommand)
-        @tree.<<('e'.extend Vimprint::ModalCommand)
-        @tree.pop_mode
-        @tree.<<('f'.extend Vimprint::ModalCommand)
-        @tree.root.must_equal ['a',['b', ['c'], 'd', 'e'], 'f']
-      end
     end
 
 

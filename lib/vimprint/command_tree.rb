@@ -1,14 +1,14 @@
+class Object
+  def add_to(command_tree)
+    command_tree.push_command(self)
+  end
+end
+
 module Vimprint
 
   module ModeOpener
     def add_to(command_tree)
       command_tree.push_mode(self)
-    end
-  end
-
-  module ModalCommand
-    def add_to(command_tree)
-      command_tree.push_command(self)
     end
   end
 
@@ -32,11 +32,7 @@ module Vimprint
     end
 
     def <<(item)
-      if item.respond_to?(:add_to)
-        item.add_to(self)
-      else
-        push_command(item)
-      end
+      item.add_to(self)
     end
 
     def push_mode(mode=[])
