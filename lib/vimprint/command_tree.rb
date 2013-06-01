@@ -8,6 +8,9 @@ module Vimprint
   end
 
   module ModalCommand
+    def add_to(list, modestack)
+      list << self
+    end
   end
 
   module ModeCloser
