@@ -1,22 +1,21 @@
 module Vimprint
 
   module ModeOpener
-    def add_to(list, modestack)
-      list << self
-      modestack << self
+    def add_to(command_tree)
+      command_tree.push_mode(self)
     end
   end
 
   module ModalCommand
-    def add_to(list, modestack)
-      list << self
+    def add_to(command_tree)
+      command_tree.entry_point << self
     end
   end
 
   module ModeCloser
-    def add_to(list, modestack)
-      list << self
-      modestack.pop
+    def add_to(command_tree)
+      command_tree.entry_point << self
+      command_tree.pop_mode
     end
   end
 
@@ -34,7 +33,7 @@ module Vimprint
 
     def << (item)
       if item.respond_to?(:add_to)
-        item.add_to(self.entry_point, self.stack)
+        item.add_to(self)
       else
         entry_point << item
       end
