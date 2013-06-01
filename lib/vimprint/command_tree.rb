@@ -31,11 +31,11 @@ module Vimprint
       @stack.last
     end
 
-    def << (item)
+    def <<(item)
       if item.respond_to?(:add_to)
         item.add_to(self)
       else
-        entry_point << item
+        push_command(item)
       end
     end
 
