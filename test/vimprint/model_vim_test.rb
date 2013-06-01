@@ -74,4 +74,22 @@ class ModelVimTest < MiniTest::Unit::TestCase
     assert_equal formatter.print, "h - move 1 character to the left\nj - move 1 line down"
   end
 
+  def test_explain_the_u_command
+    normal = NormalMode[
+      NormalCommand.new('u')
+    ]
+    formatter = ExplainFormatter.new(normal)
+    assert_equal formatter.print, "u - undo the last change"
+  end
+
+  def test_explain_the_visual_u_operator
+    normal = NormalMode[
+      VisualMode[
+        VisualOperation.new('u')
+      ]
+    ]
+    formatter = ExplainFormatter.new(normal)
+    assert_equal formatter.print, "u - downcase the selected text"
+  end
+
 end

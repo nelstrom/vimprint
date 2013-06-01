@@ -24,6 +24,11 @@ class NormalMode < Array
     map(&:plain_print).join
   end
 end
+class VisualMode < Array
+  def explain
+    map(&:explain).join("\n")
+  end
+end
 class InsertMode < Array
   def plain_print
     map(&:plain_print).join
@@ -31,11 +36,17 @@ class InsertMode < Array
 end
 
 class Dictionary
-  def self.lookup(keystroke)
+  def self.lookup(keystroke, mode=:normal)
     {
-      'h' => "move 1 character to the left",
-      'j' => "move 1 line down"
-    }[keystroke]
+      :normal => {
+        'h' => "move 1 character to the left",
+        'j' => "move 1 line down",
+        'u' => "undo the last change",
+      },
+      :visual => {
+        'u' => "downcase the selected text",
+      }
+    }[mode][keystroke]
   end
 end
 
@@ -63,6 +74,18 @@ end
 Terminator = Struct.new(:keystroke) do
   def plain_print
     "}\n"
+  end
+end
+
+NormalCommand = Struct.new(:keystroke) do
+  def explain
+    "#{keystroke} - #{Dictionary.lookup(keystroke)}"
+  end
+end
+
+VisualOperation = Struct.new(:keystroke) do
+  def explain
+    "#{keystroke} - #{Dictionary.lookup(keystroke, :visual)}"
   end
 end
 
