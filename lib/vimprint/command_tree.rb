@@ -8,13 +8,13 @@ module Vimprint
 
   module ModalCommand
     def add_to(command_tree)
-      command_tree.entry_point << self
+      command_tree.push_command(self)
     end
   end
 
   module ModeCloser
     def add_to(command_tree)
-      command_tree.entry_point << self
+      command_tree.push_command(self)
       command_tree.pop_mode
     end
   end
@@ -40,12 +40,16 @@ module Vimprint
     end
 
     def push_mode(mode=[])
-      entry_point.push(mode)
+      push_command(mode)
       @stack.push(mode)
     end
 
     def pop_mode()
       @stack.pop
+    end
+
+    def push_command(command)
+      entry_point.push(command)
     end
 
   end
