@@ -36,23 +36,29 @@ class InsertMode < Array
 end
 
 class Dictionary
-  def self.lookup(keystroke, mode=:normal)
+  SINGULAR = 0
+  PLURAL   = 1
+
+  def self.lookup(keystroke, mode=:normal, count=1)
+    count ||=1
+    plurality = (count == 1) ? SINGULAR : PLURAL
+
     {
       :normal => {
-        'h' => "move 1 character to the left",
-        'j' => "move 1 line down",
-        'u' => "undo the last change",
+        'h' => ["move 1 character to the left"],
+        'j' => ['move 1 line down', "move #{count} lines down"],
+        'u' => ["undo the last change"],
       },
       :visual => {
-        'u' => "downcase the selected text",
+        'u' => ["downcase the selected text"],
       }
-    }[mode][keystroke]
+    }[mode][keystroke][plurality]
   end
 end
 
-Motion = Struct.new(:keystroke) do
+Motion = Struct.new(:keystroke, :count) do
   def explain
-    "#{keystroke} - #{Dictionary.lookup(keystroke)}"
+    "#{count}#{keystroke} - #{Dictionary.lookup(keystroke, :normal, count)}"
   end
   def plain_print
     "#{keystroke} "

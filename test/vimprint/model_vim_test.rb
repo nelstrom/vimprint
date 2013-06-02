@@ -92,4 +92,12 @@ class ModelVimTest < MiniTest::Unit::TestCase
     assert_equal formatter.print, "u - downcase the selected text"
   end
 
+  def test_explain_a_motion_with_count
+    normal = NormalMode[
+      Motion.new('j', 3)
+    ]
+    formatter = ExplainFormatter.new(normal)
+    assert_equal formatter.print, "3j - move 3 lines down"
+  end
+
 end
