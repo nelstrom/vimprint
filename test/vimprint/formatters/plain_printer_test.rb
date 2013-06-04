@@ -1,6 +1,5 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/vimprint/model_vim'
 require './lib/vimprint/formatters/plain_printer'
 
 module Vimprint
