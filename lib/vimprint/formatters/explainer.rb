@@ -1,3 +1,5 @@
+require_relative '../model_vim'
+require_relative 'plain_printer'
 module Vimprint
 
   class ExplainFormatter < Formatter
@@ -26,6 +28,36 @@ module Vimprint
       }[mode][keystroke][plurality]
     end
 
+  end
+
+  class NormalMode
+    def explain
+      map(&:explain).join("\n")
+    end
+  end
+
+  class VisualMode
+    def explain
+      map(&:explain).join("\n")
+    end
+  end
+
+  class Motion
+    def explain
+      "#{count}#{keystroke} - #{Dictionary.lookup(keystroke, :normal, count)}"
+    end
+  end
+
+  class NormalCommand
+    def explain
+      "#{keystroke} - #{Dictionary.lookup(keystroke)}"
+    end
+  end
+
+  class VisualOperation
+    def explain
+      "#{keystroke} - #{Dictionary.lookup(keystroke, :visual)}"
+    end
   end
 
 end
