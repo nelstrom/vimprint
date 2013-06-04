@@ -28,34 +28,34 @@ module Vimprint
     end
   end
 
-  Motion = Struct.new(:keystroke, :count) do
+  class Motion
     def plain_print
       "#{keystroke} "
     end
   end
 
-  Switch  = Struct.new(:keystroke) do
+  class Switch
     def plain_print
       "\n#{keystroke}{"
     end
   end
 
-  Input  = Struct.new(:keystroke) do
+  class Input
     def plain_print
       keystroke
     end
   end
 
-  Terminator = Struct.new(:keystroke) do
+  class Terminator
     def plain_print
       "}\n"
     end
   end
 
-  NormalCommand = Struct.new(:keystroke) do
+  class NormalCommand
   end
 
-  VisualOperation = Struct.new(:keystroke) do
+  class VisualOperation
   end
 
 end

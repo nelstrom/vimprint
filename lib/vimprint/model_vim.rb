@@ -15,28 +15,28 @@ module Vimprint
   class InsertMode < Array
   end
 
-  Motion = Struct.new(:keystroke, :count) do
+  class Motion < Struct.new(:keystroke, :count)
     def explain
       "#{count}#{keystroke} - #{Dictionary.lookup(keystroke, :normal, count)}"
     end
   end
 
-  Switch  = Struct.new(:keystroke) do
+  class Switch  < Struct.new(:keystroke)
   end
 
-  Input  = Struct.new(:keystroke) do
+  class Input  < Struct.new(:keystroke)
   end
 
-  Terminator = Struct.new(:keystroke) do
+  class Terminator < Struct.new(:keystroke)
   end
 
-  NormalCommand = Struct.new(:keystroke) do
+  class NormalCommand < Struct.new(:keystroke)
     def explain
       "#{keystroke} - #{Dictionary.lookup(keystroke)}"
     end
   end
 
-  VisualOperation = Struct.new(:keystroke) do
+  class VisualOperation < Struct.new(:keystroke)
     def explain
       "#{keystroke} - #{Dictionary.lookup(keystroke, :visual)}"
     end
