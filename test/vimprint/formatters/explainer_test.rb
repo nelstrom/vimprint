@@ -12,7 +12,7 @@ module Vimprint
         Motion.new('j'),
       ]
       formatter = ExplainFormatter.new(normal)
-      assert_equal formatter.print, "h - move 1 character to the left\nj - move 1 line down"
+      assert_equal "h - move 1 character to the left\nj - move 1 line down", formatter.print
     end
 
     def test_explain_the_u_command
@@ -20,7 +20,7 @@ module Vimprint
         NormalCommand.new('u')
       ]
       formatter = ExplainFormatter.new(normal)
-      assert_equal formatter.print, "u - undo the last change"
+      assert_equal "u - undo the last change", formatter.print
     end
 
     def test_explain_the_visual_u_operator
@@ -30,7 +30,7 @@ module Vimprint
         ]
       ]
       formatter = ExplainFormatter.new(normal)
-      assert_equal formatter.print, "u - downcase the selected text"
+      assert_equal "u - downcase the selected text", formatter.print
     end
 
     def test_explain_a_motion_with_count
@@ -38,7 +38,7 @@ module Vimprint
         Motion.new('j', 3)
       ]
       formatter = ExplainFormatter.new(normal)
-      assert_equal formatter.print, "3j - move 3 lines down"
+      assert_equal "3j - move 3 lines down", formatter.print
     end
 
   end

@@ -14,7 +14,7 @@ module Vimprint
         Motion.new('l'),
       ]
       formatter = Formatter.new(normal)
-      assert_equal formatter.print, "h j k l "
+      assert_equal "h j k l ", formatter.print
     end
 
     def test_insert_mode_prints_each_member
@@ -26,7 +26,7 @@ module Vimprint
         Input.new('o'),
       ]
       formatter = Formatter.new(insertion)
-      assert_equal formatter.print, "hello"
+      assert_equal "hello", formatter.print
     end
 
     def test_switching_from_normal_to_insert_mode_and_back_again
@@ -44,7 +44,7 @@ module Vimprint
           Motion.new('l')
       ]
       formatter = Formatter.new(normal)
-      assert_equal formatter.print, "h \ni{hello}\nl "
+      assert_equal "h \ni{hello}\nl ", formatter.print
     end
 
     def test_switching_from_normal_mode_to_insert_mode_to_normal_mode
@@ -64,7 +64,7 @@ module Vimprint
           Motion.new('l')
       ]
       formatter = Formatter.new(normal)
-      assert_equal formatter.print, "h \ni{hello}\nl "
+      assert_equal "h \ni{hello}\nl ", formatter.print
     end
 
   end
