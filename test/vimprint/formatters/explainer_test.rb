@@ -23,7 +23,6 @@ module Vimprint
         Motion.new('e', 5),
         Motion.new('0'),
       ]
-      formatter = ExplainFormatter.new(normal)
       explanations = [
         "h - move left 1 character",
         "5h - move left 5 characters",
@@ -41,6 +40,18 @@ module Vimprint
         "5e - move to end of current/next word 5 times",
         "0 - move to start of current line",
       ]
+      formatter = ExplainFormatter.new(normal)
+      assert_equal explanations.join("\n"), formatter.print
+    end
+
+    def test_explain_simple_switches
+      normal = NormalMode[
+        Switch.new('i'),
+      ]
+      explanations = [
+        "i - insert in front of cursor",
+      ]
+      formatter = ExplainFormatter.new(normal)
       assert_equal explanations.join("\n"), formatter.print
     end
 

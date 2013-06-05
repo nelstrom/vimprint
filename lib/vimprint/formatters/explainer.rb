@@ -28,7 +28,7 @@ module Vimprint
           'e' => ["move to end of current/next word","move to end of current/next word #{count} times"],
           '0' => ["move to start of current line"],
           # switches
-          'i' => [],
+          'i' => ["insert in front of cursor"],
           'I' => [],
           'a' => [],
           'A' => [],
@@ -62,6 +62,12 @@ module Vimprint
   class Motion
     def explain
       "#{count}#{keystroke} - #{Dictionary.lookup(keystroke, :normal, count)}"
+    end
+  end
+
+  class Switch
+    def explain
+      "#{keystroke} - #{Dictionary.lookup(keystroke, :normal)}"
     end
   end
 
