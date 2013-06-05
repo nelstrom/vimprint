@@ -127,4 +127,10 @@ module Vimprint
     end
   end
 
+  class AbortedCommand
+    def explain
+      "#{raw_keystrokes} - [aborted command]"
+    end
+  end
+
 end

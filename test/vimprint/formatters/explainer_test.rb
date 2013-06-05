@@ -101,5 +101,13 @@ module Vimprint
       assert_equal "u - downcase the selected text", formatter.print
     end
 
+    def test_explain_an_aborted_command
+      normal = NormalMode[
+        AbortedCommand.new("2\e")
+      ]
+      formatter = ExplainFormatter.new(normal)
+      assert_equal "2\e - [aborted command]", formatter.print
+    end
+
   end
 end

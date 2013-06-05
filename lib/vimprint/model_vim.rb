@@ -1,22 +1,18 @@
 module Vimprint
 
+  # MODES
   class NormalMode < Array; end
-
   class VisualMode < Array; end
-
   class InsertMode < Array; end
 
+  # COMMANDS
   class Motion < Struct.new(:keystroke, :count); end
-
   class Switch < Struct.new(:keystroke, :count); end
-
   class Input < Struct.new(:keystroke); end
-
   class Terminator < Struct.new(:keystroke); end
-
   class NormalCommand < Struct.new(:keystroke); end
-
   class VisualOperation < Struct.new(:keystroke); end
+  class AbortedCommand < Struct.new(:raw_keystrokes); end
 
 end
 
