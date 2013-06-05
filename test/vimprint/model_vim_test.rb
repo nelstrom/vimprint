@@ -9,11 +9,10 @@ module Vimprint
 
       def test_stage_accumulates_raw_keystrokes
         stage = Stage.new
-        stage.add_count     3
         stage.add_register 'a'
         stage.add_count     4
         stage.add_trigger  'x'
-        assert_equal '3"a4x', stage.raw_keystrokes
+        assert_equal '"a4x', stage.raw_keystrokes
       end
 
       def test_counts_are_multiplied
@@ -32,6 +31,7 @@ module Vimprint
         stage.add_motion 'l'
         assert_equal "a", stage.register
         assert_equal 24, stage.effective_count
+        assert_equal '2"a3d4l', stage.raw_keystrokes
       end
 
       def test_register_is_overwritten
@@ -50,6 +50,7 @@ module Vimprint
         stage.add_trigger  'x'
         assert_equal "b", stage.register
         assert_equal 6, stage.effective_count
+        assert_equal '3"a2"bx', stage.raw_keystrokes
       end
 
     end
