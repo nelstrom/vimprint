@@ -8,9 +8,13 @@ module Vimprint
     def test_explain_simple_motions
       normal = NormalMode[
         Motion.new('h'),
+        Motion.new('h', 5),
         Motion.new('j'),
+        Motion.new('j', 5),
         Motion.new('k'),
+        Motion.new('k', 5),
         Motion.new('l'),
+        Motion.new('l', 5),
         Motion.new('b'),
         Motion.new('w'),
         Motion.new('e'),
@@ -19,9 +23,13 @@ module Vimprint
       formatter = ExplainFormatter.new(normal)
       explanations = [
         "h - move left 1 character",
+        "5h - move left 5 characters",
         "j - move down 1 line",
+        "5j - move down 5 lines",
         "k - move up 1 line",
+        "5k - move up 5 lines",
         "l - move right 1 character",
+        "5l - move right 5 characters",
         "b - move to start of current/previous word",
         "w - move to start of next word",
         "e - move to end of current/next word",
