@@ -47,9 +47,23 @@ module Vimprint
     def test_explain_simple_switches
       normal = NormalMode[
         Switch.new('i'),
+        Switch.new('I'),
+        Switch.new('a'),
+        Switch.new('A'),
+        Switch.new('s'),
+        Switch.new('S'),
+        Switch.new('o'),
+        Switch.new('O'),
       ]
       explanations = [
         "i - insert in front of cursor",
+        "I - insert at start of line",
+        "a - append after the cursor",
+        "A - append at end of line",
+        "s - delete current character and switch to insert mode",
+        "S - delete current line and switch to insert mode",
+        "o - open a new line below the current line, switch to insert mode",
+        "O - open a new line above the current line, switch to insert mode",
       ]
       formatter = ExplainFormatter.new(normal)
       assert_equal explanations.join("\n"), formatter.print
