@@ -14,6 +14,12 @@ module Vimprint
   class VisualOperation < Struct.new(:keystroke); end
   class AbortedCommand < Struct.new(:raw_keystrokes); end
 
+  module CommandBuilder
+    def build(stage)
+      new(stage.trigger)
+    end
+  end
+
   class Stage < Struct.new(:trigger, :register)
 
     attr_reader :register, :trigger, :operator, :motion
