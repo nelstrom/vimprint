@@ -16,8 +16,11 @@ module Vimprint
         Motion.new('l'),
         Motion.new('l', 5),
         Motion.new('b'),
+        Motion.new('b', 5),
         Motion.new('w'),
+        Motion.new('w', 5),
         Motion.new('e'),
+        Motion.new('e', 5),
         Motion.new('0'),
       ]
       formatter = ExplainFormatter.new(normal)
@@ -31,8 +34,11 @@ module Vimprint
         "l - move right 1 character",
         "5l - move right 5 characters",
         "b - move to start of current/previous word",
+        "5b - move to start of current/previous word 5 times",
         "w - move to start of next word",
+        "5w - move to start of next word 5 times",
         "e - move to end of current/next word",
+        "5e - move to end of current/next word 5 times",
         "0 - move to start of current line",
       ]
       assert_equal explanations.join("\n"), formatter.print
@@ -54,14 +60,6 @@ module Vimprint
       ]
       formatter = ExplainFormatter.new(normal)
       assert_equal "u - downcase the selected text", formatter.print
-    end
-
-    def test_explain_a_motion_with_count
-      normal = NormalMode[
-        Motion.new('j', 3)
-      ]
-      formatter = ExplainFormatter.new(normal)
-      assert_equal "3j - move down 3 lines", formatter.print
     end
 
   end

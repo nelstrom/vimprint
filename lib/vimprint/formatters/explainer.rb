@@ -23,9 +23,9 @@ module Vimprint
           'j' => ['move down 1 line', "move down #{count} lines"],
           'k' => ["move up 1 line", "move up #{count} lines"],
           'l' => ["move right 1 character", "move right #{count} characters"],
-          'b' => ["move to start of current/previous word"],
-          'w' => ["move to start of next word"],
-          'e' => ["move to end of current/next word"],
+          'b' => ["move to start of current/previous word","move to start of current/previous word #{count} times"],
+          'w' => ["move to start of next word","move to start of next word #{count} times"],
+          'e' => ["move to end of current/next word","move to end of current/next word #{count} times"],
           '0' => ["move to start of current line"],
           # switches
           'i' => [],
