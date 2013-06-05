@@ -16,7 +16,7 @@ module Vimprint
 
   class Stage < Struct.new(:trigger, :register)
 
-    attr_reader :register, :trigger
+    attr_reader :register, :trigger, :operator, :motion
 
     def initialize()
       @buffer = []
@@ -25,6 +25,10 @@ module Vimprint
 
     def raw_keystrokes
       @buffer.join
+    end
+
+    def effective_count
+      @counts.inject(1) { |a,b| a*b }
     end
 
     def add_count(value)
@@ -39,6 +43,16 @@ module Vimprint
 
     def add_trigger(keystrokes)
       @trigger = keystrokes
+      @buffer << keystrokes
+    end
+
+    def add_operator(keystrokes)
+      @operator = keystrokes
+      @buffer << keystrokes
+    end
+
+    def add_motion(keystrokes)
+      @motion = keystrokes
       @buffer << keystrokes
     end
 
