@@ -18,8 +18,25 @@ module Vimprint
 
       {
         :normal => {
-          'h' => ["move 1 character to the left"],
-          'j' => ['move 1 line down', "move #{count} lines down"],
+          # motions
+          'h' => ["move left 1 character","move left #{count} characters"],
+          'j' => ['move down 1 line', "move down #{count} lines"],
+          'k' => ["move up 1 line", "move up #{count} lines"],
+          'l' => ["move right 1 character", "move right #{count} characters"],
+          'b' => ["move to start of current/previous word"],
+          'w' => ["move to start of next word"],
+          'e' => ["move to end of current/next word"],
+          '0' => ["move to start of current line"],
+          # switches
+          'i' => [],
+          'I' => [],
+          'a' => [],
+          'A' => [],
+          's' => [],
+          'S' => [],
+          'o' => [],
+          'O' => [],
+          # misc
           'u' => ["undo the last change"],
         },
         :visual => {
