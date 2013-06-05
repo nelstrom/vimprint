@@ -47,22 +47,36 @@ module Vimprint
     def test_explain_simple_switches
       normal = NormalMode[
         Switch.new('i'),
+        Switch.new('i', 5),
         Switch.new('I'),
+        Switch.new('I', 5),
         Switch.new('a'),
+        Switch.new('a', 5),
         Switch.new('A'),
+        Switch.new('A', 5),
         Switch.new('s'),
+        Switch.new('s', 5),
         Switch.new('S'),
+        Switch.new('S', 5),
         Switch.new('o'),
+        Switch.new('o', 5),
         Switch.new('O'),
       ]
       explanations = [
         "i - insert in front of cursor",
+        "5i - insert 5 times in front of cursor",
         "I - insert at start of line",
+        "5I - insert 5 times at start of line",
         "a - append after the cursor",
+        "5a - append 5 times after the cursor",
         "A - append at end of line",
+        "5A - append 5 times at end of line",
         "s - delete current character and switch to insert mode",
+        "5s - delete 5 characters and switch to insert mode",
         "S - delete current line and switch to insert mode",
+        "5S - delete 5 lines and switch to insert mode",
         "o - open a new line below the current line, switch to insert mode",
+        "5o - 5 times open a new line below the current line",
         "O - open a new line above the current line, switch to insert mode",
       ]
       formatter = ExplainFormatter.new(normal)

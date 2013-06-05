@@ -28,13 +28,14 @@ module Vimprint
           'e' => ["move to end of current/next word","move to end of current/next word #{count} times"],
           '0' => ["move to start of current line"],
           # switches
-          'i' => ["insert in front of cursor"],
-          'I' => ["insert at start of line"],
-          'a' => ["append after the cursor"],
-          'A' => ["append at end of line"],
-          's' => ["delete current character and switch to insert mode"],
+          'i' => ["insert in front of cursor","insert #{count} times in front of cursor"],
+          'I' => ["insert at start of line","insert #{count} times at start of line"],
+          'a' => ["append after the cursor","append #{count} times after the cursor"],
+          'A' => ["append at end of line","append #{count} times at end of line"],
+          's' => ["delete current character and switch to insert mode","delete #{count} characters and switch to insert mode"],
           'S' => ["delete current line and switch to insert mode"],
-          'o' => ["open a new line below the current line, switch to insert mode"],
+          'S' => ["delete current line and switch to insert mode","delete #{count} lines and switch to insert mode"],
+          'o' => ["open a new line below the current line, switch to insert mode","#{count} times open a new line below the current line"],
           'O' => ["open a new line above the current line, switch to insert mode"],
           # misc
           'u' => ["undo the last change"],
@@ -67,7 +68,7 @@ module Vimprint
 
   class Switch
     def explain
-      "#{keystroke} - #{Dictionary.lookup(keystroke, :normal)}"
+      "#{count}#{keystroke} - #{Dictionary.lookup(keystroke, :normal, count)}"
     end
   end
 

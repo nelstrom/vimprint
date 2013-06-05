@@ -8,7 +8,7 @@ module Vimprint
 
   class Motion < Struct.new(:keystroke, :count); end
 
-  class Switch < Struct.new(:keystroke); end
+  class Switch < Struct.new(:keystroke, :count); end
 
   class Input < Struct.new(:keystroke); end
 
