@@ -122,13 +122,13 @@ module Vimprint
 
   class Motion
     def explain(context)
-      "#{raw_keystrokes} - #{Dictionary.lookup(trigger, context.mode, count)}"
+      "#{raw_keystrokes} - #{Dictionary.lookup(trigger, context.mode, effective_count)}"
     end
   end
 
   class Switch
     def explain(context)
-      "#{raw_keystrokes} - #{Dictionary.lookup(trigger, :normal, count)}"
+      "#{raw_keystrokes} - #{Dictionary.lookup(trigger, :normal, effective_count)}"
     end
   end
 

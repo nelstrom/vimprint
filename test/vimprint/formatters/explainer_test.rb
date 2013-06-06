@@ -120,51 +120,47 @@ module Vimprint
     end
 
     def test_explain_delete_word_operation
-      normal = NormalMode[
-        Operation.new(
-          raw_keystrokes: 'dw',
-          operator: 'd',
-          motion: Motion.new(raw_keystrokes: 'w', trigger: 'w')
-        )
-      ]
-      formatter = ExplainFormatter.new(normal)
-      assert_equal "dw - delete to end of word", formatter.print
+      deletion = normal_mode { create_operation("d w") }
+      assert_equal "dw - delete to end of word", format(deletion)
     end
 
     def test_explain_delete_paragraph_operation
-      normal = NormalMode[
-        Operation.new(
-          raw_keystrokes: 'd}',
-          operator: 'd',
-          motion: Motion.new(raw_keystrokes: '}', trigger: '}')
-        )
-      ]
-      formatter = ExplainFormatter.new(normal)
-      assert_equal "d} - delete to end of paragraph", formatter.print
+      deletion = normal_mode { create_operation("d }") }
+      assert_equal "d} - delete to end of paragraph", format(deletion)
     end
 
     def test_explain_yank_word
-      normal = NormalMode[
-        Operation.new(
-          raw_keystrokes: 'yw',
-          operator: 'y',
-          motion: Motion.new(raw_keystrokes: 'w', trigger: 'w')
-        )
-      ]
-      formatter = ExplainFormatter.new(normal)
-      assert_equal "yw - yank to end of word", formatter.print
+      yank = normal_mode { create_operation("y w") }
+      assert_equal "yw - yank to end of word", format(yank)
     end
 
     def test_explain_yank_paragraph
-      normal = NormalMode[
-        Operation.new(
-          raw_keystrokes: 'y}',
-          operator: 'y',
-          motion: Motion.new(raw_keystrokes: '}', trigger: '}')
-        )
-      ]
-      formatter = ExplainFormatter.new(normal)
-      assert_equal "y} - yank to end of paragraph", formatter.print
+      yank = normal_mode { create_operation("y }") }
+      assert_equal "y} - yank to end of paragraph", format(yank)
+    end
+
+    private
+
+    def normal_mode
+      NormalMode[ *yield ]
+    end
+
+    def create_operation(keys)
+      parts = keys.split(' ')
+      count = parts.shift if parts.size > 2
+      operator, motion = parts
+
+      Operation.new(
+        raw_keystrokes: keys.gsub(' ', ''),
+        operator: operator,
+        counts: [count.to_i],
+        motion: Motion.new(raw_keystrokes: motion, trigger: motion)
+      )
+    end
+
+    def format(commands)
+      formatter = ExplainFormatter.new(commands)
+      formatter.print
     end
 
   end

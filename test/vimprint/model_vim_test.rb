@@ -13,7 +13,6 @@ module Vimprint
       stage.add_trigger  'x'
       hashmap = {
         raw_keystrokes: '"a4x',
-        effective_count: 4,
         counts: [4],
         trigger: 'x'
       }
@@ -43,7 +42,7 @@ module Vimprint
       stage.add_count 4
       stage.add_motion 'l'
       assert_equal "a", stage.register
-      assert_equal 24, stage.effective_count
+      assert_equal [2,3,4], stage.counts
       assert_equal '2"a3d4l', stage.raw_keystrokes
     end
 
@@ -62,7 +61,7 @@ module Vimprint
       stage.add_register 'b'
       stage.add_trigger  'x'
       assert_equal "b", stage.register
-      assert_equal 6, stage.effective_count
+      assert_equal [3,2], stage.counts
       assert_equal '3"a2"bx', stage.raw_keystrokes
     end
 

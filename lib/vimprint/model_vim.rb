@@ -28,14 +28,18 @@ module Vimprint
       stage = OpenStruct.new(options)
       @raw_keystrokes = stage.raw_keystrokes
       @trigger = stage.trigger
-      @count = stage.count
+      @counts = stage.counts || Array(stage.count)
       @operator = stage.operator
       @motion = stage.motion
+    end
+
+    def effective_count
+      @counts.inject(1) { |a,b| a*b }
     end
   end
 
   class Motion < BaseCommand
-    attr_reader :trigger, :count, :raw_keystrokes
+    attr_reader :trigger, :raw_keystrokes
 
     # 1. attr_reader :context
     # 2. SpecificMotion < Motion
@@ -43,7 +47,7 @@ module Vimprint
   end
 
   class Switch < BaseCommand
-    attr_reader :raw_keystrokes, :trigger, :count
+    attr_reader :raw_keystrokes, :trigger
   end
 
   class Input < Struct.new(:keystroke); end
@@ -67,7 +71,7 @@ module Vimprint
 
   class Stage < Struct.new(:trigger, :register)
 
-    attr_reader :register, :trigger, :operator, :motion
+    attr_reader :register, :trigger, :operator, :motion, :counts
 
     def initialize()
       @buffer = []
@@ -77,7 +81,6 @@ module Vimprint
     def to_hash
       {
         raw_keystrokes: raw_keystrokes,
-        effective_count: effective_count,
         counts: @counts,
         trigger: @trigger
       }
@@ -85,10 +88,6 @@ module Vimprint
 
     def raw_keystrokes
       @buffer.join
-    end
-
-    def effective_count
-      @counts.inject(1) { |a,b| a*b }
     end
 
     def add_count(value)
