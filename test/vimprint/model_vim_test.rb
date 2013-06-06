@@ -74,6 +74,9 @@ module Vimprint
       class NormalCommand
         extend CommandBuilder
       end
+      class Motion
+        extend CommandBuilder
+      end
     end
 
     def test_command_builder_uses_stage_attributes
@@ -81,6 +84,14 @@ module Vimprint
       stage.add_trigger 'x'
       command = NormalCommand.build(stage)
       assert_equal 'x', command.trigger
+    end
+
+    def test_building_a_motion
+      stage = Stage.new
+      stage.add_count 2
+      stage.add_trigger 'w'
+      command = Motion.build(stage)
+      assert_equal 'w', command.trigger
     end
 
   end

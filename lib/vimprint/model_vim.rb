@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module Vimprint
 
   # MODES
@@ -6,11 +8,30 @@ module Vimprint
   class InsertMode < Array; end
 
   # COMMANDS
-  class Motion < Struct.new(:raw_keystrokes, :trigger, :count); end
+  class Motion
+    attr_reader :trigger, :count
+    def initialize(options={})
+      stage = OpenStruct.new(options)
+      @raw_keystrokes = stage.raw_keystrokes
+      @trigger = stage.trigger
+      @count = stage.count
+    end
+  end
+
   class Switch < Struct.new(:keystroke, :count); end
   class Input < Struct.new(:keystroke); end
   class Terminator < Struct.new(:keystroke); end
-  class NormalCommand < Struct.new(:trigger); end
+
+  class NormalCommand
+    attr_reader :trigger
+    def initialize(options={})
+      stage = OpenStruct.new(options)
+      @raw_keystrokes = stage.raw_keystrokes
+      @trigger = stage.trigger
+      @count = stage.count
+    end
+  end
+
   class VisualOperation < Struct.new(:keystroke); end
   class AbortedCommand < Struct.new(:raw_keystrokes); end
 
