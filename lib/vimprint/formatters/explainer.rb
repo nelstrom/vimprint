@@ -94,19 +94,19 @@ module Vimprint
 
   class NormalMode
     def explain(context=nil)
-      map { |o| o.explain(:normal) }.join("\n")
+      map { |o| o.explain(self) }.join("\n")
     end
   end
 
   class VisualMode
     def explain(context)
-      map { |o| o.explain(:visual) }.join("\n")
+      map { |o| o.explain(self) }.join("\n")
     end
   end
 
   class Motion
     def explain(context)
-      "#{raw_keystrokes} - #{Dictionary.lookup(trigger, context, count)}"
+      "#{raw_keystrokes} - #{Dictionary.lookup(trigger, context.mode, count)}"
     end
   end
 

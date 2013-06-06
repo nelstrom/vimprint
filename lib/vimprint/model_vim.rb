@@ -3,8 +3,16 @@ require 'ostruct'
 module Vimprint
 
   # MODES
-  class NormalMode < Array; end
-  class VisualMode < Array; end
+  class NormalMode < Array
+    def mode
+      :normal
+    end
+  end
+  class VisualMode < Array
+    def mode
+      :visual
+    end
+  end
   class InsertMode < Array; end
 
   module CommandBuilder
@@ -26,6 +34,10 @@ module Vimprint
 
   class Motion < BaseCommand
     attr_reader :trigger, :count, :raw_keystrokes
+
+    # 1. attr_reader :context
+    # 2. SpecificMotion < Motion
+    # 3. motion.explain(context)
   end
 
   class Switch < BaseCommand
