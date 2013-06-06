@@ -101,6 +101,16 @@ module Vimprint
       assert_equal "u - downcase the selected text", formatter.print
     end
 
+    def test_explain_motions_used_in_visual_mode
+      normal = NormalMode[
+        VisualMode[
+          Motion.new(raw_keystrokes: 'h', trigger: 'h'),
+        ]
+      ]
+      formatter = ExplainFormatter.new(normal)
+      assert_equal "h - select left 1 character", formatter.print
+    end
+
     def test_explain_an_aborted_command
       normal = NormalMode[
         AbortedCommand.new(raw_keystrokes: "2\e")

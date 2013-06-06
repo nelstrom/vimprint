@@ -85,6 +85,7 @@ module Vimprint
         },
         :visual => {
           'u' => ["downcase the selected text"],
+          'h' => ["select left 1 character"],
         }
       }[mode][keystroke][plurality]
     end
@@ -92,43 +93,43 @@ module Vimprint
   end
 
   class NormalMode
-    def explain
-      map(&:explain).join("\n")
+    def explain(context=nil)
+      map { |o| o.explain(:normal) }.join("\n")
     end
   end
 
   class VisualMode
-    def explain
-      map(&:explain).join("\n")
+    def explain(context)
+      map { |o| o.explain(:visual) }.join("\n")
     end
   end
 
   class Motion
-    def explain
-      "#{raw_keystrokes} - #{Dictionary.lookup(trigger, :normal, count)}"
+    def explain(context)
+      "#{raw_keystrokes} - #{Dictionary.lookup(trigger, context, count)}"
     end
   end
 
   class Switch
-    def explain
+    def explain(context)
       "#{raw_keystrokes} - #{Dictionary.lookup(trigger, :normal, count)}"
     end
   end
 
   class NormalCommand
-    def explain
+    def explain(context)
       "#{trigger} - #{Dictionary.lookup(trigger)}"
     end
   end
 
   class VisualOperation
-    def explain
+    def explain(context)
       "#{raw_keystrokes} - #{Dictionary.lookup(trigger, :visual)}"
     end
   end
 
   class AbortedCommand
-    def explain
+    def explain(context)
       "#{raw_keystrokes} - [aborted command]"
     end
   end
