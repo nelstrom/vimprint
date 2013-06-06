@@ -48,25 +48,18 @@ module Vimprint
       normal = NormalMode[
         Switch.new(raw_keystrokes: 'i', trigger: 'i'),
         Switch.new(raw_keystrokes: '5i', trigger: 'i', count: 5),
-
         Switch.new(raw_keystrokes: 'I', trigger: 'I'),
         Switch.new(raw_keystrokes: '5I', trigger: 'I', count: 5),
-
         Switch.new(raw_keystrokes: 'a', trigger: 'a'),
         Switch.new(raw_keystrokes: '5a', trigger: 'a', count: 5),
-
         Switch.new(raw_keystrokes: 'A', trigger: 'A'),
         Switch.new(raw_keystrokes: '5A', trigger: 'A', count: 5),
-
         Switch.new(raw_keystrokes: 's', trigger: 's'),
         Switch.new(raw_keystrokes: '5s', trigger: 's', count: 5),
-
         Switch.new(raw_keystrokes: 'S', trigger: 'S'),
         Switch.new(raw_keystrokes: '5S', trigger: 'S', count: 5),
-
         Switch.new(raw_keystrokes: 'o', trigger: 'o'),
         Switch.new(raw_keystrokes: '5o', trigger: 'o', count: 5),
-
         Switch.new(raw_keystrokes: 'O', trigger: 'O'),
       ]
       explanations = [
@@ -101,7 +94,7 @@ module Vimprint
     def test_explain_the_visual_u_operator
       normal = NormalMode[
         VisualMode[
-          VisualOperation.new('u')
+          VisualOperation.new(raw_keystrokes: 'u', trigger: 'u')
         ]
       ]
       formatter = ExplainFormatter.new(normal)

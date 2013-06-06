@@ -123,7 +123,7 @@ module Vimprint
 
   class VisualOperation
     def explain
-      "#{keystroke} - #{Dictionary.lookup(keystroke, :visual)}"
+      "#{raw_keystrokes} - #{Dictionary.lookup(trigger, :visual)}"
     end
   end
 

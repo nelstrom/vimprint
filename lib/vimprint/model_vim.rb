@@ -39,7 +39,10 @@ module Vimprint
     attr_reader :trigger
   end
 
-  class VisualOperation < Struct.new(:keystroke); end
+  class VisualOperation < BaseCommand
+    attr_reader :raw_keystrokes, :trigger
+  end
+
   class AbortedCommand < BaseCommand
     attr_reader :raw_keystrokes
   end

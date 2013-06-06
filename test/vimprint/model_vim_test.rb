@@ -104,6 +104,13 @@ module Vimprint
       assert_equal "3a", command.raw_keystrokes
     end
 
+    def test_building_a_visual_operator
+      stage = Stage.new
+      stage.add_trigger 'c'
+      command = VisualOperation.build(stage)
+      assert_equal "c", command.raw_keystrokes
+    end
+
   end
 
 end
