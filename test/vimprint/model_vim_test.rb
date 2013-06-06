@@ -70,7 +70,7 @@ module Vimprint
 
   describe CommandBuilder do
 
-    def test_command_builder_uses_stage_attributes
+    def test_building_a_normal_command
       stage = Stage.new
       stage.add_trigger 'x'
       command = NormalCommand.build(stage)
@@ -83,6 +83,16 @@ module Vimprint
       stage.add_trigger 'w'
       command = Motion.build(stage)
       assert_equal 'w', command.trigger
+    end
+
+    def test_building_an_aborted_command
+      stage = Stage.new
+      stage.add_count     3
+      stage.add_register 'a'
+      stage.add_count     2
+      stage.add_register 'b'
+      command = AbortedCommand.build(stage)
+      assert_equal '3"a2"b', command.raw_keystrokes
     end
 
   end

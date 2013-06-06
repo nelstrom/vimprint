@@ -37,7 +37,9 @@ module Vimprint
   end
 
   class VisualOperation < Struct.new(:keystroke); end
-  class AbortedCommand < Struct.new(:raw_keystrokes); end
+  class AbortedCommand < BaseCommand
+    attr_reader :raw_keystrokes
+  end
 
   class Stage < Struct.new(:trigger, :register)
 
