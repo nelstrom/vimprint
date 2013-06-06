@@ -102,13 +102,8 @@ module Vimprint
     end
 
     def test_explain_motions_used_in_visual_mode
-      normal = NormalMode[
-        VisualMode[
-          Motion.new(raw_keystrokes: 'h', trigger: 'h'),
-        ]
-      ]
-      formatter = ExplainFormatter.new(normal)
-      assert_equal "h - select left 1 character", formatter.print
+      visual_motion = visual_mode { create_motion("h") }
+      assert_equal "h - select left 1 character", format(visual_motion)
     end
 
     def test_explain_an_aborted_command
@@ -145,6 +140,22 @@ module Vimprint
       NormalMode[ *yield ]
     end
 
+    def visual_mode
+      VisualMode[ *yield ]
+    end
+
+    def create_motion(keys)
+      parts = keys.split(' ')
+      count = parts.shift if parts.size > 1
+      motion, = parts
+
+      Motion.new(
+        raw_keystrokes: motion,
+        trigger: motion,
+        counts: Array(count).map(&:to_i)
+      )
+    end
+
     def create_operation(keys)
       parts = keys.split(' ')
       count = parts.shift if parts.size > 2
@@ -153,7 +164,7 @@ module Vimprint
       Operation.new(
         raw_keystrokes: keys.gsub(' ', ''),
         operator: operator,
-        counts: [count.to_i],
+        counts: Array(count).map(&:to_i),
         motion: Motion.new(raw_keystrokes: motion, trigger: motion)
       )
     end

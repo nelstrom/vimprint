@@ -101,9 +101,12 @@ module Vimprint
         },
         :visual => {
           'u' => ["downcase the selected text"],
-          'h' => ["select left 1 character"],
+          'h' => [
+            "select left 1 character",
+            "select left #{count} characters"
+          ],
         }
-      }[mode][keystroke][plurality]
+      }[mode][keystroke].fetch(plurality)
     end
 
   end
@@ -115,7 +118,7 @@ module Vimprint
   end
 
   class VisualMode
-    def explain(context)
+    def explain(context=nil)
       map { |o| o.explain(self) }.join("\n")
     end
   end
