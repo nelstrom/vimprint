@@ -29,6 +29,8 @@ module Vimprint
       @raw_keystrokes = stage.raw_keystrokes
       @trigger = stage.trigger
       @count = stage.count
+      @operator = stage.operator
+      @motion = stage.motion
     end
   end
 
@@ -49,6 +51,10 @@ module Vimprint
 
   class NormalCommand < BaseCommand
     attr_reader :trigger
+  end
+
+  class Operation < BaseCommand
+    attr_reader :raw_keystrokes, :operator, :motion
   end
 
   class VisualOperation < BaseCommand

@@ -119,5 +119,53 @@ module Vimprint
       assert_equal "2\e - [aborted command]", formatter.print
     end
 
+    def test_explain_delete_word_operation
+      normal = NormalMode[
+        Operation.new(
+          raw_keystrokes: 'dw',
+          operator: 'd',
+          motion: Motion.new(raw_keystrokes: 'w', trigger: 'w')
+        )
+      ]
+      formatter = ExplainFormatter.new(normal)
+      assert_equal "dw - delete to end of word", formatter.print
+    end
+
+    def test_explain_delete_paragraph_operation
+      normal = NormalMode[
+        Operation.new(
+          raw_keystrokes: 'd}',
+          operator: 'd',
+          motion: Motion.new(raw_keystrokes: '}', trigger: '}')
+        )
+      ]
+      formatter = ExplainFormatter.new(normal)
+      assert_equal "d} - delete to end of paragraph", formatter.print
+    end
+
+    def test_explain_yank_word
+      normal = NormalMode[
+        Operation.new(
+          raw_keystrokes: 'yw',
+          operator: 'y',
+          motion: Motion.new(raw_keystrokes: 'w', trigger: 'w')
+        )
+      ]
+      formatter = ExplainFormatter.new(normal)
+      assert_equal "yw - yank to end of word", formatter.print
+    end
+
+    def test_explain_yank_paragraph
+      normal = NormalMode[
+        Operation.new(
+          raw_keystrokes: 'y}',
+          operator: 'y',
+          motion: Motion.new(raw_keystrokes: '}', trigger: '}')
+        )
+      ]
+      formatter = ExplainFormatter.new(normal)
+      assert_equal "y} - yank to end of paragraph", formatter.print
+    end
+
   end
 end
