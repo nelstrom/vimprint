@@ -16,7 +16,7 @@ module Vimprint
 
   module CommandBuilder
     def build(stage)
-      new(stage.trigger)
+      new(stage.to_hash)
     end
   end
 
@@ -27,6 +27,15 @@ module Vimprint
     def initialize()
       @buffer = []
       @counts = []
+    end
+
+    def to_hash
+      {
+        raw_keystrokes: raw_keystrokes,
+        effective_count: effective_count,
+        counts: @counts,
+        trigger: @trigger
+      }
     end
 
     def raw_keystrokes

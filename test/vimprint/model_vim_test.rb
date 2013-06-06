@@ -6,6 +6,20 @@ module Vimprint
 
   describe Stage do
 
+    def test_stage_to_hash
+      stage = Stage.new
+      stage.add_register 'a'
+      stage.add_count     4
+      stage.add_trigger  'x'
+      hashmap = {
+        raw_keystrokes: '"a4x',
+        effective_count: 4,
+        counts: [4],
+        trigger: 'x'
+      }
+      assert_equal hashmap, stage.to_hash
+    end
+
     def test_stage_accumulates_raw_keystrokes
       stage = Stage.new
       stage.add_register 'a'
