@@ -30,7 +30,7 @@ module Vimprint
 
   class Motion
     def plain_print
-      "#{keystroke} "
+      "#{raw_keystrokes} "
     end
   end
 

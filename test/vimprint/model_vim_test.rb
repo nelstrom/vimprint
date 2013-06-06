@@ -66,7 +66,7 @@ module Vimprint
       stage = Stage.new
       stage.add_trigger 'x'
       command = NormalCommand.build(stage)
-      assert_equal 'x', command.keystroke
+      assert_equal 'x', command.trigger
     end
 
   end

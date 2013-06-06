@@ -7,10 +7,10 @@ module Vimprint
 
     def test_normal_mode_prints_each_member
       normal = NormalMode[
-        Motion.new('h'),
-        Motion.new('j'),
-        Motion.new('k'),
-        Motion.new('l'),
+        Motion.new('h', 'h'),
+        Motion.new('j', 'j'),
+        Motion.new('k', 'k'),
+        Motion.new('l', 'l'),
       ]
       formatter = Formatter.new(normal)
       assert_equal "h j k l ", formatter.print
@@ -30,7 +30,7 @@ module Vimprint
 
     def test_switching_from_normal_to_insert_mode_and_back_again
       normal = NormalMode[
-        Motion.new('h'),
+        Motion.new('h', 'h'),
         Switch.new('i'),
         InsertMode[
           Input.new('h'),
@@ -40,7 +40,7 @@ module Vimprint
           Input.new('o'),
           Terminator.new("\e")
         ],
-          Motion.new('l')
+          Motion.new('l', 'l')
       ]
       formatter = Formatter.new(normal)
       assert_equal "h \ni{hello}\nl ", formatter.print
@@ -50,7 +50,7 @@ module Vimprint
       # Home > Category > Subcat > Article
       # Normal > Insert
       normal = NormalMode[
-        Motion.new('h'),
+        Motion.new('h', 'h'),
         Switch.new('i'),
         InsertMode[
           Input.new('h'),
@@ -60,7 +60,7 @@ module Vimprint
           Input.new('o'),
           Terminator.new("\e")
         ],
-          Motion.new('l')
+          Motion.new('l', 'l')
       ]
       formatter = Formatter.new(normal)
       assert_equal "h \ni{hello}\nl ", formatter.print

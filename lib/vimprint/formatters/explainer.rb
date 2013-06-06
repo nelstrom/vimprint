@@ -105,7 +105,7 @@ module Vimprint
 
   class Motion
     def explain
-      "#{count}#{keystroke} - #{Dictionary.lookup(keystroke, :normal, count)}"
+      "#{raw_keystrokes} - #{Dictionary.lookup(trigger, :normal, count)}"
     end
   end
 
@@ -117,7 +117,7 @@ module Vimprint
 
   class NormalCommand
     def explain
-      "#{keystroke} - #{Dictionary.lookup(keystroke)}"
+      "#{trigger} - #{Dictionary.lookup(trigger)}"
     end
   end
 
