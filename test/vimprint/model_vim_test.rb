@@ -70,15 +70,6 @@ module Vimprint
 
   describe CommandBuilder do
 
-    before do
-      class NormalCommand
-        extend CommandBuilder
-      end
-      class Motion
-        extend CommandBuilder
-      end
-    end
-
     def test_command_builder_uses_stage_attributes
       stage = Stage.new
       stage.add_trigger 'x'

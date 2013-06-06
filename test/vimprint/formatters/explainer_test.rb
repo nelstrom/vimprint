@@ -7,21 +7,21 @@ module Vimprint
 
     def test_explain_simple_motions
       normal = NormalMode[
-        Motion.new('h', 'h'),
-        Motion.new('5h', 'h', 5),
-        Motion.new('j', 'j'),
-        Motion.new('5j', 'j', 5),
-        Motion.new('k', 'k'),
-        Motion.new('5k', 'k', 5),
-        Motion.new('l', 'l'),
-        Motion.new('5l', 'l', 5),
-        Motion.new('b', 'b'),
-        Motion.new('5b', 'b', 5),
-        Motion.new('w', 'w'),
-        Motion.new('5w', 'w', 5),
-        Motion.new('e', 'e'),
-        Motion.new('5e', 'e', 5),
-        Motion.new('0', '0'),
+        Motion.new(raw_keystrokes: 'h', trigger: 'h'),
+        Motion.new(raw_keystrokes: '5h', trigger: 'h', count: 5),
+        Motion.new(raw_keystrokes: 'j', trigger: 'j'),
+        Motion.new(raw_keystrokes: '5j', trigger: 'j', count: 5),
+        Motion.new(raw_keystrokes: 'k', trigger: 'k'),
+        Motion.new(raw_keystrokes: '5k', trigger: 'k', count: 5),
+        Motion.new(raw_keystrokes: 'l', trigger: 'l'),
+        Motion.new(raw_keystrokes: '5l', trigger: 'l', count: 5),
+        Motion.new(raw_keystrokes: 'b', trigger: 'b'),
+        Motion.new(raw_keystrokes: '5b', trigger: 'b', count: 5),
+        Motion.new(raw_keystrokes: 'w', trigger: 'w'),
+        Motion.new(raw_keystrokes: '5w', trigger: 'w', count: 5),
+        Motion.new(raw_keystrokes: 'e', trigger: 'e'),
+        Motion.new(raw_keystrokes: '5e', trigger: 'e', count: 5),
+        Motion.new(raw_keystrokes: '0', trigger: '0'),
       ]
       explanations = [
         "h - move left 1 character",
@@ -85,7 +85,7 @@ module Vimprint
 
     def test_explain_the_u_command
       normal = NormalMode[
-        NormalCommand.new('u')
+        NormalCommand.new(raw_keystrokes: 'u', trigger: 'u')
       ]
       formatter = ExplainFormatter.new(normal)
       assert_equal "u - undo the last change", formatter.print

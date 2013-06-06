@@ -7,8 +7,15 @@ module Vimprint
   class VisualMode < Array; end
   class InsertMode < Array; end
 
+  module CommandBuilder
+    def build(stage)
+      new(stage.to_hash)
+    end
+  end
+
   # COMMANDS
   class BaseCommand
+    extend CommandBuilder
     def initialize(options={})
       stage = OpenStruct.new(options)
       @raw_keystrokes = stage.raw_keystrokes
@@ -18,7 +25,7 @@ module Vimprint
   end
 
   class Motion < BaseCommand
-    attr_reader :trigger, :count
+    attr_reader :trigger, :count, :raw_keystrokes
   end
 
   class Switch < Struct.new(:keystroke, :count); end
@@ -31,12 +38,6 @@ module Vimprint
 
   class VisualOperation < Struct.new(:keystroke); end
   class AbortedCommand < Struct.new(:raw_keystrokes); end
-
-  module CommandBuilder
-    def build(stage)
-      new(stage.to_hash)
-    end
-  end
 
   class Stage < Struct.new(:trigger, :register)
 
