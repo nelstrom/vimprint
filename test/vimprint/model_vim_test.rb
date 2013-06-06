@@ -91,8 +91,9 @@ module Vimprint
       stage.add_register 'a'
       stage.add_count     2
       stage.add_register 'b'
+      stage.escape
       command = AbortedCommand.build(stage)
-      assert_equal '3"a2"b', command.raw_keystrokes
+      assert_equal "3\"a2\"b\e", command.raw_keystrokes
     end
 
   end
