@@ -111,7 +111,7 @@ module Vimprint
 
   class Switch
     def explain
-      "#{count}#{keystroke} - #{Dictionary.lookup(keystroke, :normal, count)}"
+      "#{raw_keystrokes} - #{Dictionary.lookup(trigger, :normal, count)}"
     end
   end
 

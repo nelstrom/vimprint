@@ -31,7 +31,7 @@ module Vimprint
     def test_switching_from_normal_to_insert_mode_and_back_again
       normal = NormalMode[
         Motion.new(raw_keystrokes: 'h', trigger: 'h'),
-        Switch.new('i'),
+        Switch.new(raw_keystrokes: 'i'),
         InsertMode[
           Input.new('h'),
           Input.new('e'),
@@ -51,7 +51,7 @@ module Vimprint
       # Normal > Insert
       normal = NormalMode[
         Motion.new(raw_keystrokes: 'h', trigger: 'h'),
-        Switch.new('i'),
+        Switch.new(raw_keystrokes: 'i'),
         InsertMode[
           Input.new('h'),
           Input.new('e'),

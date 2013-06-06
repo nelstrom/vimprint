@@ -36,7 +36,7 @@ module Vimprint
 
   class Switch
     def plain_print
-      "\n#{keystroke}{"
+      "\n#{raw_keystrokes}{"
     end
   end
 

@@ -96,6 +96,14 @@ module Vimprint
       assert_equal "3\"a2\"b\e", command.raw_keystrokes
     end
 
+    def test_building_a_switch_command
+      stage = Stage.new
+      stage.add_count    3
+      stage.add_trigger 'a'
+      command = Switch.build(stage)
+      assert_equal "3a", command.raw_keystrokes
+    end
+
   end
 
 end

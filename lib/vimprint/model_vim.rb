@@ -28,7 +28,10 @@ module Vimprint
     attr_reader :trigger, :count, :raw_keystrokes
   end
 
-  class Switch < Struct.new(:keystroke, :count); end
+  class Switch < BaseCommand
+    attr_reader :raw_keystrokes, :trigger, :count
+  end
+
   class Input < Struct.new(:keystroke); end
   class Terminator < Struct.new(:keystroke); end
 
