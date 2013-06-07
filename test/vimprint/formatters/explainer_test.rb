@@ -3,110 +3,174 @@ require 'minitest/pride'
 require './lib/vimprint/formatters/explainer'
 
 module Vimprint
-  class ModelVimTest < MiniTest::Unit::TestCase
+  describe 'ModelVim' do
 
-    def test_explain_simple_motions
-      normal = NormalMode[
-        Motion.new(raw_keystrokes: 'h', trigger: 'h'),
-        Motion.new(raw_keystrokes: '5h', trigger: 'h', count: 5),
-        Motion.new(raw_keystrokes: 'j', trigger: 'j'),
-        Motion.new(raw_keystrokes: '5j', trigger: 'j', count: 5),
-        Motion.new(raw_keystrokes: 'k', trigger: 'k'),
-        Motion.new(raw_keystrokes: '5k', trigger: 'k', count: 5),
-        Motion.new(raw_keystrokes: 'l', trigger: 'l'),
-        Motion.new(raw_keystrokes: '5l', trigger: 'l', count: 5),
-        Motion.new(raw_keystrokes: 'b', trigger: 'b'),
-        Motion.new(raw_keystrokes: '5b', trigger: 'b', count: 5),
-        Motion.new(raw_keystrokes: 'w', trigger: 'w'),
-        Motion.new(raw_keystrokes: '5w', trigger: 'w', count: 5),
-        Motion.new(raw_keystrokes: 'e', trigger: 'e'),
-        Motion.new(raw_keystrokes: '5e', trigger: 'e', count: 5),
-        Motion.new(raw_keystrokes: '0', trigger: '0'),
-      ]
-      explanations = [
-        "h - move left 1 character",
-        "5h - move left 5 characters",
-        "j - move down 1 line",
-        "5j - move down 5 lines",
-        "k - move up 1 line",
-        "5k - move up 5 lines",
-        "l - move right 1 character",
-        "5l - move right 5 characters",
-        "b - move to start of current/previous word",
-        "5b - move to start of current/previous word 5 times",
-        "w - move to start of next word",
-        "5w - move to start of next word 5 times",
-        "e - move to end of current/next word",
-        "5e - move to end of current/next word 5 times",
-        "0 - move to start of current line",
-      ]
-      formatter = ExplainFormatter.new(normal)
-      assert_equal explanations.join("\n"), formatter.print
+    it 'explains h motion' do
+      motion = normal_mode { create_motion("h") }
+      assert_equal "h - move left 1 character", format(motion)
     end
 
-    def test_explain_simple_switches
-      normal = NormalMode[
-        Switch.new(raw_keystrokes: 'i', trigger: 'i'),
-        Switch.new(raw_keystrokes: '5i', trigger: 'i', count: 5),
-        Switch.new(raw_keystrokes: 'I', trigger: 'I'),
-        Switch.new(raw_keystrokes: '5I', trigger: 'I', count: 5),
-        Switch.new(raw_keystrokes: 'a', trigger: 'a'),
-        Switch.new(raw_keystrokes: '5a', trigger: 'a', count: 5),
-        Switch.new(raw_keystrokes: 'A', trigger: 'A'),
-        Switch.new(raw_keystrokes: '5A', trigger: 'A', count: 5),
-        Switch.new(raw_keystrokes: 's', trigger: 's'),
-        Switch.new(raw_keystrokes: '5s', trigger: 's', count: 5),
-        Switch.new(raw_keystrokes: 'S', trigger: 'S'),
-        Switch.new(raw_keystrokes: '5S', trigger: 'S', count: 5),
-        Switch.new(raw_keystrokes: 'o', trigger: 'o'),
-        Switch.new(raw_keystrokes: '5o', trigger: 'o', count: 5),
-        Switch.new(raw_keystrokes: 'O', trigger: 'O'),
-      ]
-      explanations = [
-        "i - insert in front of cursor",
-        "5i - insert 5 times in front of cursor",
-        "I - insert at start of line",
-        "5I - insert 5 times at start of line",
-        "a - append after the cursor",
-        "5a - append 5 times after the cursor",
-        "A - append at end of line",
-        "5A - append 5 times at end of line",
-        "s - delete current character and switch to insert mode",
-        "5s - delete 5 characters and switch to insert mode",
-        "S - delete current line and switch to insert mode",
-        "5S - delete 5 lines and switch to insert mode",
-        "o - open a new line below the current line, switch to insert mode",
-        "5o - 5 times open a new line below the current line",
-        "O - open a new line above the current line, switch to insert mode",
-      ]
-      formatter = ExplainFormatter.new(normal)
-      assert_equal explanations.join("\n"), formatter.print
+    it 'explains h motion with count' do
+      motion = normal_mode { create_motion("5 h") }
+      assert_equal "5h - move left 5 characters", format(motion)
     end
 
-    def test_explain_the_u_command
-      normal = NormalMode[
-        NormalCommand.new(raw_keystrokes: 'u', trigger: 'u')
-      ]
-      formatter = ExplainFormatter.new(normal)
-      assert_equal "u - undo the last change", formatter.print
+    it "explains j motion" do
+      motion = normal_mode { create_motion('j') }
+      assert_equal "j - move down 1 line", format(motion)
     end
 
-    def test_explain_the_visual_u_operator
-      normal = NormalMode[
-        VisualMode[
-          VisualOperation.new(raw_keystrokes: 'u', trigger: 'u')
-        ]
-      ]
-      formatter = ExplainFormatter.new(normal)
-      assert_equal "u - downcase the selected text", formatter.print
+    it "explains j motion with count" do
+      motion = normal_mode { create_motion('5 j') }
+      assert_equal "5j - move down 5 lines", format(motion)
     end
 
-    def test_explain_motions_used_in_visual_mode
+    it "explains k motion" do
+      motion = normal_mode { create_motion('k') }
+      assert_equal "k - move up 1 line", format(motion)
+    end
+
+    it "explains k motion with count" do
+      motion = normal_mode { create_motion('5 k') }
+      assert_equal "5k - move up 5 lines", format(motion)
+    end
+
+    it "explains l motion" do
+      motion = normal_mode { create_motion('l') }
+      assert_equal "l - move right 1 character", format(motion)
+    end
+
+    it "explains l motion with count" do
+      motion = normal_mode { create_motion('5 l') }
+      assert_equal "5l - move right 5 characters", format(motion)
+    end
+
+    it "explains w motion" do
+      motion = normal_mode { create_motion('w') }
+      assert_equal "w - move to start of next word", format(motion)
+    end
+
+    it "explains w motion with count" do
+      motion = normal_mode { create_motion('5 w') }
+      assert_equal "5w - move to start of next word 5 times", format(motion)
+    end
+
+    it "explains b motion" do
+      motion = normal_mode { create_motion('b') }
+      assert_equal "b - move to start of current/previous word", format(motion)
+    end
+
+    it "explains b motion with count" do
+      motion = normal_mode { create_motion('5 b') }
+      assert_equal "5b - move to start of current/previous word 5 times", format(motion)
+    end
+
+    it "explains e motion" do
+      motion = normal_mode { create_motion('e') }
+      assert_equal "e - move to end of current/next word", format(motion)
+    end
+
+    it "explains e motion with count" do
+      motion = normal_mode { create_motion('5 e') }
+      assert_equal "5e - move to end of current/next word 5 times", format(motion)
+    end
+
+    it "explains 0 motion" do
+      motion = normal_mode { create_motion('0') }
+      assert_equal "0 - move to start of current line", format(motion)
+    end
+
+    it 'explains i switch' do
+      switch = normal_mode { create_switch("i") }
+      assert_equal "i - insert in front of cursor", format(switch)
+    end
+
+    it 'explains i switch with count' do
+      switch = normal_mode { create_switch("5 i") }
+      assert_equal "5i - insert 5 times in front of cursor", format(switch)
+    end
+
+    it "explains I switch" do
+      switch = normal_mode { create_switch('I') }
+      assert_equal "I - insert at start of line", format(switch)
+    end
+
+    it "explains I switch with count" do
+      switch = normal_mode { create_switch('5 I') }
+      assert_equal "5I - insert 5 times at start of line", format(switch)
+    end
+
+    it "explains a switch" do
+      switch = normal_mode { create_switch('a') }
+      assert_equal "a - append after the cursor", format(switch)
+    end
+
+    it "explains a switch with count" do
+      switch = normal_mode { create_switch('5 a') }
+      assert_equal "5a - append 5 times after the cursor", format(switch)
+    end
+
+    it "explains A switch" do
+      switch = normal_mode { create_switch('A') }
+      assert_equal "A - append at end of line", format(switch)
+    end
+
+    it "explains A switch with count" do
+      switch = normal_mode { create_switch('5 A') }
+      assert_equal "5A - append 5 times at end of line", format(switch)
+    end
+
+    it "explains s switch" do
+      switch = normal_mode { create_switch('s') }
+      assert_equal "s - delete current character and switch to insert mode", format(switch)
+    end
+
+    it "explains s switch with count" do
+      switch = normal_mode { create_switch('5 s') }
+      assert_equal "5s - delete 5 characters and switch to insert mode", format(switch)
+    end
+
+    it "explains S switch" do
+      switch = normal_mode { create_switch('S') }
+      assert_equal "S - delete current line and switch to insert mode", format(switch)
+    end
+
+    it "explains S switch with count" do
+      switch = normal_mode { create_switch('5 S') }
+      assert_equal "5S - delete 5 lines and switch to insert mode", format(switch)
+    end
+
+    it "explains o switch" do
+      switch = normal_mode { create_switch('o') }
+      assert_equal "o - open a new line below the current line, switch to insert mode", format(switch)
+    end
+
+    it "explains o switch with count" do
+      switch = normal_mode { create_switch('5 o') }
+      assert_equal "5o - 5 times open a new line below the current line", format(switch)
+    end
+
+    it "explains O switch" do
+      switch = normal_mode { create_switch('O') }
+      assert_equal "O - open a new line above the current line, switch to insert mode", format(switch)
+    end
+
+    it 'explains the u command' do
+      command = normal_mode { create_normal_command('u') }
+      assert_equal "u - undo the last change", format(command)
+    end
+
+    it 'explains the visual u operator' do
+      visual_operation = visual_mode { create_visual_operation('u') }
+      assert_equal "u - downcase the selected text", format(visual_operation)
+    end
+
+    it 'explains motions used in visual mode' do
       visual_motion = visual_mode { create_motion("h") }
       assert_equal "h - select left 1 character", format(visual_motion)
     end
 
-    def test_explain_an_aborted_command
+    it 'explains an aborted command' do
       normal = NormalMode[
         AbortedCommand.new(raw_keystrokes: "2\e")
       ]
@@ -114,27 +178,25 @@ module Vimprint
       assert_equal "2\e - [aborted command]", formatter.print
     end
 
-    def test_explain_delete_word_operation
+    it 'explains delete word operation' do
       deletion = normal_mode { create_operation("d w") }
       assert_equal "dw - delete to end of word", format(deletion)
     end
 
-    def test_explain_delete_paragraph_operation
+    it 'explains delete paragraph operation' do
       deletion = normal_mode { create_operation("d }") }
       assert_equal "d} - delete to end of paragraph", format(deletion)
     end
 
-    def test_explain_yank_word
+    it 'explains yank word operation' do
       yank = normal_mode { create_operation("y w") }
       assert_equal "yw - yank to end of word", format(yank)
     end
 
-    def test_explain_yank_paragraph
+    it 'explains yank paragraph operation' do
       yank = normal_mode { create_operation("y }") }
       assert_equal "y} - yank to end of paragraph", format(yank)
     end
-
-    private
 
     def normal_mode
       NormalMode[ *yield ]
@@ -144,13 +206,33 @@ module Vimprint
       VisualMode[ *yield ]
     end
 
+    def create_normal_command(keys)
+      NormalCommand.new(raw_keystrokes: keys, trigger: keys)
+    end
+
+    def create_visual_operation(keys)
+      VisualOperation.new(raw_keystrokes: keys, trigger: keys)
+    end
+
+    def create_switch(keys)
+      parts = keys.split(' ')
+      count = parts.shift if parts.size > 1
+      switch, = parts
+
+      Switch.new(
+        raw_keystrokes: keys.gsub(' ', ''),
+        trigger: switch,
+        counts: Array(count).map(&:to_i)
+      )
+    end
+
     def create_motion(keys)
       parts = keys.split(' ')
       count = parts.shift if parts.size > 1
       motion, = parts
 
       Motion.new(
-        raw_keystrokes: motion,
+        raw_keystrokes: keys.gsub(' ', ''),
         trigger: motion,
         counts: Array(count).map(&:to_i)
       )
