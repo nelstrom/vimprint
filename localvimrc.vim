@@ -5,8 +5,8 @@ endif
 function! SetupTestrunner()
   let name = expand('%:t')
   if match(name, '_test') > -1
-    nnoremap <buffer> Q :wa <bar> :Dispatch testrb %<CR>
+    nnoremap <buffer> Q :wa <bar> :!ruby %<CR>
   else
-    nnoremap <buffer> Q :execute ':wa <bar> :Dispatch testrb' rake#buffer().related()<CR>
+    nnoremap <buffer> Q :execute ':wa <bar> :!ruby' rake#buffer().related()<CR>
   endif
 endfunction
