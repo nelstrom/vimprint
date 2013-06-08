@@ -12,27 +12,19 @@ module Vimprint
     SINGULAR = 0
     PLURAL   = 1
 
-    def self.operator_lookup(keystroke, mode, motion)
-      motion_explained = case motion.trigger
-      when 'w' then 'word'
-      when '}' then 'paragraph'
-      end
-
-      case keystroke
-      when 'd'
-        "delete to end of #{motion_explained}"
-      when 'y'
-        "yank to end of #{motion_explained}"
-      else
-        raise ArgumentError, "ASPLODE: #{keystroke.inspect}"
-      end
-    end
-
     def self.lookup(keystroke, mode=:normal, count=1)
       count ||=1
       plurality = (count == 1) ? SINGULAR : PLURAL
 
       {
+        'delete' => {
+          '}' => ['delete to end of paragraph'],
+          'w' => ['delete to end of word'],
+        },
+        'yank' => {
+          '}' => ['yank to end of paragraph'],
+          'w' => ['yank to end of word'],
+        },
         :normal => {
           # motions
           'h' => [
@@ -124,8 +116,11 @@ module Vimprint
   end
 
   class Motion
+    def lookup(context)
+      Dictionary.lookup(trigger, context.mode, effective_count)
+    end
     def explain(context)
-      "#{raw_keystrokes} - #{Dictionary.lookup(trigger, context.mode, effective_count)}"
+      "#{raw_keystrokes} - #{lookup(context)}"
     end
   end
 
@@ -143,7 +138,7 @@ module Vimprint
 
   class Operation
     def explain(context)
-      "#{raw_keystrokes} - #{Dictionary.operator_lookup(operator, context.mode, motion)}"
+      "#{raw_keystrokes} - #{motion.lookup(self)}"
     end
   end
 
