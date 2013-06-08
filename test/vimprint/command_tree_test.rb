@@ -1,5 +1,6 @@
 require_relative '../../lib/vimprint/command_tree'
 require 'minitest/autorun'
+require 'minitest/pride'
 
 module Vimprint
   describe CommandTree do
@@ -8,13 +9,13 @@ module Vimprint
 
       it 'references the root node' do
         tree = CommandTree.new
-        tree.entry_point.must_equal tree.root
+        assert_equal tree.root, tree.entry_point
       end
 
       it 'can be set in the constructor' do
         normal_mode = []
         tree = CommandTree.new(normal_mode)
-        tree.entry_point.must_equal normal_mode
+        assert_equal tree.entry_point, normal_mode
       end
 
     end
@@ -28,7 +29,7 @@ module Vimprint
       it 'appends to the root-level entry point' do
         @tree << 'a'
         @tree << 'b'
-        @tree.root.must_equal ['a','b']
+        assert_equal ['a','b'], @tree.root
       end
 
       it 'appends to the top-most entry point' do
@@ -38,13 +39,13 @@ module Vimprint
         @tree << 'c'
         @tree.pop_mode
         @tree << 'd'
-        @tree.root.must_equal ['a',['b','c'],'d']
+        assert_equal ['a',['b','c'],'d'], @tree.root
       end
 
       it 'pushes a new mode when receiving a ModeOpener' do
         @tree.<<(['a'].extend Vimprint::ModeOpener)
         @tree.<<(['b'].extend Vimprint::ModeOpener)
-        @tree.root.must_equal [['a',['b']]]
+        assert_equal [['a',['b']]], @tree.root
       end
 
       it 'pops the modestack when receiving a ModeCloser' do
@@ -53,7 +54,7 @@ module Vimprint
         @tree.<<('b')
         @tree.<<('c'.extend Vimprint::ModeCloser)
         @tree.<<('d')
-        @tree.root.must_equal ['a',['b', 'c'], 'd']
+        assert_equal ['a',['b', 'c'], 'd'], @tree.root
       end
 
       it 'pops the modestack for each ModeCloser received' do
@@ -65,7 +66,7 @@ module Vimprint
         @tree.<<('d')
         @tree.<<('e'.extend Vimprint::ModeCloser)
         @tree.<<('f')
-        @tree.root.must_equal ['a',['b', ['c'], 'd', 'e'], 'f']
+        assert_equal ['a',['b', ['c'], 'd', 'e'], 'f'], @tree.root
       end
 
     end
