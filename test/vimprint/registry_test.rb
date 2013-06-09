@@ -65,11 +65,11 @@ module Vimprint
 
       before do
         @normal_mode = Registry.create_mode("normal")
-        @normal_mode.create_command('w')
+        @normal_mode.create_command('w', 'move to the start of the next word')
       end
 
       it 'explains the specified command' do
-        explained_motion = @normal_mode.get_command('w')
+        explained_motion = @normal_mode.get_command('w').template
         assert_equal "move to the start of the next word", explained_motion
       end
 
@@ -77,6 +77,26 @@ module Vimprint
         assert_raises(NoCommandError) {@normal_mode.get_command('sparkles')}
       end
 
+    end
+
+    describe "#create_command" do
+
+      before do
+        @normal_mode = Registry.create_mode("normal")
+      end
+
+      it 'instantiates an Explanation and saves it with a signature' do
+        template = 'move to the end of the current word'
+        @normal_mode.create_command('e', template)
+        assert_equal template, @normal_mode.get_command('e').template
+      end
+
+      it 'overrides the existing explanation' do
+        builtin, overridden = [ 'yank entire line',  'yank to end of line']
+        @normal_mode.create_command('Y', builtin)
+        @normal_mode.create_command('Y', overridden)
+        assert_equal overridden, @normal_mode.get_command('Y').template
+      end
     end
 
   end

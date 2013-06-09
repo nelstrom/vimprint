@@ -25,9 +25,9 @@ module Vimprint
       @modes[name] ||= new
     end
 
-    def create_command(trigger)
+    def create_command(signature, template)
       @commands ||= {}
-      @commands[trigger] = "move to the start of the next word"
+      @commands[signature] = Explanation.new(template)
     end
 
     def get_command(trigger)
