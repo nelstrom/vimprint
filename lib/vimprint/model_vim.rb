@@ -7,10 +7,16 @@ module Vimprint
     def mode
       :normal
     end
+    def verb
+      "move"
+    end
   end
   class VisualMode < Array
     def mode
       :visual
+    end
+    def verb
+      "select"
     end
   end
   class InsertMode < Array; end
@@ -59,6 +65,15 @@ module Vimprint
 
   class Operation < BaseCommand
     attr_reader :raw_keystrokes, :operator, :motion
+    def mode
+      verb
+    end
+    def verb
+      case operator
+      when 'd' then 'delete'
+      when 'y' then 'yank'
+      end
+    end
   end
 
   class VisualOperation < BaseCommand
