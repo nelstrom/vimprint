@@ -1,8 +1,10 @@
 require_relative '../model_vim'
 
 module Vimprint
+
   class Formatter
     attr_reader :commands
+
     def initialize(commands)
       @commands = commands
     end

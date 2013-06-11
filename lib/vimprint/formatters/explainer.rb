@@ -1,8 +1,14 @@
 require_relative '../model_vim'
-require_relative 'plain_printer'
+
 module Vimprint
 
-  class ExplainFormatter < Formatter
+  class ExplainFormatter
+    attr_reader :commands
+
+    def initialize(commands)
+      @commands = commands
+    end
+
     def print
       commands.explain
     end
