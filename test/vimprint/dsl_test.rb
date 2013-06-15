@@ -3,6 +3,17 @@ require 'minitest/pride'
 require './lib/vimprint/dsl'
 
 module Vimprint
+
+  describe HashFromBlock do
+    it 'takes a block with .new' do
+      hash = HashFromBlock.new {
+        one 1
+        two 2
+      }.hash
+      assert_equal({one: 1, two: 2}, hash)
+    end
+  end
+
   describe Dsl do
     it 'has a motion method' do
       Dsl.parse do
