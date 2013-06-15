@@ -5,13 +5,30 @@ require './lib/vimprint/dsl'
 module Vimprint
 
   describe HashFromBlock do
-    it 'takes a block with .new' do
-      hash = HashFromBlock.new {
+
+    it '.new returns a HashFromBlock object' do
+      builder = HashFromBlock.new {
         one 1
         two 2
-      }.hash
+      }
+      assert_equal HashFromBlock, builder.class
+      assert_equal({one: 1, two: 2}, builder.hash)
+    end
+
+    it 'can add new items' do
+      builder = HashFromBlock.new { one 1 }
+      builder.two 2
+      assert_equal({one: 1, two: 2}, builder.hash)
+    end
+
+    it '.build returns a hash object' do
+      hash = HashFromBlock.build {
+        one 1
+        two 2
+      }
       assert_equal({one: 1, two: 2}, hash)
     end
+
   end
 
   describe Dsl do

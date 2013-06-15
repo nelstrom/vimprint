@@ -5,7 +5,7 @@ module Vimprint
     attr_reader :config
 
     def initialize(&block)
-      @config = HashFromBlock.hash(&block)
+      @config = HashFromBlock.build(&block)
     end
 
     def signature
@@ -26,19 +26,18 @@ module Vimprint
   class HashFromBlock
     attr_reader :hash
 
-    def self.hash(&block)
+    def self.build(&block)
       self.new(&block).hash
     end
 
     def initialize(&block)
       @hash = {}
       instance_eval(&block)
-      hash
     end
 
     def method_missing(name, *args, &block)
       args = args.shift if args.size == 1
-      hash[name] = (block.nil?) ? args : self.class.hash(&block)
+      hash[name] = (block.nil?) ? args : self.class.build(&block)
     end
   end
 
