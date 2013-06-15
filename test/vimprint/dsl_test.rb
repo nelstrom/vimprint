@@ -6,13 +6,20 @@ module Vimprint
 
   describe HashFromBlock do
 
-    it '.new returns a HashFromBlock object' do
-      builder = HashFromBlock.new {
+    def values
+      proc do
         one 1
         two 2
-      }
+        nested do
+          three 3
+        end
+      end
+    end
+
+    it '.new returns a HashFromBlock object' do
+      builder = HashFromBlock.new &values
       assert_equal HashFromBlock, builder.class
-      assert_equal({one: 1, two: 2}, builder.hash)
+      assert_equal({one: 1, two: 2, nested: {three: 3}}, builder.hash)
     end
 
     it 'can add new items' do
@@ -22,11 +29,8 @@ module Vimprint
     end
 
     it '.build returns a hash object' do
-      hash = HashFromBlock.build {
-        one 1
-        two 2
-      }
-      assert_equal({one: 1, two: 2}, hash)
+      hash = HashFromBlock.build &values
+      assert_equal({one: 1, two: 2, nested: {three: 3}}, hash)
     end
 
   end
