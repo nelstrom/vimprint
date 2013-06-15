@@ -1,6 +1,7 @@
 require_relative '../helper'
-require_compiled_ragel '../../lib/ragel/insert_parser'
-require_relative '../../lib/vimprint/event_list'
+
+require 'vimprint/ragel/insert_parser'
+require 'vimprint/event_list'
 
 describe InsertParser do
 

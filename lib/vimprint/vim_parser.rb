@@ -1,2 +1,2 @@
-require_relative 'event_list'
-require_relative '../ragel/vim_parser'
+require 'vimprint/event_list'
+require 'vimprint/ragel/vim_parser'
