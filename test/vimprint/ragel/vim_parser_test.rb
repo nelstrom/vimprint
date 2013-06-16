@@ -1,6 +1,7 @@
 require_relative '../helper'
-require_compiled_ragel '../../lib/ragel/vim_parser'
-require_relative '../../lib/vimprint/event_list'
+
+require 'vimprint/ragel/vim_parser'
+require 'vimprint/event_list'
 
 describe VimParser do
 
