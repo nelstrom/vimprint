@@ -1,5 +1,4 @@
-require_relative '../helper'
-
+require 'minitest/autorun'
 require 'vimprint/ragel/vim_parser'
 require 'vimprint/event_list'
 
