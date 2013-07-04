@@ -7,6 +7,7 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
+    minitest (5.0.4)
     nokogiri (1.5.8)
     rake (10.0.3)
 
@@ -14,5 +15,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  minitest
   rake
   vimprint!
