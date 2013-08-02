@@ -4,3 +4,4 @@ notes-on-command-dsl.md
 scratch.rb
 *.log
 lib/vimprint/ragel
+next
