@@ -69,8 +69,9 @@ module Vimprint
 
   end
 
-  describe Dsl do
-    it 'has a motion method' do
+  describe 'Dsl.parse' do
+
+    before do
       Dsl.parse do
         motion {
           trigger 'h'
@@ -83,13 +84,24 @@ module Vimprint
           }
         }
       end
-      normal_mode = Registry.get_mode("normal")
+    end
+
+    def normal_mode
+      Registry.get_mode("normal")
+    end
+
+    it 'motion block generates a singular explanation' do
       h_once = normal_mode.get_command({trigger: 'h', number: 'singular'})
-      h_multiple = normal_mode.get_command({trigger: 'h', number: 'plural'})
       assert_equal Explanation, h_once.class
       assert_equal "move right 1 character", h_once.template
+    end
+
+    it 'motion block generates a plural explanation' do
+      h_multiple = normal_mode.get_command({trigger: 'h', number: 'plural'})
       assert_equal Explanation, h_multiple.class
       assert_equal 'move right #{count} characters', h_multiple.template
     end
+
   end
+
 end
