@@ -42,7 +42,7 @@ module Vimprint
       Config.new do
         trigger 'h'
         explain {
-          template 'move right #{number}'
+          template 'move right {{number}}'
           number {
             singular "1 character"
             plural '#{count} characters'
@@ -56,7 +56,7 @@ module Vimprint
     end
 
     it '#template accesses the template' do
-      assert_equal('move right #{number}', config.template)
+      assert_equal('move right {{number}}', config.template)
     end
 
     it '#projected_templates gets singular+plural templates' do
@@ -75,7 +75,7 @@ module Vimprint
         motion {
           trigger 'h'
           explain {
-            template 'move right #{number}'
+            template 'move right {{number}}'
             number {
               singular "1 character"
               plural '#{count} characters'

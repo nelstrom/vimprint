@@ -18,7 +18,7 @@ module Vimprint
 
     def projected_templates
       config[:explain][:number].each.with_object({}) do |(key,value),hash|
-        hash[key.to_sym] = template.sub('#{number}', value)
+        hash[key.to_sym] = template.sub('{{number}}', value)
       end
     end
   end
