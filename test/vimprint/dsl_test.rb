@@ -42,7 +42,7 @@ module Vimprint
       Config.new do
         trigger 'h'
         explain {
-          template 'move right {{number}}'
+          template 'move left {{number}}'
           number {
             singular "1 character"
             plural '#{count} characters'
@@ -56,13 +56,13 @@ module Vimprint
     end
 
     it '#template accesses the template' do
-      assert_equal('move right {{number}}', config.template)
+      assert_equal('move left {{number}}', config.template)
     end
 
     it '#projected_templates gets singular+plural templates' do
       templates = {
-        :singular => "move right 1 character",
-        :plural => 'move right #{count} characters',
+        :singular => "move left 1 character",
+        :plural => 'move left #{count} characters',
       }
       assert_equal(templates, config.projected_templates)
     end
@@ -76,7 +76,7 @@ module Vimprint
         motion {
           trigger 'h'
           explain {
-            template 'move right {{number}}'
+            template 'move left {{number}}'
             number {
               singular "1 character"
               plural '#{count} characters'
@@ -93,13 +93,13 @@ module Vimprint
     it 'motion block generates a singular explanation' do
       h_once = normal_mode.get_command({trigger: 'h', number: 'singular'})
       assert_equal Explanation, h_once.class
-      assert_equal "move right 1 character", h_once.template
+      assert_equal "move left 1 character", h_once.template
     end
 
     it 'motion block generates a plural explanation' do
       h_multiple = normal_mode.get_command({trigger: 'h', number: 'plural'})
       assert_equal Explanation, h_multiple.class
-      assert_equal 'move right #{count} characters', h_multiple.template
+      assert_equal 'move left #{count} characters', h_multiple.template
     end
 
   end
