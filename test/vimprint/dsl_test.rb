@@ -36,6 +36,39 @@ module Vimprint
 
   end
 
+  describe Config do
+
+    def config
+      Config.new do
+        trigger 'h'
+        explain {
+          template 'move right #{number}'
+          number {
+            singular "1 character"
+            plural '#{count} characters'
+          }
+        }
+      end
+    end
+
+    it '#signature accesses the trigger' do
+      assert_equal({trigger: "h"}, config.signature)
+    end
+
+    it '#template accesses the template' do
+      assert_equal('move right #{number}', config.template)
+    end
+
+    it '#projected_templates gets singular+plural templates' do
+      templates = {
+        :singular => "move right 1 character",
+        :plural => 'move right #{count} characters',
+      }
+      assert_equal(templates, config.projected_templates)
+    end
+
+  end
+
   describe Dsl do
     it 'has a motion method' do
       Dsl.parse do
