@@ -1,3 +1,4 @@
+gem 'minitest'
 require_relative '../../lib/vimprint/command_tree'
 require 'minitest/autorun'
 require 'minitest/pride'

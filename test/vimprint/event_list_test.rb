@@ -1,3 +1,4 @@
+gem 'minitest'
 require_relative '../../lib/vimprint/event_list'
 require 'minitest/autorun'
 

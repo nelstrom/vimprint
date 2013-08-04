@@ -1,3 +1,4 @@
+gem 'minitest'
 require 'minitest/autorun'
 require 'vimprint/ragel/vim_parser'
 require 'vimprint/event_list'
