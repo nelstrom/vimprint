@@ -1,5 +1,5 @@
 gem 'minitest'
-require_relative '../../lib/vimprint/command_tree'
+require './lib/vimprint/model/command_tree'
 require 'minitest/autorun'
 require 'minitest/pride'
 
