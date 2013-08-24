@@ -5,3 +5,4 @@ scratch.rb
 *.log
 lib/vimprint/ragel
 next
+sketches
