@@ -1,4 +1,5 @@
-require_relative '../model_vim'
+require_relative '../model/modes'
+require_relative '../model/commands'
 
 module Vimprint
 
