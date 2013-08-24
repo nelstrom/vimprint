@@ -2,8 +2,11 @@ module Vimprint
 
   %%{
     machine parser;
+    action H { @head = p; }
+    action T { @tail = p; }
 
-    normal  := ('x')*;
+    cut = 'x' >H @T @{ @eventlist << strokes };
+    normal  := cut*;
 
   }%%
 
@@ -12,7 +15,7 @@ module Vimprint
     attr_accessor :data
 
     def initialize(listener)
-      @listener = listener
+      @eventlist = listener
       %% write data;
     end
 
