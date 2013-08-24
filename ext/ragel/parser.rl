@@ -14,7 +14,7 @@ module Vimprint
 
     attr_accessor :data
 
-    def initialize(listener)
+    def initialize(listener=[])
       @eventlist = listener
       %% write data;
     end
@@ -24,6 +24,7 @@ module Vimprint
       stack = []
       %% write init;
       %% write exec;
+      @eventlist
     end
 
     def strokes
