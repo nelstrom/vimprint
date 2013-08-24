@@ -9,7 +9,7 @@ module Vimprint
     end
 
     it 'accepts a simple "x" command' do
-      assert_equal ["x"], scan("x")
+      assert_equal [NormalCommand.new("x")], scan("x")
     end
   end
 

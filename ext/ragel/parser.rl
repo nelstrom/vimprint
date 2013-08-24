@@ -1,3 +1,6 @@
+require 'vimprint/model/modes'
+require 'vimprint/model/commands'
+
 module Vimprint
 
   %%{
@@ -5,7 +8,7 @@ module Vimprint
     action H { @head = p; }
     action T { @tail = p; }
 
-    cut = 'x' >H @T @{ @eventlist << strokes };
+    cut = 'x' >H @T @{ @eventlist << NormalCommand.new(strokes) };
     normal  := cut*;
 
   }%%
