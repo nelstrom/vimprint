@@ -30,9 +30,9 @@ module Vimprint
       @commands[signature] = Explanation.new(template)
     end
 
-    def get_command(trigger)
-      @commands.fetch(trigger) {
-        raise NoCommandError.new("Vimprint doesn't know about #{trigger} command")
+    def get_command(signature)
+      @commands.fetch(signature) {
+        raise NoCommandError.new("Vimprint doesn't know about #{signature} command")
       }
     end
 

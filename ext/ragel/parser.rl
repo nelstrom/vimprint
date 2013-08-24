@@ -1,4 +1,5 @@
 require 'vimprint/model/modes'
+require 'vimprint/model/stage'
 require 'vimprint/model/commands'
 
 module Vimprint
@@ -8,8 +9,12 @@ module Vimprint
     action H { @head = p; }
     action T { @tail = p; }
 
-    cut = 'x' >H @T @{ @eventlist << NormalCommand.new(strokes) };
-    normal  := cut*;
+    count = [1-9] >H @T @{ @stage.add_count(strokes) };
+    cut   = 'x'   >H @T @{ @stage.add_trigger(strokes) };
+    cut_command =
+      count?
+      cut @{ @eventlist << NormalCommand.new(@stage.to_hash) };
+    normal  := cut_command*;
 
   }%%
 
@@ -19,6 +24,7 @@ module Vimprint
 
     def initialize(listener=[])
       @eventlist = listener
+      @stage = Stage.new
       %% write data;
     end
 
