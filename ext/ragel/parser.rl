@@ -10,9 +10,11 @@ module Vimprint
     action T { @tail = p; }
 
     count = [1-9] >H @T @{ @stage.add_count(strokes) };
+    register = '"' [a-z]  >H @T @{ @stage.add_register(strokes) };
     cut   = 'x'   >H @T @{ @stage.add_trigger(strokes) };
     cut_command =
       count?
+      register?
       cut @{ @eventlist << NormalCommand.new(@stage.commit) };
     normal  := cut_command*;
 

@@ -10,6 +10,7 @@ module Vimprint
     def reset
       @buffer = []
       @counts = []
+      @register = ""
     end
 
     def commit
@@ -21,6 +22,7 @@ module Vimprint
         raw_keystrokes: raw_keystrokes,
         counts: @counts,
         count: effective_count,
+        register: @register,
         trigger: @trigger
       }
     end

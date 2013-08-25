@@ -6,6 +6,7 @@ module Vimprint
     def initialize(config={})
       @trigger        = config[:trigger]
       @count          = config[:count]
+      @register       = config[:register]
       @raw_keystrokes = config[:raw_keystrokes]
     end
 
@@ -18,13 +19,19 @@ module Vimprint
     def signature
       {
         trigger: @trigger,
-        number:  plurality
+        number:  plurality,
+        register: register_description
       }
     end
 
     def plurality
       return 'singular' if @count.nil?
       @count > 1 ? 'plural' : 'singular'
+    end
+
+    def register_description
+      return 'default' if (@register.nil? || @register.empty?)
+      "named"
     end
 
   end

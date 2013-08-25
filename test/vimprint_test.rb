@@ -5,19 +5,12 @@ module Vimprint
 
   describe Vimprint do
 
-    it 'explains the "x" command' do
-      assert_equal [["x", "cut 1 character into default register"]], Vimprint.explain("x")
-    end
-
-    it 'explains the "2x" command' do
-      assert_equal [["2x", "cut 2 characters into default register"]], Vimprint.explain("2x")
-    end
-
-    it 'explains consecutive commands: "x2x"' do
+    it 'explains consecutive commands: \'x2x"ax\'' do
       assert_equal [
-        ["x", "cut 1 character into default register"],
-        ["2x", "cut 2 characters into default register"],
-      ], Vimprint.explain("x2x")
+        ['x', 'cut 1 character into default register'],
+        ['2x', 'cut 2 characters into default register'],
+        ['"ax', 'cut 1 character into register a'],
+      ], Vimprint.explain('x2x"ax')
     end
 
   end
