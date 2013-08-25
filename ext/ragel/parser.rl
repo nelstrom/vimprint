@@ -13,7 +13,7 @@ module Vimprint
     cut   = 'x'   >H @T @{ @stage.add_trigger(strokes) };
     cut_command =
       count?
-      cut @{ @eventlist << NormalCommand.new(@stage.to_hash); @stage.reset };
+      cut @{ @eventlist << NormalCommand.new(@stage.commit) };
     normal  := cut_command*;
 
   }%%

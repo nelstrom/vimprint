@@ -30,6 +30,21 @@ module Vimprint
       assert_equal hashmap, stage.to_hash
     end
 
+    def test_commit_returns_hash_and_clears_state
+      stage = Stage.new
+      stage.add_register 'a'
+      stage.add_count     4
+      stage.add_trigger  'x'
+      hashmap = {
+        raw_keystrokes: '"a4x',
+        counts: [4],
+        count: 4,
+        trigger: 'x'
+      }
+      assert_equal hashmap, stage.commit
+      assert_equal({:raw_keystrokes=>"", :counts=>[], :count=>nil, :trigger=>"x"}, stage.to_hash)
+    end
+
     def test_stage_accumulates_raw_keystrokes
       stage = Stage.new
       stage.add_register 'a'

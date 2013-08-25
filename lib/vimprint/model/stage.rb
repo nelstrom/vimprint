@@ -4,13 +4,16 @@ module Vimprint
     attr_reader :register, :trigger, :operator, :motion, :counts
 
     def initialize()
-      @buffer = []
-      @counts = []
+      reset
     end
 
     def reset
       @buffer = []
       @counts = []
+    end
+
+    def commit
+      to_hash.tap { reset }
     end
 
     def to_hash
