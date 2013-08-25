@@ -6,6 +6,7 @@ module Vimprint
       eventlist.map do |event|
         template = Registry.get_mode('normal').get_command(event.signature)
         count = event.count
+        register = event.register
         [
           event.raw_keystrokes,
           template.render(binding)

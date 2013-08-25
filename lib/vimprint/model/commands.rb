@@ -1,7 +1,7 @@
 module Vimprint
 
   class BaseCommand
-    attr_reader :trigger, :count, :raw_keystrokes
+    attr_reader :trigger, :count, :raw_keystrokes, :register
 
     def initialize(config={})
       @trigger        = config[:trigger]

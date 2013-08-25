@@ -16,7 +16,7 @@ module Vimprint
 
   @normal_mode.create_command(
     {trigger: 'x', number: 'singular', register: 'named'},
-    'cut 1 character into register a'
+    'cut 1 character into register #{register}'
   )
 
 end
