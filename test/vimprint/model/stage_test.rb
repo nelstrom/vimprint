@@ -7,6 +7,15 @@ module Vimprint
 
   describe Stage do
 
+    def test_reset_clears_state
+      stage = Stage.new
+      stage.add_register 'a'
+      stage.add_count     4
+      stage.add_trigger  'x'
+      stage.reset
+      assert_equal({:raw_keystrokes=>"", :counts=>[], :count=>nil, :trigger=>"x"}, stage.to_hash)
+    end
+
     def test_stage_to_hash
       stage = Stage.new
       stage.add_register 'a'
@@ -46,6 +55,7 @@ module Vimprint
       assert_equal "a", stage.register
       assert_equal [2,3,4], stage.counts
       assert_equal '2"a3d4l', stage.raw_keystrokes
+      assert_equal 24, stage.count
     end
 
     def test_register_is_overwritten

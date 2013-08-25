@@ -13,6 +13,13 @@ module Vimprint
       assert_equal [["2x", "cut 2 characters into default register"]], Vimprint.explain("2x")
     end
 
+    it 'explains consecutive commands: "x2x"' do
+      assert_equal [
+        ["x", "cut 1 character into default register"],
+        ["2x", "cut 2 characters into default register"],
+      ], Vimprint.explain("x2x")
+    end
+
   end
 
 end

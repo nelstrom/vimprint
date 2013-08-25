@@ -8,6 +8,11 @@ module Vimprint
       @counts = []
     end
 
+    def reset
+      @buffer = []
+      @counts = []
+    end
+
     def to_hash
       {
         raw_keystrokes: raw_keystrokes,
@@ -20,6 +25,8 @@ module Vimprint
     def effective_count
       @counts.map { |digit| digit.to_i }.inject(:*)
     end
+
+    alias_method :count, :effective_count
 
     def raw_keystrokes
       @buffer.join
