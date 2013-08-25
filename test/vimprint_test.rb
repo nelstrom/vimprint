@@ -17,11 +17,14 @@ module Vimprint
       ], Vimprint.explain('x2x"ax"zx2"ax"a2x3"a2x')
     end
 
-    it 'explains both x and X commands: \'xX\'' do
+    it 'explains both x and X commands' do
       assert_equal [
         ['x', 'cut character under cursor into default register'],
-        ['X', 'cut 1 character before cursor into default register']
-      ], Vimprint.explain('xX')
+        ['X', 'cut 1 character before cursor into default register'],
+        ['2X', 'cut 2 characters before cursor into default register'],
+        ['"aX', 'cut 1 character before cursor into register a'],
+        ['"z3X', 'cut 3 characters before cursor into register z'],
+      ], Vimprint.explain('xX2X"aX"z3X')
     end
 
   end
