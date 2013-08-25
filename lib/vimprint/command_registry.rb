@@ -19,4 +19,9 @@ module Vimprint
     'cut 1 character into register #{register}'
   )
 
+  @normal_mode.create_command(
+    {trigger: 'x', number: 'plural', register: 'named'},
+    'cut #{count} characters into register #{register}'
+  )
+
 end
