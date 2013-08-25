@@ -17,6 +17,13 @@ module Vimprint
       ], Vimprint.explain('x2x"ax"zx2"ax"a2x3"a2x')
     end
 
+    it 'explains both x and X commands: \'xX\'' do
+      assert_equal [
+        ['x', 'cut 1 character into default register'],
+        ['X', 'backspace cut 1 character into default register'],
+      ], Vimprint.explain('xX')
+    end
+
   end
 
 end
