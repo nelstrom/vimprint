@@ -13,7 +13,8 @@ module Vimprint
         ['"zx', 'cut 1 character into register z'],
         ['2"ax', 'cut 2 characters into register a'],
         ['"a2x', 'cut 2 characters into register a'],
-      ], Vimprint.explain('x2x"ax"zx2"ax"a2x')
+        ['3"a2x', 'cut 6 characters into register a'],
+      ], Vimprint.explain('x2x"ax"zx2"ax"a2x3"a2x')
     end
 
   end
