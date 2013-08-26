@@ -36,7 +36,8 @@ module Vimprint
         ['ma', 'save current position with local mark a'],
         ['mZ', 'save current position with global mark Z'],
         ['`a', 'jump to local mark a'],
-      ], Vimprint.explain('mamZ`a')
+        ['2`Z', 'jump to global mark Z'],
+      ], Vimprint.explain('mamZ`a2`Z')
     end
 
   end

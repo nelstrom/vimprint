@@ -72,4 +72,8 @@ module Vimprint
   @normal_mode.create_command(
     {trigger: '`', mark: 'lowercase'},
     'jump to local mark #{mark}')
+  @normal_mode.create_command(
+    {trigger: '`', mark: 'uppercase'},
+    'jump to global mark #{mark}')
+
 end

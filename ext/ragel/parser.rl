@@ -24,6 +24,7 @@ module Vimprint
     big_letter = [A-Z] >H @T @{ @stage.add_mark(strokes) };
     mark = [m`] >H @T @{ @stage.add_trigger(strokes) };
     mark_command =
+      count?
       mark
       (small_letter | big_letter) @{ @eventlist << MarkCommand.new(@stage.commit) };
 
