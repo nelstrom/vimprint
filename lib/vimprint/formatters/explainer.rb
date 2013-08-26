@@ -13,7 +13,7 @@ module Vimprint
     end
   end
 
-  class NormalCommand
+  class BaseCommand
     def explain
       [
         raw_keystrokes,

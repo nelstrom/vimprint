@@ -25,7 +25,7 @@ module Vimprint
 
   class NormalCommand < BaseCommand
     def signature
-      { trigger: @trigger, number:  plurality }
+      super.merge({number: plurality})
     end
 
     def plurality
@@ -36,11 +36,7 @@ module Vimprint
 
   class RegisterCommand < NormalCommand
     def signature
-      {
-        trigger: @trigger,
-        number:  plurality,
-        register: register_description
-      }
+      super.merge({register: register_description})
     end
 
     def register_description
@@ -49,12 +45,9 @@ module Vimprint
     end
   end
 
-  class MarkCommand < NormalCommand
+  class MarkCommand < BaseCommand
     def signature
-      {
-        trigger: @trigger,
-        mark: mark_description
-      }
+      super.merge({mark: mark_description})
     end
 
     def mark_description
