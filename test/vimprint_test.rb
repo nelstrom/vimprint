@@ -5,6 +5,10 @@ module Vimprint
 
   describe Vimprint do
 
+    def ctrl_R
+      "\x12" # Ruby string notation for ctrl_R
+    end
+
     it 'prints consecutive commands with spaces to pad' do
       assert_equal 'x 2x "ax "zx 2"ax "a2x 3"a2x ', Vimprint.pp('x2x"ax"zx2"ax"a2x3"a2x')
     end
@@ -44,7 +48,8 @@ module Vimprint
       assert_equal [
         ['u', 'undo 1 change'],
         ['2u', 'undo 2 changes'],
-      ], Vimprint.explain("u2u")
+        ["3<C-r>", 'redo 3 changes'],
+      ], Vimprint.explain("u2u3#{ctrl_R}")
     end
 
   end

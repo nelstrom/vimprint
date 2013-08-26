@@ -82,4 +82,11 @@ module Vimprint
   @normal_mode.create_command(
     {trigger: 'u', number: 'plural'},
     'undo #{count} changes')
+
+  @normal_mode.create_command(
+    {trigger: '<C-r>', number: 'singular'},
+    'redo 1 change')
+  @normal_mode.create_command(
+    {trigger: '<C-r>', number: 'plural'},
+    'redo #{count} changes')
 end

@@ -9,6 +9,8 @@ module Vimprint
     action H { @head = p; }
     action T { @tail = p; }
 
+    ctrl_r = 18;
+
     count = [1-9] >H @T @{ @stage.add_count(strokes) };
     register = '"' [a-z]  >H @T @{ @stage.add_register(strokes) };
     cut   = [xX]   >H @T @{ @stage.add_trigger(strokes) };
@@ -29,9 +31,10 @@ module Vimprint
       (small_letter | big_letter) @{ @eventlist << MarkCommand.new(@stage.commit) };
 
     undo = 'u' >H @T @{ @stage.add_trigger(strokes) };
+    redo = ctrl_r >H @T @{ @stage.add_trigger('<C-r>') };
     history_command =
       count?
-      undo @{ @eventlist << NormalCommand.new(@stage.commit) };
+      (undo | redo) @{ @eventlist << NormalCommand.new(@stage.commit) };
 
     normal  := (cut_command | mark_command | history_command)*;
 
