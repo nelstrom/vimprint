@@ -69,4 +69,7 @@ module Vimprint
     {trigger: 'm', mark: 'uppercase'},
     'save current position with global mark #{mark}')
 
+  @normal_mode.create_command(
+    {trigger: '`', mark: 'lowercase'},
+    'jump to local mark #{mark}')
 end

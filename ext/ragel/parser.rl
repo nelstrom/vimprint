@@ -22,7 +22,7 @@ module Vimprint
 
     small_letter = [a-z] >H @T @{ @stage.add_mark(strokes) };
     big_letter = [A-Z] >H @T @{ @stage.add_mark(strokes) };
-    mark = 'm' >H @T @{ @stage.add_trigger(strokes) };
+    mark = [m`] >H @T @{ @stage.add_trigger(strokes) };
     mark_command =
       mark
       (small_letter | big_letter) @{ @eventlist << MarkCommand.new(@stage.commit) };

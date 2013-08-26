@@ -35,7 +35,8 @@ module Vimprint
       assert_equal [
         ['ma', 'save current position with local mark a'],
         ['mZ', 'save current position with global mark Z'],
-      ], Vimprint.explain('mamZ')
+        ['`a', 'jump to local mark a'],
+      ], Vimprint.explain('mamZ`a')
     end
 
   end
