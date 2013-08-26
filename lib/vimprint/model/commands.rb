@@ -25,7 +25,7 @@ module Vimprint
 
   class NormalCommand < BaseCommand
     def signature
-      { trigger: @trigger }
+      { trigger: @trigger, number:  plurality }
     end
 
     def plurality

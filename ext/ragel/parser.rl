@@ -28,7 +28,12 @@ module Vimprint
       mark
       (small_letter | big_letter) @{ @eventlist << MarkCommand.new(@stage.commit) };
 
-    normal  := (cut_command | mark_command)*;
+    undo = 'u' >H @T @{ @stage.add_trigger(strokes) };
+    history_command =
+      count?
+      undo @{ @eventlist << NormalCommand.new(@stage.commit) };
+
+    normal  := (cut_command | mark_command | history_command)*;
 
   }%%
 

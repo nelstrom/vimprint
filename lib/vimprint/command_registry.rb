@@ -76,4 +76,10 @@ module Vimprint
     {trigger: '`', mark: 'uppercase'},
     'jump to global mark #{mark}')
 
+  @normal_mode.create_command(
+    {trigger: 'u', number: 'singular'},
+    'undo 1 change')
+  @normal_mode.create_command(
+    {trigger: 'u', number: 'plural'},
+    'undo #{count} changes')
 end

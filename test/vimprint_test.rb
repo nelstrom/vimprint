@@ -40,6 +40,13 @@ module Vimprint
       ], Vimprint.explain('mamZ`a2`Z')
     end
 
+    it 'explains undo and redo commands' do
+      assert_equal [
+        ['u', 'undo 1 change'],
+        ['2u', 'undo 2 changes'],
+      ], Vimprint.explain("u2u")
+    end
+
   end
 
 end
