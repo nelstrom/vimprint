@@ -34,7 +34,8 @@ module Vimprint
     it 'explains distroke commands' do
       assert_equal [
         ['ma', 'save current position with local mark a'],
-      ], Vimprint.explain('ma')
+        ['mZ', 'save current position with global mark Z'],
+      ], Vimprint.explain('mamZ')
     end
 
   end

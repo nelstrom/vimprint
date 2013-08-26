@@ -58,7 +58,7 @@ module Vimprint
     end
 
     def mark_description
-      "lowercase"
+      /[[:upper:]]/.match(@mark) ? "uppercase" : "lowercase"
     end
   end
 

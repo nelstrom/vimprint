@@ -64,5 +64,9 @@ module Vimprint
 
   @normal_mode.create_command(
     {trigger: 'm', mark: 'lowercase'},
-    'save current position with local mark a')
+    'save current position with local mark #{mark}')
+  @normal_mode.create_command(
+    {trigger: 'm', mark: 'uppercase'},
+    'save current position with global mark #{mark}')
+
 end
