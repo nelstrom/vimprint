@@ -5,6 +5,10 @@ module Vimprint
 
   describe Vimprint do
 
+    it 'prints consecutive commands with spaces to pad' do
+      assert_equal 'x 2x "ax "zx 2"ax "a2x 3"a2x ', Vimprint.pp('x2x"ax"zx2"ax"a2x3"a2x')
+    end
+
     it 'explains consecutive commands: \'x2x"ax"zx2"ax"a2x\'' do
       assert_equal [
         ['x', 'cut character under cursor into default register'],
