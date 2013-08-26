@@ -31,6 +31,12 @@ module Vimprint
       ], Vimprint.explain('xX2X"aX"z3X')
     end
 
+    it 'explains distroke commands' do
+      assert_equal [
+        ['ma', 'save current position with local mark a'],
+      ], Vimprint.explain('ma')
+    end
+
   end
 
 end

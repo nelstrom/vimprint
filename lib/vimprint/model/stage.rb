@@ -1,7 +1,7 @@
 module Vimprint
   class Stage
 
-    attr_reader :register, :trigger, :operator, :motion, :counts
+    attr_reader :register, :trigger, :operator, :motion, :counts, :mark
 
     def initialize()
       reset
@@ -11,6 +11,7 @@ module Vimprint
       @buffer = []
       @counts = []
       @register = ""
+      @mark = ""
     end
 
     def commit
@@ -23,7 +24,8 @@ module Vimprint
         counts: @counts,
         count: effective_count,
         register: @register,
-        trigger: @trigger
+        trigger: @trigger,
+        mark: @mark
       }
     end
 
@@ -45,6 +47,11 @@ module Vimprint
     def add_register(address)
       @register = address
       @buffer << '"' + address
+    end
+
+    def add_mark(mark)
+      @mark = mark
+      @buffer << mark
     end
 
     def add_trigger(keystrokes)
