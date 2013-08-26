@@ -1,17 +1,30 @@
 require 'vimprint/command_registry'
 
 module Vimprint
-  module Explainer
-    def self.process(eventlist)
-      eventlist.map do |event|
-        template = Registry.get_mode('normal').get_command(event.signature)
-        count = event.count
-        register = event.register
-        [
-          event.raw_keystrokes,
-          template.render(binding)
-        ]
-      end
+  class Explainer
+    attr_reader :commands
+
+    def initialize(commands)
+      @commands = commands
+    end
+
+    def explain
+      commands.explain
+    end
+  end
+
+  class NormalMode
+    def explain
+      map(&:explain)
+    end
+  end
+
+  class NormalCommand
+    def explain
+      [
+        raw_keystrokes,
+        Registry.get_mode('normal').get_command(signature).render(binding)
+      ]
     end
   end
 end

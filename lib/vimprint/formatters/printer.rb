@@ -3,6 +3,7 @@ require 'vimprint/command_registry'
 module Vimprint
   class Printer
     attr_reader :commands
+
     def initialize(commands)
       @commands = commands
     end
