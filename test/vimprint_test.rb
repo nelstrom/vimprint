@@ -52,6 +52,12 @@ module Vimprint
       ], Vimprint.explain("u2u3#{ctrl_R}")
     end
 
+    it 'explains the r command' do
+      assert_equal [
+        ['ra', 'replace current character with a']
+      ], Vimprint.explain("ra")
+    end
+
   end
 
 end

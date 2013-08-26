@@ -55,4 +55,10 @@ module Vimprint
     end
   end
 
+  class ReplaceCommand < NormalCommand
+    def signature
+      super.merge({printable_char: true})
+    end
+  end
+
 end

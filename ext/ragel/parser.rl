@@ -36,7 +36,13 @@ module Vimprint
       count?
       (undo | redo) @{ @eventlist << NormalCommand.new(@stage.commit) };
 
-    normal  := (cut_command | mark_command | history_command)*;
+    replace = 'r'  >H @T @{ @stage.add_trigger(strokes) };
+    printable_chars = print >H @T @{ @stage.add_printable_char(strokes) };
+    replace_command =
+      replace
+      printable_chars @{ @eventlist << ReplaceCommand.new(@stage.commit) };
+
+    normal  := (cut_command | mark_command | history_command | replace_command)*;
 
   }%%
 

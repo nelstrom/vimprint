@@ -89,4 +89,8 @@ module Vimprint
   @normal_mode.create_command(
     {trigger: '<C-r>', number: 'plural'},
     'redo #{count} changes')
+
+  @normal_mode.create_command(
+    {trigger: 'r', number: 'singular', printable_char: true},
+    'replace current character with a')
 end
