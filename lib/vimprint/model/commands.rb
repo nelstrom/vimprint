@@ -41,4 +41,24 @@ module Vimprint
   class NormalCommand < BaseCommand
   end
 
+  class RegisterCommand < NormalCommand
+    def signature
+      {
+        trigger: @trigger,
+        number:  plurality,
+        register: register_description
+      }
+    end
+  end
+
+  class MarkCommand < NormalCommand
+    def signature
+      {
+        trigger: @trigger,
+        mark: @mark
+      }
+    end
+
+  end
+
 end

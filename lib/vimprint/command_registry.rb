@@ -21,16 +21,16 @@ module Vimprint
   #   }
   # }
   @normal_mode.create_command(
-    {trigger: 'x', number: 'singular', register: 'default', mark: ""},
+    {trigger: 'x', number: 'singular', register: 'default'},
     'cut character under cursor into default register')
   @normal_mode.create_command(
-    {trigger: 'x', number: 'plural', register: 'default', mark: ""},
+    {trigger: 'x', number: 'plural', register: 'default'},
     'cut #{count} characters into default register')
   @normal_mode.create_command(
-    {trigger: 'x', number: 'singular', register: 'named', mark: ""},
+    {trigger: 'x', number: 'singular', register: 'named'},
     'cut character under cursor into register #{register}')
   @normal_mode.create_command(
-    {trigger: 'x', number: 'plural', register: 'named', mark: ""},
+    {trigger: 'x', number: 'plural', register: 'named'},
     'cut #{count} characters into register #{register}')
 
   # Sample DSL for generating these explanations:
@@ -50,19 +50,19 @@ module Vimprint
   #   }
   # }
   @normal_mode.create_command(
-    {trigger: 'X', number: 'singular', register: 'default', mark: ""},
+    {trigger: 'X', number: 'singular', register: 'default'},
     'cut 1 character before cursor into default register')
   @normal_mode.create_command(
-    {trigger: 'X', number: 'plural', register: 'default', mark: ""},
+    {trigger: 'X', number: 'plural', register: 'default'},
     'cut #{count} characters before cursor into default register')
   @normal_mode.create_command(
-    {trigger: 'X', number: 'singular', register: 'named', mark: ""},
+    {trigger: 'X', number: 'singular', register: 'named'},
     'cut 1 character before cursor into register #{register}')
   @normal_mode.create_command(
-    {trigger: 'X', number: 'plural', register: 'named', mark: ""},
+    {trigger: 'X', number: 'plural', register: 'named'},
     'cut #{count} characters before cursor into register #{register}')
 
   @normal_mode.create_command(
-    {trigger: 'm', number: 'singular', register: 'default', mark: 'a'},
+    {trigger: 'm', mark: 'a'},
     'save current position with local mark a')
 end
