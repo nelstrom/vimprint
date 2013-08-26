@@ -63,6 +63,6 @@ module Vimprint
     'cut #{count} characters before cursor into register #{register}')
 
   @normal_mode.create_command(
-    {trigger: 'm', mark: 'a'},
+    {trigger: 'm', mark: 'lowercase'},
     'save current position with local mark a')
 end

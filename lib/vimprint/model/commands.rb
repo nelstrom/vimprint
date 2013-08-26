@@ -18,27 +18,20 @@ module Vimprint
     end
 
     def signature
-      {
-        trigger: @trigger,
-        number:  plurality,
-        register: register_description,
-        mark: @mark
-      }
+      { trigger: @trigger }
+    end
+
+  end
+
+  class NormalCommand < BaseCommand
+    def signature
+      { trigger: @trigger }
     end
 
     def plurality
       return 'singular' if @count.nil?
       @count > 1 ? 'plural' : 'singular'
     end
-
-    def register_description
-      return 'default' if (@register.nil? || @register.empty?)
-      "named"
-    end
-
-  end
-
-  class NormalCommand < BaseCommand
   end
 
   class RegisterCommand < NormalCommand
@@ -49,16 +42,24 @@ module Vimprint
         register: register_description
       }
     end
+
+    def register_description
+      return 'default' if (@register.nil? || @register.empty?)
+      "named"
+    end
   end
 
   class MarkCommand < NormalCommand
     def signature
       {
         trigger: @trigger,
-        mark: @mark
+        mark: mark_description
       }
     end
 
+    def mark_description
+      "lowercase"
+    end
   end
 
 end
