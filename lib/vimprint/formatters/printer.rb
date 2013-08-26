@@ -1,13 +1,7 @@
-require 'vimprint/command_registry'
+require 'vimprint/formatters/base_formatter'
 
 module Vimprint
-  class Printer
-    attr_reader :commands
-
-    def initialize(commands)
-      @commands = commands
-    end
-
+  class Printer < BaseFormatter
     def print
       commands.print
     end
