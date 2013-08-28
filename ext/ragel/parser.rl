@@ -11,9 +11,9 @@ module Vimprint
 
     ctrl_r = 18;
 
-    count = [1-9] >H @T @{ @stage.add_count(strokes) };
-    register = ('"' [a-z])  >H @T @{ @stage.add_register(strokes) };
-    cut   = [xX]   >H @T @{ @stage.add_trigger(strokes) };
+    count = [1-9] >H @T @{ @stage.add(:count, strokes) };
+    register = ('"' [a-z])  >H @T @{ @stage.add(:register, strokes) };
+    cut   = [xX]   >H @T @{ @stage.add(:trigger, strokes) };
     cut_command =
       (
         count?
@@ -22,22 +22,22 @@ module Vimprint
       count?
       cut @{ @eventlist << RegisterCommand.new(@stage.commit) };
 
-    small_letter = [a-z] >H @T @{ @stage.add_mark(strokes) };
-    big_letter = [A-Z] >H @T @{ @stage.add_mark(strokes) };
-    mark = [m`] >H @T @{ @stage.add_trigger(strokes) };
+    small_letter = [a-z] >H @T @{ @stage.add(:mark, strokes) };
+    big_letter = [A-Z] >H @T @{ @stage.add(:mark, strokes) };
+    mark = [m`] >H @T @{ @stage.add(:trigger, strokes) };
     mark_command =
       count?
       mark
       (small_letter | big_letter) @{ @eventlist << MarkCommand.new(@stage.commit) };
 
-    undo = 'u' >H @T @{ @stage.add_trigger(strokes) };
-    redo = ctrl_r >H @T @{ @stage.add_trigger('<C-r>') };
+    undo = 'u' >H @T @{ @stage.add(:trigger, strokes) };
+    redo = ctrl_r >H @T @{ @stage.add(:trigger, '<C-r>') };
     history_command =
       count?
       (undo | redo) @{ @eventlist << NormalCommand.new(@stage.commit) };
 
-    replace = 'r'  >H @T @{ @stage.add_trigger(strokes) };
-    printable_chars = print >H @T @{ @stage.add_printable_char(strokes) };
+    replace = 'r'  >H @T @{ @stage.add(:trigger, strokes) };
+    printable_chars = print >H @T @{ @stage.add(:printable_char, strokes) };
     replace_command =
       replace
       printable_chars @{ @eventlist << ReplaceCommand.new(@stage.commit) };

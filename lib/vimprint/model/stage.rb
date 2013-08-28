@@ -53,41 +53,6 @@ module Vimprint
       @buffer << value
     end
 
-    def add_count(value)
-      @counts << value
-      @buffer << value
-    end
-
-    def add_register(value)
-      @register = value.sub(/^"/, '')
-      @buffer << value
-    end
-
-    def add_mark(value)
-      @mark = value
-      @buffer << value
-    end
-
-    def add_printable_char(value)
-      @printable_char = value
-      @buffer << value
-    end
-
-    def add_trigger(value)
-      @trigger = value
-      @buffer << value
-    end
-
-    def add_operator(value)
-      @operator = value
-      @buffer << value
-    end
-
-    def add_motion(value)
-      @motion = value
-      @buffer << value
-    end
-
   end
 
 end
