@@ -13,8 +13,7 @@ module Vimprint
       stage.add_count     4
       stage.add_trigger  'x'
       stage.reset
-      hashmap = {:raw_keystrokes=>"", :counts=>[], :count=>nil, register: '', :trigger=>"x", mark: ''}
-      assert_equal(hashmap, stage.to_hash)
+      assert_equal({}, stage.to_hash)
     end
 
     def test_stage_to_hash
@@ -24,11 +23,9 @@ module Vimprint
       stage.add_trigger  'x'
       hashmap = {
         raw_keystrokes: '"a4x',
-        counts: [4],
         count: 4,
         register: 'a',
         trigger: 'x',
-        mark: ''
       }
       assert_equal hashmap, stage.to_hash
     end
@@ -40,14 +37,12 @@ module Vimprint
       stage.add_trigger  'x'
       hashmap = {
         raw_keystrokes: '"a4x',
-        counts: [4],
         count: 4,
         register: 'a',
         trigger: 'x',
-        mark: ''
       }
       assert_equal hashmap, stage.commit
-      assert_equal({raw_keystrokes: "", counts: [], count: nil, register: "", trigger: "x", mark: ''}, stage.to_hash)
+      assert_equal({}, stage.to_hash)
     end
 
     def test_stage_accumulates_raw_keystrokes

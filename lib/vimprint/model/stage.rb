@@ -12,6 +12,7 @@ module Vimprint
       @counts = []
       @register = ""
       @mark = ""
+      @trigger = ""
       @printable_char = ""
     end
 
@@ -22,13 +23,14 @@ module Vimprint
     def to_hash
       {
         raw_keystrokes: raw_keystrokes,
-        counts: @counts,
         count: effective_count,
         register: @register,
         trigger: @trigger,
         mark: @mark,
         printable_char: @printable_char
-      }
+      }.reject do |k,v|
+        v.nil? || v == [] || v == ""
+      end
     end
 
     def effective_count
