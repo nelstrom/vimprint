@@ -9,7 +9,7 @@ module Vimprint
 
     def test_reset_clears_state
       stage = Stage.new
-      stage.add_register 'a'
+      stage.add_register '"a'
       stage.add_count     4
       stage.add_trigger  'x'
       stage.reset
@@ -18,7 +18,7 @@ module Vimprint
 
     def test_stage_to_hash
       stage = Stage.new
-      stage.add_register 'a'
+      stage.add_register '"a'
       stage.add_count     4
       stage.add_trigger  'x'
       hashmap = {
@@ -32,7 +32,7 @@ module Vimprint
 
     def test_commit_returns_hash_and_clears_state
       stage = Stage.new
-      stage.add_register 'a'
+      stage.add_register '"a'
       stage.add_count     4
       stage.add_trigger  'x'
       hashmap = {
@@ -47,7 +47,7 @@ module Vimprint
 
     def test_stage_accumulates_raw_keystrokes
       stage = Stage.new
-      stage.add_register 'a'
+      stage.add_register '"a'
       stage.add_count     4
       stage.add_trigger  'x'
       assert_equal '"a4x', stage.raw_keystrokes
@@ -62,7 +62,7 @@ module Vimprint
       #   register a is set to: 123456789012345678901234
       stage = Stage.new
       stage.add_count 2
-      stage.add_register 'a'
+      stage.add_register '"a'
       stage.add_count 3
       stage.add_operator 'd'
       stage.add_count 4
@@ -83,9 +83,9 @@ module Vimprint
       #   register a is unchanged
       stage = Stage.new
       stage.add_count     3
-      stage.add_register 'a'
+      stage.add_register '"a'
       stage.add_count     2
-      stage.add_register 'b'
+      stage.add_register '"b'
       stage.add_trigger  'x'
       assert_equal "b", stage.register
       assert_equal [3,2], stage.counts

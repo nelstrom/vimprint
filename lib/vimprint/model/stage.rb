@@ -49,8 +49,8 @@ module Vimprint
     end
 
     def add_register(address)
-      @register = address
-      @buffer << '"' + address
+      @register = address.sub(/^"/, '')
+      @buffer << address
     end
 
     def add_mark(mark)

@@ -12,7 +12,7 @@ module Vimprint
     ctrl_r = 18;
 
     count = [1-9] >H @T @{ @stage.add_count(strokes) };
-    register = '"' [a-z]  >H @T @{ @stage.add_register(strokes) };
+    register = ('"' [a-z])  >H @T @{ @stage.add_register(strokes) };
     cut   = [xX]   >H @T @{ @stage.add_trigger(strokes) };
     cut_command =
       (
