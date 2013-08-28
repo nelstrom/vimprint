@@ -78,10 +78,6 @@ module Vimprint
       @buffer << keystrokes
     end
 
-    def escape
-      @buffer << "\e"
-    end
-
   end
 
 end
