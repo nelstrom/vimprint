@@ -43,39 +43,49 @@ module Vimprint
       @buffer.join
     end
 
+    def add(name, value)
+      case name
+      when :register then @register = value.sub(/^"/, '')
+      when :count then @counts << value
+      else
+        instance_variable_set("@#{name}", value)
+      end
+      @buffer << value
+    end
+
     def add_count(value)
       @counts << value
       @buffer << value
     end
 
-    def add_register(address)
-      @register = address.sub(/^"/, '')
-      @buffer << address
+    def add_register(value)
+      @register = value.sub(/^"/, '')
+      @buffer << value
     end
 
-    def add_mark(mark)
-      @mark = mark
-      @buffer << mark
+    def add_mark(value)
+      @mark = value
+      @buffer << value
     end
 
-    def add_printable_char(printable_char)
-      @printable_char = printable_char
-      @buffer << printable_char
+    def add_printable_char(value)
+      @printable_char = value
+      @buffer << value
     end
 
-    def add_trigger(keystrokes)
-      @trigger = keystrokes
-      @buffer << keystrokes
+    def add_trigger(value)
+      @trigger = value
+      @buffer << value
     end
 
-    def add_operator(keystrokes)
-      @operator = keystrokes
-      @buffer << keystrokes
+    def add_operator(value)
+      @operator = value
+      @buffer << value
     end
 
-    def add_motion(keystrokes)
-      @motion = keystrokes
-      @buffer << keystrokes
+    def add_motion(value)
+      @motion = value
+      @buffer << value
     end
 
   end
