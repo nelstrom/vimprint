@@ -63,4 +63,10 @@ module Vimprint
     end
   end
 
+  class AbortedCommand < BaseCommand
+    def signature
+      {aborted: true}
+    end
+  end
+
 end

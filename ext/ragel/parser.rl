@@ -12,6 +12,7 @@ module Vimprint
     tabkey = 9;
     enter  = 13;
     ctrl_r = 18;
+    escape = 27;
 
     count = [1-9] >H @T @{ @stage.add(:count, strokes) };
     register = ('"' [a-z])  >H @T @{ @stage.add(:register, strokes) };
@@ -23,6 +24,11 @@ module Vimprint
       )?
       count?
       cut @{ @eventlist << RegisterCommand.new(@stage.commit) };
+
+    abort = escape >H @T @{ @stage.add(:trigger, strokes) };
+    aborted_command =
+      count?
+      abort @{ @eventlist << AbortedCommand.new(@stage.commit) };
 
     small_letter = [a-z] >H @T @{ @stage.add(:mark, strokes) };
     big_letter = [A-Z] >H @T @{ @stage.add(:mark, strokes) };
@@ -45,7 +51,7 @@ module Vimprint
       replace
       printable_chars @{ @eventlist << ReplaceCommand.new(@stage.commit) };
 
-    normal  := (cut_command | mark_command | history_command | replace_command)*;
+    normal  := (cut_command | mark_command | history_command | replace_command | aborted_command)*;
 
   }%%
 
@@ -76,6 +82,7 @@ module Vimprint
       .gsub(/ /, '<Space>')
       .gsub(/\t/, '<Tab>')
       .gsub(/\r/, '<Enter>')
+      .gsub(/\e/, '<Esc>')
     end
 
   end

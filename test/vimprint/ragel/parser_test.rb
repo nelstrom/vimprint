@@ -30,6 +30,10 @@ module Vimprint
         assert_equal 'r<Tab>', Parser.new.keystrokes("r\t")
       end
 
+      it 'replaces "\t" with <Tab>' do
+        assert_equal '3<Esc>', Parser.new.keystrokes("3\e")
+      end
+
     end
 
   end

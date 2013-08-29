@@ -21,4 +21,5 @@ module Vimprint
       ]
     end
   end
+
 end

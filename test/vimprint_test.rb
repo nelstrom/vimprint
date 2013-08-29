@@ -63,6 +63,12 @@ module Vimprint
       ], Vimprint.explain("rarZr r\tr\r3rx")
     end
 
+    it 'explains aborted commands' do
+      assert_equal [
+        ['3<Esc>', '[aborted command]'],
+      ], Vimprint.explain("3\e")
+    end
+
   end
 
 end

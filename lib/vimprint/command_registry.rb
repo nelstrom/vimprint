@@ -96,4 +96,8 @@ module Vimprint
   @normal_mode.create_command(
     {trigger: 'r', number: 'plural', printable_char: true},
     'replace next #{count} characters with #{printable_char}')
+
+  @normal_mode.create_command(
+    {aborted: true},
+    '[aborted command]')
 end
