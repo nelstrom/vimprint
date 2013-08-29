@@ -1,5 +1,12 @@
 module Vimprint
 
+  module ReceivesCount
+    def plurality
+      return 'singular' if @count.nil?
+      @count > 1 ? 'plural' : 'singular'
+    end
+  end
+
   class BaseCommand
     attr_reader :trigger, :count, :raw_keystrokes, :register, :mark
 
@@ -20,19 +27,18 @@ module Vimprint
     end
 
     def signature
-      { trigger: @trigger }
+      {}
     end
 
   end
 
   class NormalCommand < BaseCommand
+    include ReceivesCount
     def signature
-      super.merge({number: plurality})
-    end
-
-    def plurality
-      return 'singular' if @count.nil?
-      @count > 1 ? 'plural' : 'singular'
+      super.merge({
+        number: plurality,
+        trigger: trigger
+      })
     end
   end
 
@@ -49,7 +55,10 @@ module Vimprint
 
   class MarkCommand < BaseCommand
     def signature
-      super.merge({mark: mark_description})
+      super.merge({
+        mark: mark_description,
+        trigger: trigger
+      })
     end
 
     def mark_description
@@ -66,14 +75,18 @@ module Vimprint
 
   class AbortedCommand < BaseCommand
     def signature
-      {aborted: true}
+      { aborted: true }
     end
   end
 
-  class Motion < NormalCommand
+  class Motion < BaseCommand
+    include ReceivesCount
     attr_accessor :motion
     def signature
-      super.merge({motion: motion}).reject { |k| k == :trigger }
+      super.merge({
+        number: plurality,
+        motion: motion
+      })
     end
   end
 
