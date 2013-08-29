@@ -102,6 +102,9 @@ module Vimprint
     '[aborted command]')
 
   @normal_mode.create_command(
-    {motion: 'w'},
+    {motion: 'w', number: 'singular'},
     'move forward to start of next word')
+  @normal_mode.create_command(
+    {motion: 'w', number: 'plural'},
+    'move forward to start of next word #{count} times')
 end

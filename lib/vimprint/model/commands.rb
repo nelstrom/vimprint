@@ -70,10 +70,10 @@ module Vimprint
     end
   end
 
-  class Motion < BaseCommand
+  class Motion < NormalCommand
     attr_accessor :motion
     def signature
-      {motion: motion}
+      super.merge({motion: motion}).reject { |k| k == :trigger }
     end
   end
 
