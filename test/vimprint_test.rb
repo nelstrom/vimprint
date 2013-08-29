@@ -58,7 +58,8 @@ module Vimprint
         ['rZ', 'replace current character with Z'],
         ['r<Space>', 'replace current character with <Space>'],
         ['r<Tab>', 'replace current character with <Tab>'],
-      ], Vimprint.explain("rarZr r\t")
+        ['r<Enter>', 'replace current character with <Enter>'],
+      ], Vimprint.explain("rarZr r\tr\r")
     end
 
   end
