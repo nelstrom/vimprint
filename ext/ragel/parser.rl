@@ -38,10 +38,11 @@ module Vimprint
 
     replace = 'r'  >H @T @{ @stage.add(:trigger, strokes) };
     whitespace = ' ' >H @T @{ @stage.add(:printable_char, '<Space>') };
+    tabkey = 9  >H @T @{ @stage.add(:printable_char, '<Tab>') };
     printable_chars = (print - whitespace) >H @T @{ @stage.add(:printable_char, strokes) };
     replace_command =
       replace
-      (whitespace | printable_chars) @{ @eventlist << ReplaceCommand.new(@stage.commit) };
+      (whitespace | tabkey | printable_chars) @{ @eventlist << ReplaceCommand.new(@stage.commit) };
 
     normal  := (cut_command | mark_command | history_command | replace_command)*;
 
