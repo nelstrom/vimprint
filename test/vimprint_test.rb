@@ -91,12 +91,18 @@ module Vimprint
         '"a"b"cx',
         '2"a3"b4"cx',
         '"a3"b4"cx',
+        '"a3"b4"cma',
+        '"a3"b4"cu',
+        '"a3"b4"crx',
       ].join
 
       assert_equal [
         ['"a"b"cx', 'cut character under cursor into register c'],
         ['2"a3"b4"cx', 'cut 24 characters into register c'],
         ['"a3"b4"cx', 'cut 12 characters into register c'],
+        ['"a3"b4"cma', 'save current position with local mark a'],
+        ['"a3"b4"cu', 'undo 12 changes'],
+        ['"a3"b4"crx', 'replace next 12 characters with x'],
       ], Vimprint.explain(weird_input)
     end
 
