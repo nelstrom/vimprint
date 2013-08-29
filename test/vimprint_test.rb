@@ -66,7 +66,8 @@ module Vimprint
     it 'explains aborted commands' do
       assert_equal [
         ['3<Esc>', '[aborted command]'],
-      ], Vimprint.explain("3\e")
+        ['"a<Esc>', '[aborted command]'],
+      ], Vimprint.explain("3\e\"a\e")
     end
 
   end

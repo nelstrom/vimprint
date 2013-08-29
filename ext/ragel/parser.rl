@@ -28,6 +28,7 @@ module Vimprint
     abort = escape >H @T @{ @stage.add(:trigger, strokes) };
     aborted_command =
       count?
+      register?
       abort @{ @eventlist << AbortedCommand.new(@stage.commit) };
 
     small_letter = [a-z] >H @T @{ @stage.add(:mark, strokes) };
