@@ -119,6 +119,34 @@ module Vimprint
       assert_equal [
         ['dw', 'delete from cursor to start of next word'],
       ], Vimprint.explain('dw')
+      # consider the following:
+      #   de - cut from cursor forward to end of word
+      #   dw - cut from cursor forward to start of next word
+      #   ce - cut from cursor forward to end of word
+      #   cw - cut from cursor forward to end of word
+      #
+      #   de - cut from cursor forward to end of word, save text to default register
+      #   dw - cut from cursor forward to start of next word, save text to default register
+      #   ce - cut from cursor forward to end of word, save text to default register, start Insert mode
+      #   cw - cut from cursor forward to end of word, save text to default register, start Insert mode
+      #
+      # cw breaks from convention!
+      #
+      # Also, think about how to explain all of the command!
+      #   de - from cursor to end of word, cut text into default register
+      #   dw - from cursor to start of next word, cut text into default register
+      #   ce - from cursor to end of word, cut text into default register and start Insert mode
+      #   cw - from cursor to end of word, cut text into default register and start Insert mode
+      #
+      # Also, think about different descriptions for charwise/linewise motions
+      #  2dw - cut from cursor forward to start of 2nd word
+      #   dd - cut 1 line
+      #  2dd - cut 2 lines
+      #   dj - cut this line and 1 below
+      #  2dj - cut this line and 2 below
+      #   dj - cut 2 lines
+      #  2dj - cut 3 lines
+      #  dvj - cut from cursor same position on line below
     end
 
   end

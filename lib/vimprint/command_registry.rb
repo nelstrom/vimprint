@@ -117,4 +117,21 @@ module Vimprint
   @normal_mode.create_command(
     {operator: 'd', motion: 'w'},
     'delete from cursor to start of next word')
+
+  # Operator:
+  #     template: "delete {{motion}}"
+  # Motion
+  #
+  # Two possibilities:
+  #     1) Operater asks Motion to explain itself
+  #     2) Motion asks Operator to fill in the 'verb'
+  #
+  # 1) Definitions take this form:
+  #    operator: 'cut #{motion.explain(self)}, save text to default register'
+  #    motion:   '#{verb} forward to end of word'
+  #
+  # 2) Definitions take this form:
+  #    motion: '#{verb.context} forward to end of word'
+  #    operator: 'cut'
+
 end
