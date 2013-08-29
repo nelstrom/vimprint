@@ -4,6 +4,15 @@ require 'rake/testtask'
 
 CLEAN.include %w[ lib/vimprint/ragel ]
 
+desc "Generate a .dot visualization for each .rl file"
+desc "Compile each .rl file to .dot graph (viewable with Graphviz)"
+task :visualize do
+  FileList.new('ext/ragel/*.rl').each do |file|
+    system "ragel -Vp #{file} > #{file.ext('.dot')}"
+  end
+end
+
+desc "Compile each .rl file to executable .rb"
 task :ragel do
   out_dir = File.expand_path('../lib/vimprint/ragel', __FILE__)
   Dir.mkdir(out_dir) unless Dir.exist?(out_dir)

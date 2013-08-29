@@ -6,3 +6,4 @@ scratch.rb
 lib/vimprint/ragel
 next
 sketches
+ext/ragel/*.dot
