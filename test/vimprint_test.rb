@@ -54,8 +54,9 @@ module Vimprint
 
     it 'explains the r command' do
       assert_equal [
-        ['ra', 'replace current character with a']
-      ], Vimprint.explain("ra")
+        ['ra', 'replace current character with a'],
+        ['rZ', 'replace current character with Z'],
+      ], Vimprint.explain("rarZ")
     end
 
   end

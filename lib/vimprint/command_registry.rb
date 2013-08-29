@@ -92,5 +92,5 @@ module Vimprint
 
   @normal_mode.create_command(
     {trigger: 'r', number: 'singular', printable_char: true},
-    'replace current character with a')
+    'replace current character with #{printable_char}')
 end

@@ -9,6 +9,7 @@ module Vimprint
       @register       = config[:register]
       @mark           = config[:mark]
       @raw_keystrokes = config[:raw_keystrokes]
+      @printable_char = config[:printable_char]
     end
 
     def ==(other)
@@ -56,6 +57,7 @@ module Vimprint
   end
 
   class ReplaceCommand < NormalCommand
+    attr_accessor :printable_char
     def signature
       super.merge({printable_char: true})
     end
