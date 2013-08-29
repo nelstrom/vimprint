@@ -37,9 +37,9 @@ module Vimprint
       (undo | redo) @{ @eventlist << NormalCommand.new(@stage.commit) };
 
     replace = 'r'  >H @T @{ @stage.add(:trigger, strokes) };
-    whitespace = ' ' >H @T @{ @stage.add(:printable_char, '<Space>') };
-    tabkey = 9  >H @T @{ @stage.add(:printable_char, '<Tab>') };
-    enter  = 13 >H @T @{ @stage.add(:printable_char, '<Enter>') };
+    whitespace = ' ' >H @T @{ @stage.add(:printable_char, strokes) };
+    tabkey = 9  >H @T @{ @stage.add(:printable_char, strokes) };
+    enter  = 13 >H @T @{ @stage.add(:printable_char, strokes) };
     printable_chars = (print - whitespace) >H @T @{ @stage.add(:printable_char, strokes) };
     replace_command =
       replace
@@ -68,7 +68,14 @@ module Vimprint
     end
 
     def strokes
-      @data[@head..@tail].pack('c*')
+      keystrokes(@data[@head..@tail].pack('c*'))
+    end
+
+    def keystrokes(input)
+      input
+      .gsub(/ /, '<Space>')
+      .gsub(/\t/, '<Tab>')
+      .gsub(/\r/, '<Enter>')
     end
 
   end
