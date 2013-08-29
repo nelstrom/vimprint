@@ -103,16 +103,16 @@ module Vimprint
 
   @normal_mode.create_command(
     {motion: 'w', number: 'singular'},
-    'move forward to start of next word')
+    '#{verb} forward to start of next word')
   @normal_mode.create_command(
     {motion: 'w', number: 'plural'},
-    'move forward to start of #{count.ordinalize} word')
+    '#{verb} forward to start of #{count.ordinalize} word')
   @normal_mode.create_command(
     {motion: 'e', number: 'singular'},
-    'move forward to end of word')
+    '#{verb} forward to end of word')
   @normal_mode.create_command(
     {motion: 'e', number: 'plural'},
-    'move forward to end of #{count.ordinalize} word')
+    '#{verb} forward to end of #{count.ordinalize} word')
 
   @normal_mode.create_command(
     {operator: 'd', motion: 'w'},

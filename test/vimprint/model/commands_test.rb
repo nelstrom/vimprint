@@ -17,4 +17,10 @@ module Vimprint
       assert_equal 'named', RegisterCommand.new({register: 'a'}).register_description
     end
   end
+
+  describe Motion do
+    it 'assumes it\'s being called from Normal mode' do
+      assert_equal 'move', Motion.new.verb
+    end
+  end
 end

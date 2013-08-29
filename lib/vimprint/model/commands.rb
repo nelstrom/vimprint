@@ -89,6 +89,10 @@ module Vimprint
         motion: motion
       })
     end
+
+    def verb
+      "move"
+    end
   end
 
   class Operation < BaseCommand
