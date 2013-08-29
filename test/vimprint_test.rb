@@ -64,11 +64,18 @@ module Vimprint
     end
 
     it 'explains aborted commands' do
+      explanation = '[aborted command]'
+      bad_input = [
+        "3\e",
+        "\"a\e",
+        "2\"x3\e",
+      ].join
+
       assert_equal [
-        ['3<Esc>', '[aborted command]'],
-        ['"a<Esc>', '[aborted command]'],
-        ['2"x3<Esc>', '[aborted command]'],
-      ], Vimprint.explain("3\e\"a\e2\"x3\e")
+        ['3<Esc>', explanation],
+        ['"a<Esc>', explanation],
+        ['2"x3<Esc>', explanation],
+      ], Vimprint.explain(bad_input)
     end
 
   end
