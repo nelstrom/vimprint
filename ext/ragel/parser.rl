@@ -21,7 +21,7 @@ module Vimprint
     cut_command =
       (
         count?
-        register
+        register+
       )?
       count?
       (
