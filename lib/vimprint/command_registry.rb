@@ -118,6 +118,67 @@ module Vimprint
     {operator: 'd', motion: 'w'},
     'delete from cursor to start of next word')
 
+  # e.g. dw
+  @normal_mode.create_command(
+    {
+      operator: 'd',
+      register: 'default',
+      modifier: {
+        kind: 'motion',
+        number: 'singular',
+        typewise: 'charwise',
+      }
+    },
+    'cut {from cursor to start of next word}, save text to default register')
+  # e.g. 2dw or d2w
+  @normal_mode.create_command(
+    {
+      operator: 'd',
+      register: 'default',
+      modifier: {
+        kind: 'motion',
+        number: 'plural',
+        typewise: 'charwise',
+      }
+    },
+    'cut {from cursor to start of #{count.ordinalize} word}, save text to default register')
+  # e.g. "adw
+  @normal_mode.create_command(
+    {
+      operator: 'd',
+      register: 'named',
+      modifier: {
+        kind: 'motion',
+        number: 'plural',
+        typewise: 'charwise',
+      }
+    },
+    'cut {from cursor to start of #{count.ordinalize} word}, save text to register #{register}')
+  # e.g. dd
+  @normal_mode.create_command(
+    {
+      operator: 'd',
+      register: 'named',
+      modifier: {
+        kind: 'operator',
+        number: 'plural',
+        typewise: 'linewise',
+      }
+    },
+    'cut {#{count} lines}, save text to register #{register}')
+  # e.g. "a2cw
+  @normal_mode.create_command(
+    {
+      operator: 'c',
+      register: 'named',
+      modifier: {
+        kind: 'motion',
+        number: 'plural',
+        typewise: 'charwise',
+      }
+    },
+    'cut {from cursor to start of #{count.ordinalize} word}, save text to register #{register}, start Insert mode')
+
   # Operator:
   #     template: "delete {{motion}}"
   # Motion
