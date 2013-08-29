@@ -55,7 +55,17 @@ module Vimprint
         | abort @{ @eventlist << AbortedCommand.new(@stage.commit) }
       );
 
-    normal  := (cut_command | mark_command | history_command | replace_command)*;
+    motion = [w] >H @T @{ @stage.add(:motion, strokes) };
+    motion_command =
+      motion @{ @eventlist << Motion.new(@stage.commit) };
+
+    normal  := (
+      cut_command |
+      mark_command |
+      history_command |
+      replace_command |
+      motion_command
+    )*;
 
   }%%
 

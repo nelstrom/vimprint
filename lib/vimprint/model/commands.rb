@@ -7,6 +7,7 @@ module Vimprint
       @trigger        = config[:trigger]
       @count          = config[:count]
       @register       = config[:register]
+      @motion       = config[:motion]
       @mark           = config[:mark]
       @raw_keystrokes = config[:raw_keystrokes]
       @printable_char = config[:printable_char]
@@ -66,6 +67,13 @@ module Vimprint
   class AbortedCommand < BaseCommand
     def signature
       {aborted: true}
+    end
+  end
+
+  class Motion < BaseCommand
+    attr_accessor :motion
+    def signature
+      {motion: motion}
     end
   end
 

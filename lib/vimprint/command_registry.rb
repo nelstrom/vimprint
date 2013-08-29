@@ -100,4 +100,8 @@ module Vimprint
   @normal_mode.create_command(
     {aborted: true},
     '[aborted command]')
+
+  @normal_mode.create_command(
+    {motion: 'w'},
+    'move forward to start of next word')
 end

@@ -106,6 +106,12 @@ module Vimprint
       ], Vimprint.explain(weird_input)
     end
 
+    it 'explains motions used in Normal mode' do
+      assert_equal [
+        ['w', 'move forward to start of next word'],
+      ], Vimprint.explain('w')
+    end
+
   end
 
 end
