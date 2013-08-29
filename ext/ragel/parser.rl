@@ -37,10 +37,11 @@ module Vimprint
       (undo | redo) @{ @eventlist << NormalCommand.new(@stage.commit) };
 
     replace = 'r'  >H @T @{ @stage.add(:trigger, strokes) };
-    printable_chars = print >H @T @{ @stage.add(:printable_char, strokes) };
+    whitespace = ' ' >H @T @{ @stage.add(:printable_char, '<Space>') };
+    printable_chars = (print - whitespace) >H @T @{ @stage.add(:printable_char, strokes) };
     replace_command =
       replace
-      printable_chars @{ @eventlist << ReplaceCommand.new(@stage.commit) };
+      (whitespace | printable_chars) @{ @eventlist << ReplaceCommand.new(@stage.commit) };
 
     normal  := (cut_command | mark_command | history_command | replace_command)*;
 

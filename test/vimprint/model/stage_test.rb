@@ -92,6 +92,13 @@ module Vimprint
       assert_equal '3"a2"bx', stage.raw_keystrokes
     end
 
+    def test_staging_r_space
+      stage = Stage.new
+      stage.add :trigger, 'r'
+      stage.add :printable_char, '<Space>'
+      assert_equal({trigger: 'r', printable_char: '<Space>', raw_keystrokes: 'r<Space>'}, stage.to_hash)
+    end
+
   end
 
 end

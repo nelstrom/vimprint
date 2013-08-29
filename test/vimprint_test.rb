@@ -56,7 +56,8 @@ module Vimprint
       assert_equal [
         ['ra', 'replace current character with a'],
         ['rZ', 'replace current character with Z'],
-      ], Vimprint.explain("rarZ")
+        ['r<Space>', 'replace current character with <Space>'],
+      ], Vimprint.explain("rarZr ")
     end
 
   end
