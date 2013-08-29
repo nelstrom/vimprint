@@ -70,6 +70,9 @@ module Vimprint
         "\"a\e",
         "2\"x3\e",
         "r\e",
+        "m\e",
+        "3m\e",
+        "`\e",
       ].join
 
       assert_equal [
@@ -77,6 +80,9 @@ module Vimprint
         ['"a<Esc>', explanation],
         ['2"x3<Esc>', explanation],
         ['r<Esc>', explanation],
+        ['m<Esc>', explanation],
+        ['3m<Esc>', explanation],
+        ['`<Esc>', explanation],
       ], Vimprint.explain(bad_input)
     end
 

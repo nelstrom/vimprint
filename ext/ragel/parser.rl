@@ -36,7 +36,11 @@ module Vimprint
     mark_command =
       count?
       mark
-      (small_letter | big_letter) @{ @eventlist << MarkCommand.new(@stage.commit) };
+      (
+        small_letter @{ @eventlist << MarkCommand.new(@stage.commit) }
+        | big_letter @{ @eventlist << MarkCommand.new(@stage.commit) }
+        | abort @{ @eventlist << AbortedCommand.new(@stage.commit) }
+      );
 
     undo = 'u' >H @T @{ @stage.add(:trigger, strokes) };
     redo = ctrl_r >H @T @{ @stage.add(:trigger, '<C-r>') };
