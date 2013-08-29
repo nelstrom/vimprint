@@ -14,6 +14,7 @@ module Vimprint
     ctrl_r = 18;
     escape = 27;
 
+    abort = escape >H @T @{ @stage.add(:trigger, strokes) };
     count = [1-9] >H @T @{ @stage.add(:count, strokes) };
     register = ('"' [a-z])  >H @T @{ @stage.add(:register, strokes) };
     cut   = [xX]   >H @T @{ @stage.add(:trigger, strokes) };
@@ -23,16 +24,11 @@ module Vimprint
         register
       )?
       count?
-      cut @{ @eventlist << RegisterCommand.new(@stage.commit) };
-
-    abort = escape >H @T @{ @stage.add(:trigger, strokes) };
-    aborted_command =
       (
-        count?
-        register
-      )?
-      count?
-      abort @{ @eventlist << AbortedCommand.new(@stage.commit) };
+        cut @{ @eventlist << RegisterCommand.new(@stage.commit) }
+        |
+        abort @{ @eventlist << AbortedCommand.new(@stage.commit) }
+      );
 
     small_letter = [a-z] >H @T @{ @stage.add(:mark, strokes) };
     big_letter = [A-Z] >H @T @{ @stage.add(:mark, strokes) };
@@ -55,7 +51,7 @@ module Vimprint
       replace
       printable_chars @{ @eventlist << ReplaceCommand.new(@stage.commit) };
 
-    normal  := (cut_command | mark_command | history_command | replace_command | aborted_command)*;
+    normal  := (cut_command | mark_command | history_command | replace_command)*;
 
   }%%
 
