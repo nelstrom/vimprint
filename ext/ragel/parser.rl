@@ -41,6 +41,7 @@ module Vimprint
     replace = 'r'  >H @T @{ @stage.add(:trigger, strokes) };
     printable_chars = (print | tabkey | enter)  >H @T @{ @stage.add(:printable_char, strokes) };
     replace_command =
+      count?
       replace
       printable_chars @{ @eventlist << ReplaceCommand.new(@stage.commit) };
 

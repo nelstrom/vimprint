@@ -59,7 +59,8 @@ module Vimprint
         ['r<Space>', 'replace current character with <Space>'],
         ['r<Tab>', 'replace current character with <Tab>'],
         ['r<Enter>', 'replace current character with <Enter>'],
-      ], Vimprint.explain("rarZr r\tr\r")
+        ['3rx', 'replace next 3 characters with x'],
+      ], Vimprint.explain("rarZr r\tr\r3rx")
     end
 
   end
