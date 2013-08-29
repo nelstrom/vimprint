@@ -109,8 +109,10 @@ module Vimprint
     it 'explains motions used in Normal mode' do
       assert_equal [
         ['w', 'move forward to start of next word'],
-        ['3w', 'move forward to start of next word 3 times'],
-      ], Vimprint.explain('w3w')
+        ['3w', 'move forward to start of 3rd word'],
+        ['e', 'move forward to end of word'],
+        ['2e', 'move forward to end of 2nd word'],
+      ], Vimprint.explain('w3we2e')
     end
 
   end

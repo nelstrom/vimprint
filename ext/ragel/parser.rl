@@ -55,7 +55,7 @@ module Vimprint
         | abort @{ @eventlist << AbortedCommand.new(@stage.commit) }
       );
 
-    motion = [w] >H @T @{ @stage.add(:motion, strokes) };
+    motion = [we] >H @T @{ @stage.add(:motion, strokes) };
     motion_command =
       count_register_prefix
       motion @{ @eventlist << Motion.new(@stage.commit) };
