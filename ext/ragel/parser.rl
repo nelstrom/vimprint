@@ -9,6 +9,8 @@ module Vimprint
     action H { @head = p; }
     action T { @tail = p; }
 
+    tabkey = 9;
+    enter  = 13;
     ctrl_r = 18;
 
     count = [1-9] >H @T @{ @stage.add(:count, strokes) };
@@ -37,13 +39,10 @@ module Vimprint
       (undo | redo) @{ @eventlist << NormalCommand.new(@stage.commit) };
 
     replace = 'r'  >H @T @{ @stage.add(:trigger, strokes) };
-    whitespace = ' ' >H @T @{ @stage.add(:printable_char, strokes) };
-    tabkey = 9  >H @T @{ @stage.add(:printable_char, strokes) };
-    enter  = 13 >H @T @{ @stage.add(:printable_char, strokes) };
-    printable_chars = (print - whitespace) >H @T @{ @stage.add(:printable_char, strokes) };
+    printable_chars = (print | tabkey | enter)  >H @T @{ @stage.add(:printable_char, strokes) };
     replace_command =
       replace
-      (whitespace | tabkey | enter | printable_chars) @{ @eventlist << ReplaceCommand.new(@stage.commit) };
+      printable_chars @{ @eventlist << ReplaceCommand.new(@stage.commit) };
 
     normal  := (cut_command | mark_command | history_command | replace_command)*;
 
