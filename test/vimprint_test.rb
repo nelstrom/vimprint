@@ -88,11 +88,15 @@ module Vimprint
 
     it 'explains combinations of counts and registers' do
       weird_input = [
-        '"a"b"cx'
+        '"a"b"cx',
+        '2"a3"b4"cx',
+        '"a3"b4"cx',
       ].join
 
       assert_equal [
-        ['"a"b"cx', 'cut character under cursor into register c']
+        ['"a"b"cx', 'cut character under cursor into register c'],
+        ['2"a3"b4"cx', 'cut 24 characters into register c'],
+        ['"a3"b4"cx', 'cut 12 characters into register c'],
       ], Vimprint.explain(weird_input)
     end
 

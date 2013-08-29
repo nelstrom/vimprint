@@ -21,8 +21,8 @@ module Vimprint
     cut_command =
       (
         count?
-        register+
-      )?
+        register
+      )*
       count?
       (
         cut @{ @eventlist << RegisterCommand.new(@stage.commit) }
