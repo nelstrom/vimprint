@@ -113,4 +113,8 @@ module Vimprint
   @normal_mode.create_command(
     {motion: 'e', number: 'plural'},
     'move forward to end of #{count.ordinalize} word')
+
+  @normal_mode.create_command(
+    {operator: 'd', motion: 'w'},
+    'delete from cursor to start of next word')
 end

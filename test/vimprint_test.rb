@@ -115,6 +115,12 @@ module Vimprint
       ], Vimprint.explain('w3we2e')
     end
 
+    it 'explains motions used after an operator' do
+      assert_equal [
+        ['dw', 'delete from cursor to start of next word'],
+      ], Vimprint.explain('dw')
+    end
+
   end
 
 end

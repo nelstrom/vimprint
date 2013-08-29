@@ -11,6 +11,7 @@ module Vimprint
       @buffer = []
       @counts = []
       @register = ""
+      @operator = ""
       @motion = ""
       @mark = ""
       @trigger = ""
@@ -28,6 +29,7 @@ module Vimprint
         register: @register,
         trigger: @trigger,
         mark: @mark,
+        operator: @operator,
         motion: @motion,
         printable_char: @printable_char
       }.reject do |k,v|

@@ -14,8 +14,9 @@ module Vimprint
       @trigger        = config[:trigger]
       @count          = config[:count]
       @register       = config[:register]
-      @motion       = config[:motion]
+      @motion         = config[:motion]
       @mark           = config[:mark]
+      @operator       = config[:operator]
       @raw_keystrokes = config[:raw_keystrokes]
       @printable_char = config[:printable_char]
     end
@@ -87,6 +88,25 @@ module Vimprint
         number: plurality,
         motion: motion
       })
+    end
+  end
+
+  class Operation < BaseCommand
+    attr_accessor :operator, :motion
+
+    def initialize(config={})
+      @count          = config[:count]
+      @register       = config[:register]
+      @motion         = Motion.new({motion: config[:motion]})
+      @operator       = config[:operator]
+      @raw_keystrokes = config[:raw_keystrokes]
+    end
+
+    def signature
+      {
+        operator: operator,
+        motion: motion.motion
+      }
     end
   end
 

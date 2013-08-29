@@ -60,12 +60,18 @@ module Vimprint
       count_register_prefix
       motion @{ @eventlist << Motion.new(@stage.commit) };
 
+    operator = [d] >H @T @{ @stage.add(:operator, strokes) };
+    operation =
+      operator
+      motion @{ @eventlist << Operation.new(@stage.commit) };
+
     normal  := (
       cut_command |
       mark_command |
       history_command |
       replace_command |
-      motion_command
+      motion_command |
+      operation
     )*;
 
   }%%
