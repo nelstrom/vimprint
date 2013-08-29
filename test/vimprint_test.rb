@@ -67,7 +67,8 @@ module Vimprint
       assert_equal [
         ['3<Esc>', '[aborted command]'],
         ['"a<Esc>', '[aborted command]'],
-      ], Vimprint.explain("3\e\"a\e")
+        ['2"x3<Esc>', '[aborted command]'],
+      ], Vimprint.explain("3\e\"a\e2\"x3\e")
     end
 
   end
