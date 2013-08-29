@@ -69,12 +69,14 @@ module Vimprint
         "3\e",
         "\"a\e",
         "2\"x3\e",
+        "r\e",
       ].join
 
       assert_equal [
         ['3<Esc>', explanation],
         ['"a<Esc>', explanation],
         ['2"x3<Esc>', explanation],
+        ['r<Esc>', explanation],
       ], Vimprint.explain(bad_input)
     end
 

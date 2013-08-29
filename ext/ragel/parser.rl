@@ -49,7 +49,11 @@ module Vimprint
     replace_command =
       count?
       replace
-      printable_chars @{ @eventlist << ReplaceCommand.new(@stage.commit) };
+      (
+        printable_chars @{ @eventlist << ReplaceCommand.new(@stage.commit) }
+        |
+        abort @{ @eventlist << AbortedCommand.new(@stage.commit) }
+      );
 
     normal  := (cut_command | mark_command | history_command | replace_command)*;
 
