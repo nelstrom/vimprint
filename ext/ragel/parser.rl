@@ -62,6 +62,7 @@ module Vimprint
 
     operator = [d] >H @T @{ @stage.add(:operator, strokes) };
     operation =
+      count_register_prefix
       operator
       motion @{ @eventlist << Operation.new(@stage.commit) };
 

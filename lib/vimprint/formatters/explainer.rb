@@ -9,12 +9,12 @@ module Vimprint
 
   class NormalMode
     def explain
-      map(&:explain)
+      map { |o| o.explain(self) }
     end
   end
 
   class BaseCommand
-    def explain
+    def explain(context)
       [
         raw_keystrokes,
         Registry.get_mode('normal').get_command(signature).render(binding)

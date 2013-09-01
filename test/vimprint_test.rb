@@ -118,7 +118,8 @@ module Vimprint
     it 'explains motions used after an operator' do
       assert_equal [
         ['dw', 'delete from cursor to start of next word'],
-      ], Vimprint.explain('dw')
+        ['2dw', 'delete from cursor to start of 2nd word'],
+      ], Vimprint.explain('dw2dw')
       # consider the following:
       #   de - cut from cursor forward to end of word
       #   dw - cut from cursor forward to start of next word

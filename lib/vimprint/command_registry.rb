@@ -118,6 +118,13 @@ module Vimprint
     {operator: 'd', motion: 'w'},
     'delete from cursor to start of next word')
 
+  @normal_mode.create_command(
+    {operator: 'd', number: 'singular', modifier: 'motion'},
+    'delete from cursor to start of next word')
+  @normal_mode.create_command(
+    {operator: 'd', number: 'plural', modifier: 'motion'},
+    'delete from cursor to start of #{motion.count.ordinalize} word')
+
   # e.g. dw
   @normal_mode.create_command(
     {

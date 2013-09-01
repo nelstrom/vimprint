@@ -99,17 +99,20 @@ module Vimprint
     attr_accessor :operator, :motion
 
     def initialize(config={})
-      @count          = config[:count]
       @register       = config[:register]
-      @motion         = Motion.new({motion: config[:motion]})
       @operator       = config[:operator]
       @raw_keystrokes = config[:raw_keystrokes]
+      @motion         = Motion.new({
+        motion: config[:motion],
+        count:  config[:count]
+      })
     end
 
     def signature
       {
         operator: operator,
-        motion: motion.motion
+        number: motion.plurality,
+        modifier: 'motion'
       }
     end
   end
