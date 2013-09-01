@@ -82,7 +82,11 @@ module Vimprint
 
   class Motion < BaseCommand
     include ReceivesCount
-    attr_accessor :motion
+    attr_accessor :motion, :invocation_context
+    def initialize(config={})
+      super
+      @invocation_context = config[:invocation_context] || 'normal'
+    end
     def signature
       super.merge({
         number: plurality,
@@ -104,14 +108,14 @@ module Vimprint
       @raw_keystrokes = config[:raw_keystrokes]
       @motion         = Motion.new({
         motion: config[:motion],
-        count:  config[:count]
+        count:  config[:count],
+        invocation_context: 'operator_pending'
       })
     end
 
     def signature
       {
         operator: operator,
-        number: motion.plurality,
         modifier: 'motion'
       }
     end

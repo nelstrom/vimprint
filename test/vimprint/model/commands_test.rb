@@ -19,8 +19,25 @@ module Vimprint
   end
 
   describe Motion do
+
     it 'assumes it\'s being called from Normal mode' do
-      assert_equal 'move', Motion.new.verb
+      motion = NormalMode[
+        Motion.new({
+          raw_keystrokes: 'w',
+          motion: 'w'
+        })
+      ].first
+      assert_equal 'normal', motion.invocation_context
     end
+
+    it 'knows when it\'s being called after an operation' do
+      motion = Operation.new({
+        raw_keystrokes: 'dw',
+        operator: 'd',
+        motion: 'w'
+      }).motion
+      assert_equal 'operator_pending', motion.invocation_context
+    end
+
   end
 end
