@@ -184,7 +184,7 @@ module Vimprint
   # Motion
   #
   # Two possibilities:
-  #     1) Operater asks Motion to explain itself
+  #     1) Operator asks Motion to explain itself
   #     2) Motion asks Operator to fill in the 'verb'
   #
   # 1) Definitions take this form:
