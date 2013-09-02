@@ -103,27 +103,20 @@ module Vimprint
 
   @normal_mode.create_command(
     {motion: 'w', number: 'singular'},
-    '#{verb} forward to start of next word')
+    '#{verb} to start of next word')
   @normal_mode.create_command(
     {motion: 'w', number: 'plural'},
-    '#{verb} forward to start of #{count.ordinalize} word')
+    '#{verb} to start of #{count.ordinalize} word')
   @normal_mode.create_command(
     {motion: 'e', number: 'singular'},
-    '#{verb} forward to end of word')
+    '#{verb} to end of word')
   @normal_mode.create_command(
     {motion: 'e', number: 'plural'},
-    '#{verb} forward to end of #{count.ordinalize} word')
+    '#{verb} to end of #{count.ordinalize} word')
 
   @normal_mode.create_command(
-    {operator: 'd', motion: 'w'},
-    'delete from cursor to start of next word')
-
-  @normal_mode.create_command(
-    {operator: 'd', number: 'singular', modifier: 'motion'},
-    'delete from cursor to start of next word')
-  @normal_mode.create_command(
-    {operator: 'd', number: 'plural', modifier: 'motion'},
-    'delete from cursor to start of #{motion.count.ordinalize} word')
+    {operator: 'd', modifier: 'motion'},
+    'delete from cursor #{motion.lookup(self.motion.signature)}')
 
   # e.g. dw
   @normal_mode.create_command(
@@ -186,13 +179,13 @@ module Vimprint
     },
     'cut {from cursor to start of #{count.ordinalize} word}, save text to register #{register}, start Insert mode')
 
-  # Operator:
+  # Operation:
   #     template: "delete {{motion}}"
   # Motion
   #
   # Two possibilities:
-  #     1) Operator asks Motion to explain itself
-  #     2) Motion asks Operator to fill in the 'verb'
+  #     1) Operation asks Motion to explain itself
+  #     2) Motion asks Operation to fill in the 'verb'
   #
   # 1) Definitions take this form:
   #    operator: 'cut #{motion.explain(self)}, save text to default register'

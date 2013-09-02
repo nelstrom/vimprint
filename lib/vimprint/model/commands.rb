@@ -95,7 +95,9 @@ module Vimprint
     end
 
     def verb
-      "move"
+      if @invocation_context == "normal"
+        "move forward"
+      end
     end
   end
 

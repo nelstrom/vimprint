@@ -9,16 +9,23 @@ module Vimprint
 
   class NormalMode
     def explain
-      map { |o| o.explain(self) }
+      map { |o| o.explain("normal") }
     end
   end
 
   class BaseCommand
     def explain(context)
-      [
-        raw_keystrokes,
-        Registry.get_mode('normal').get_command(signature).render(binding)
-      ]
+      [raw_keystrokes, lookup(context)]
+    end
+
+    def lookup(context)
+      Registry.get_mode(context).get_command(signature).render(binding)
+    end
+  end
+
+  class Motion
+    def lookup(context)
+      Registry.get_mode("normal").get_command(signature).render(binding).strip
     end
   end
 
