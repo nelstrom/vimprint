@@ -25,7 +25,10 @@ module Vimprint
 
   class Motion
     def lookup(context)
-      Registry.get_mode("normal").get_command(signature).render(binding).strip
+      [
+        verb,
+        Registry.get_mode("normal").get_command(signature).render(binding).strip
+      ].join(" ")
     end
   end
 

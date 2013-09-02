@@ -103,20 +103,20 @@ module Vimprint
 
   @normal_mode.create_command(
     {motion: 'w', number: 'singular'},
-    '#{verb} to start of next word')
+    'to start of next word')
   @normal_mode.create_command(
     {motion: 'w', number: 'plural'},
-    '#{verb} to start of #{count.ordinalize} word')
+    'to start of #{count.ordinalize} word')
   @normal_mode.create_command(
     {motion: 'e', number: 'singular'},
-    '#{verb} to end of word')
+    'to end of word')
   @normal_mode.create_command(
     {motion: 'e', number: 'plural'},
-    '#{verb} to end of #{count.ordinalize} word')
+    'to end of #{count.ordinalize} word')
 
   @normal_mode.create_command(
     {operator: 'd', modifier: 'motion'},
-    'delete from cursor #{motion.lookup(self.motion.signature)}')
+    'delete from cursor#{motion.lookup(self.motion.signature)}')
 
   # e.g. dw
   @normal_mode.create_command(
