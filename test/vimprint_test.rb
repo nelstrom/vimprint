@@ -119,7 +119,8 @@ module Vimprint
       assert_equal [
         ['dw', 'delete to start of next word'],
         ['2dw', 'delete to start of 2nd word'],
-      ], Vimprint.explain('dw2dw')
+        ['d3w', 'delete to start of 3rd word'],
+      ], Vimprint.explain('dw2dwd3w')
     end
 
     it 'explains linewise operations' do
