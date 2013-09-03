@@ -99,6 +99,13 @@ module Vimprint
       assert_equal({trigger: 'r', printable_char: '<Space>', raw_keystrokes: 'r<Space>'}, stage.to_hash)
     end
 
+    def test_staging_operator_echo
+      stage = Stage.new
+      stage.add :operator, 'd'
+      stage.add :operator, 'd'
+      assert_equal({raw_keystrokes: 'dd', operator: 'd', echo: 'd'}, stage.to_hash)
+    end
+
   end
 
 end
