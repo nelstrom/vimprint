@@ -123,7 +123,8 @@ module Vimprint
     def self.build(config)
       if config.has_key?(:echo) && config[:echo] != ''
         Echo.new({
-          trigger: config[:echo]
+          trigger: config[:echo],
+          count: config[:count]
         })
       else
         Motion.new({
@@ -136,9 +137,10 @@ module Vimprint
   end
 
   class Echo
-    attr_reader :trigger
+    attr_reader :trigger, :count
     def initialize(config={})
       @trigger = config[:trigger]
+      @count = config.fetch(:count, 1).to_i
     end
     def nature
       "echo"

@@ -119,8 +119,9 @@ module Vimprint
       assert_equal [
         ['dw', 'delete to start of next word'],
         ['2dw', 'delete to start of 2nd word'],
-        ['dd', 'delete 1 line'],
-      ], Vimprint.explain('dw2dwdd')
+        ['dd', 'delete a line'],
+        ['2dd', 'delete 2 lines'],
+      ], Vimprint.explain('dw2dwdd2dd')
       # consider the following:
       #   de - cut from cursor forward to end of word
       #   dw - cut from cursor forward to start of next word

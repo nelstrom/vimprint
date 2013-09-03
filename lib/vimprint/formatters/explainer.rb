@@ -34,7 +34,7 @@ module Vimprint
 
   class Echo
     def lookup(context)
-      '1 line'
+      count > 1 ? "#{count} lines" : "a line"
     end
   end
 
