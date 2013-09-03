@@ -62,13 +62,14 @@ module Vimprint
 
     operator = [d] >H @T @{ @stage.add(:operator, strokes) };
     echo = [d] >H @T @{ @stage.add(:echo, strokes) };
+    disallowed_in_operator_pending = (escape| tabkey | '"') >H @T @{ @stage.add(:trigger, strokes) };
     operation =
       count_register_prefix
       operator
       count?
       (
         (echo | motion) @{ @eventlist << Operation.new(@stage.commit) }
-        | abort @{ @eventlist << AbortedCommand.new(@stage.commit) }
+        | disallowed_in_operator_pending @{ @eventlist << AbortedCommand.new(@stage.commit) }
       );
 
     normal  := (
