@@ -32,7 +32,7 @@ module Vimprint
 
     def get_command(signature)
       @commands.fetch(signature) {
-        raise NoCommandError.new("Vimprint doesn't know about #{signature} command")
+        raise NoCommandError.new("no Explanation found for command signature: #{signature}")
       }
     end
 
