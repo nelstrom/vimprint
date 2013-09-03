@@ -99,27 +99,65 @@ module Vimprint
         "move forward"
       end
     end
+    def nature
+      'motion'
+    end
+  end
+
+  class Operator
+    attr_accessor :trigger, :register
+    def initialize(config={})
+      @trigger = config[:trigger]
+      @register = config[:register]
+    end
+    def signature
+      {trigger: @trigger}
+    end
+    def ==(other)
+      @trigger == other.trigger &&
+      @register == other.register
+    end
+  end
+
+  class Extent
+    def self.build(config)
+      if config.has_key?(:echo) && config[:echo] != ''
+        Echo.new({
+          trigger: config[:echo]
+        })
+      else
+        Motion.new({
+          motion: config[:motion],
+          count: config[:count],
+          invocation_context: 'operator_pending'
+        })
+      end
+    end
+  end
+
+  class Echo
+    attr_reader :trigger
+    def initialize(config={})
+      @trigger = config[:trigger]
+    end
+    def nature
+      "echo"
+    end
+    def ==(other)
+      @trigger == other.trigger
+    end
   end
 
   class Operation < BaseCommand
-    attr_accessor :operator, :motion
+    attr_accessor :operator, :extent
 
     def initialize(config={})
-      @register       = config[:register]
-      @operator       = config[:operator]
       @raw_keystrokes = config[:raw_keystrokes]
-      @motion         = Motion.new({
-        motion: config[:motion],
-        count:  config[:count],
-        invocation_context: 'operator_pending'
+      @operator = Operator.new({
+        trigger:    config[:operator],
+        register:   config[:register]
       })
-    end
-
-    def signature
-      {
-        operator: operator,
-        modifier: 'motion'
-      }
+      @extent = Extent.build(config)
     end
   end
 

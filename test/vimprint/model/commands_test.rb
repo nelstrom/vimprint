@@ -35,8 +35,54 @@ module Vimprint
         raw_keystrokes: 'dw',
         operator: 'd',
         motion: 'w'
-      }).motion
+      }).extent
       assert_equal 'operator_pending', motion.invocation_context
+    end
+
+  end
+
+  describe Operator do
+    it 'has a trigger value' do
+      operator = Operator.new({trigger: 'd'})
+      assert_equal 'd', operator.trigger
+    end
+  end
+
+  describe Extent do
+    it 'creates a motion from config' do
+      extent = Extent.build({motion: 'w', count: '2'})
+      assert_equal Motion.new({motion: 'w', count: '2'}), extent
+    end
+    it 'creates an echo from config' do
+      extent = Extent.build({echo: 'd'})
+      assert_equal Echo.new({trigger: 'd'}), extent
+    end
+    it 'creates a text object from config' do
+      skip "FILL THIS OUT WHEN IMPLEMENTING TEXT OBJECTS"
+    end
+  end
+
+  describe Operation do
+
+    it 'can be constructed from operator + motion' do
+      operation = Operation.new({
+        raw_keystrokes: 'd2w',
+        operator: 'd',
+        motion: 'w',
+        count: '2'
+      })
+      assert_equal Operator.new({trigger:'d'}), operation.operator
+      assert_equal Motion.new({motion: 'w', count: '2'}), operation.extent
+    end
+
+    it 'can be constructed from operator + operator' do
+      operation = Operation.new({
+        raw_keystrokes: 'dd',
+        operator: 'd',
+        echo: 'd',
+      })
+      assert_equal Operator.new({trigger: 'd'}), operation.operator
+      assert_equal Echo.new({trigger: 'd'}), operation.extent
     end
 
   end

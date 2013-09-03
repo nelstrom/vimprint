@@ -61,10 +61,11 @@ module Vimprint
       motion @{ @eventlist << Motion.new(@stage.commit) };
 
     operator = [d] >H @T @{ @stage.add(:operator, strokes) };
+    echo = [d] >H @T @{ @stage.add(:echo, strokes) };
     operation =
       count_register_prefix
       operator
-      motion @{ @eventlist << Operation.new(@stage.commit) };
+      (motion | echo) @{ @eventlist << Operation.new(@stage.commit) };
 
     normal  := (
       cut_command |

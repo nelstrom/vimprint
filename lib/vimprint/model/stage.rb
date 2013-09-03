@@ -1,7 +1,7 @@
 module Vimprint
   class Stage
 
-    attr_reader :register, :trigger, :operator, :motion, :counts, :mark, :printable_char
+    attr_reader :register, :trigger, :operator, :echo, :motion, :counts, :mark, :printable_char
 
     def initialize()
       reset
@@ -12,6 +12,7 @@ module Vimprint
       @counts = []
       @register = ""
       @operator = ""
+      @echo = ""
       @motion = ""
       @mark = ""
       @trigger = ""
@@ -30,6 +31,7 @@ module Vimprint
         trigger: @trigger,
         mark: @mark,
         operator: @operator,
+        echo: @echo,
         motion: @motion,
         printable_char: @printable_char
       }.reject do |k,v|

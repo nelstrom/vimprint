@@ -28,7 +28,25 @@ module Vimprint
       [
         verb,
         Registry.get_mode("normal").get_command(signature).render(binding).strip
-      ].join(" ")
+      ].compact.join(" ")
+    end
+  end
+
+  class Echo
+    def lookup(context)
+      '1 line'
+    end
+  end
+
+  class Operator
+    def lookup(context)
+      Registry.get_operator(signature)
+    end
+  end
+
+  class Operation
+    def lookup(context)
+      [operator.lookup(context), extent.lookup(context)].join(" ")
     end
   end
 

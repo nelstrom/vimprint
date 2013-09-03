@@ -25,6 +25,18 @@ module Vimprint
       @modes[name] ||= new
     end
 
+
+    def self.get_operator(name)
+      @operators.fetch(name) {
+        raise NoModeError.new("Vimprint doesn't know about #{name} operator")
+      }
+    end
+
+    def self.create_operator(name, verb)
+      @operators       ||= {}
+      @operators[name] ||= verb
+    end
+
     def create_command(signature, template)
       @commands ||= {}
       @commands[signature] = Explanation.new(template)
