@@ -73,6 +73,7 @@ module Vimprint
         "m\e",
         "3m\e",
         "`\e",
+        "d\e",
       ].join
 
       assert_equal [
@@ -83,6 +84,7 @@ module Vimprint
         ['m<Esc>', explanation],
         ['3m<Esc>', explanation],
         ['`<Esc>', explanation],
+        ['d<Esc>', explanation],
       ], Vimprint.explain(bad_input)
     end
 

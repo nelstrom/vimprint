@@ -66,7 +66,10 @@ module Vimprint
       count_register_prefix
       operator
       count?
-      (echo | motion) @{ @eventlist << Operation.new(@stage.commit) };
+      (
+        (echo | motion) @{ @eventlist << Operation.new(@stage.commit) }
+        | abort @{ @eventlist << AbortedCommand.new(@stage.commit) }
+      );
 
     normal  := (
       cut_command |
