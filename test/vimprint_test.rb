@@ -138,6 +138,17 @@ module Vimprint
       ], Vimprint.explain('dd2>>d3d3d2d')
     end
 
+    it 'aborts operator pending mode on encountering non-self operator' do
+      bad_input = [
+        "d>",
+        ">d",
+      ].join
+      assert_equal [
+        ['d>', '[aborted command]'],
+        ['>d', '[aborted command]'],
+      ], Vimprint.explain(bad_input)
+    end
+
       # consider the following:
       #   de - cut from cursor forward to end of word
       #   dw - cut from cursor forward to start of next word
