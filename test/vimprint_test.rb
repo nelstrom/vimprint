@@ -132,10 +132,10 @@ module Vimprint
     it 'explains linewise operations' do
       assert_equal [
         ['dd', 'delete a line'],
-        ['2dd', 'delete 2 lines'],
+        ['2>>', 'indent 2 lines'],
         ['d3d', 'delete 3 lines'],
         ['3d2d', 'delete 6 lines'],
-      ], Vimprint.explain('dd2ddd3d3d2d')
+      ], Vimprint.explain('dd2>>d3d3d2d')
     end
 
       # consider the following:

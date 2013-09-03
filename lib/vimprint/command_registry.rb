@@ -115,6 +115,7 @@ module Vimprint
     'to end of #{count.ordinalize} word')
 
   Registry.create_operator({trigger: 'd'}, 'delete')
+  Registry.create_operator({trigger: '>'}, 'indent')
   @normal_mode.create_command(
     {operator: 'd', modifier: 'motion'},
     'delete from cursor#{motion.lookup(self.motion.signature)}')
