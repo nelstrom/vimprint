@@ -131,7 +131,7 @@ module Vimprint
     'start Visual mode blockwise')
 
   @visual_mode.create_command(
-    {trigger: '<Esc>'},
+    {pop: true},
     'pop to Normal mode')
 
 end

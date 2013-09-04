@@ -187,6 +187,12 @@ module Vimprint
       #  dvj - cut from cursor same position on line below
 
       it 'detects Visual mode start, switch, and exit' do
+        keystrokes = [
+          "v\e",
+          "V\e",
+          "#{ctrl_V}\e",
+          "vv",
+        ].join
         assert_equal [
           [
             ["v", "start Visual mode charwise"],
@@ -200,7 +206,11 @@ module Vimprint
             ["<C-v>", "start Visual mode blockwise"],
             ["<Esc>", "pop to Normal mode"],
           ],
-        ], Vimprint.explain("v\eV\e#{ctrl_V}\e")
+          [
+            ["v", "start Visual mode charwise"],
+            ["v", "pop to Normal mode"],
+          ],
+        ], Vimprint.explain(keystrokes)
       end
 
   end

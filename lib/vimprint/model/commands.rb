@@ -182,7 +182,7 @@ module Vimprint
 
   class Terminator < BaseCommand
     def signature
-      super.merge({ trigger: trigger })
+      super.merge({ pop: true })
     end
   end
 

@@ -81,22 +81,51 @@ module Vimprint
     charwise_visual = 'v' >H @T @{ @stage.add(:switch, strokes) };
     linewise_visual = 'V' >H @T @{ @stage.add(:switch, strokes) };
     blockwise_visual = ctrl_v >H @T @{ @stage.add(:switch, '<C-v>') };
-    start_visual_mode =
-      (charwise_visual | linewise_visual | blockwise_visual) @{
-      entry_point << (switch = VisualSwitch.new(@stage.commit))
-      @modestack.push(switch.commands)
-      fcall visual;
-    };
 
-    stop_visual_mode =
-      abort @{
-        entry_point << Terminator.new(@stage.commit)
-        @modestack.pop
+    start_charwise_visual_mode =
+      charwise_visual @{
+        entry_point << (switch = VisualSwitch.new(@stage.commit))
+        @modestack.push(switch.commands)
+        fcall visual_charwise_mode;
       };
 
-    visual := (
-      stop_visual_mode @{ fret; }
-    );
+    start_linewise_visual_mode =
+      linewise_visual @{
+        entry_point << (switch = VisualSwitch.new(@stage.commit))
+        @modestack.push(switch.commands)
+        fcall visual_linewise_mode;
+      };
+
+    start_blockwise_visual_mode =
+      blockwise_visual @{
+        entry_point << (switch = VisualSwitch.new(@stage.commit))
+        @modestack.push(switch.commands)
+        fcall visual_blockwise_mode;
+      };
+
+    visual_charwise_mode := (
+      (abort | charwise_visual)  @{
+        entry_point << Terminator.new(@stage.commit)
+        @modestack.pop
+        fret;
+      }
+    )*;
+
+    visual_linewise_mode := (
+      abort  @{
+        entry_point << Terminator.new(@stage.commit)
+        @modestack.pop
+        fret;
+      }
+    )*;
+
+    visual_blockwise_mode := (
+      abort  @{
+        entry_point << Terminator.new(@stage.commit)
+        @modestack.pop
+        fret;
+      }
+    )*;
 
     normal  := (
       cut_command |
@@ -105,7 +134,9 @@ module Vimprint
       replace_command |
       motion_command |
       operation |
-      start_visual_mode
+      start_charwise_visual_mode |
+      start_linewise_visual_mode |
+      start_blockwise_visual_mode
     )*;
 
   }%%
