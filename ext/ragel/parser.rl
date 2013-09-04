@@ -73,13 +73,7 @@ module Vimprint
       count?
       (
         motion @{ @eventlist << Operation.new(@stage.commit) }
-        | operator_echo @{
-          if @stage.echo_is_true?
-            @eventlist << Operation.new(@stage.commit)
-          else
-            @eventlist << AbortedCommand.new(@stage.commit)
-          end
-        }
+        | operator_echo @{ @eventlist << Operation.build(@stage) }
         | disallowed_in_operator_pending @{ @eventlist << AbortedCommand.new(@stage.commit) }
       );
 

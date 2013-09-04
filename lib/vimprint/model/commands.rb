@@ -149,6 +149,14 @@ module Vimprint
   class Operation < BaseCommand
     attr_accessor :operator, :extent
 
+    def self.build(stage)
+      if stage.echo_is_true?
+        Operation.new(stage.commit)
+      else
+        AbortedCommand.new(stage.commit)
+      end
+    end
+
     def initialize(config={})
       @raw_keystrokes = config[:raw_keystrokes]
       @operator = Operator.new({
