@@ -120,7 +120,7 @@ module Vimprint
     )*;
 
     visual_blockwise_mode := (
-      abort  @{
+      (abort | blockwise_visual)  @{
         entry_point << Terminator.new(@stage.commit)
         @modestack.pop
         fret;

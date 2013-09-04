@@ -193,6 +193,7 @@ module Vimprint
           "#{ctrl_V}\e",
           "vv",
           "VV",
+          "#{ctrl_V}#{ctrl_V}",
         ].join
         assert_equal [
           [
@@ -214,6 +215,10 @@ module Vimprint
           [
             ["V", "start Visual mode linewise"],
             ["V", "pop to Normal mode"],
+          ],
+          [
+            ["<C-v>", "start Visual mode blockwise"],
+            ["<C-v>", "pop to Normal mode"],
           ],
         ], Vimprint.explain(keystrokes)
       end
