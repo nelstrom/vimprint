@@ -59,9 +59,18 @@ module Vimprint
     end
   end
 
+  class VisualSwitch
+    def explain(context)
+      [
+        super,
+        [commands.explain(context)].flatten
+      ]
+    end
+  end
+
   class Terminator
     def lookup(context)
-      Registry.lookup("visual", signature).render(binding).strip
+      Registry.lookup(context, signature).render(binding).strip
     end
   end
 

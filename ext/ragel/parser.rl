@@ -23,8 +23,8 @@ module Vimprint
     cut_command =
       count_register_prefix
       (
-        cut @{ @eventlist << RegisterCommand.new(@stage.commit) }
-        | abort @{ @eventlist << AbortedCommand.new(@stage.commit) }
+        cut @{ entry_point << RegisterCommand.new(@stage.commit) }
+        | abort @{ entry_point << AbortedCommand.new(@stage.commit) }
       );
 
     small_letter = [a-z] >H @T @{ @stage.add(:mark, strokes) };
@@ -34,16 +34,16 @@ module Vimprint
       count_register_prefix
       mark
       (
-        small_letter @{ @eventlist << MarkCommand.new(@stage.commit) }
-        | big_letter @{ @eventlist << MarkCommand.new(@stage.commit) }
-        | abort @{ @eventlist << AbortedCommand.new(@stage.commit) }
+        small_letter @{ entry_point << MarkCommand.new(@stage.commit) }
+        | big_letter @{ entry_point << MarkCommand.new(@stage.commit) }
+        | abort @{ entry_point << AbortedCommand.new(@stage.commit) }
       );
 
     undo = 'u' >H @T @{ @stage.add(:trigger, strokes) };
     redo = ctrl_r >H @T @{ @stage.add(:trigger, '<C-r>') };
     history_command =
       count_register_prefix
-      (undo | redo) @{ @eventlist << NormalCommand.new(@stage.commit) };
+      (undo | redo) @{ entry_point << NormalCommand.new(@stage.commit) };
 
     replace = 'r'  >H @T @{ @stage.add(:trigger, strokes) };
     printable_chars = (print | tabkey | enter)  >H @T @{ @stage.add(:printable_char, strokes) };
@@ -51,14 +51,14 @@ module Vimprint
       count_register_prefix
       replace
       (
-        printable_chars @{ @eventlist << ReplaceCommand.new(@stage.commit) }
-        | abort @{ @eventlist << AbortedCommand.new(@stage.commit) }
+        printable_chars @{ entry_point << ReplaceCommand.new(@stage.commit) }
+        | abort @{ entry_point << AbortedCommand.new(@stage.commit) }
       );
 
     motion = [we] >H @T @{ @stage.add(:motion, strokes) };
     motion_command =
       count_register_prefix
-      motion @{ @eventlist << MotionCommand.new(@stage.commit) };
+      motion @{ entry_point << MotionCommand.new(@stage.commit) };
 
     onestroke_operator = [d>];
     prefixed_operator = [?U];
@@ -72,20 +72,24 @@ module Vimprint
       operator
       count?
       (
-        motion @{ @eventlist << Operation.build(@stage) }
-        | operator_echo @{ @eventlist << Operation.build(@stage) }
-        | disallowed_in_operator_pending @{ @eventlist << AbortedCommand.new(@stage.commit) }
+        motion @{ entry_point << Operation.build(@stage) }
+        | operator_echo @{ entry_point << Operation.build(@stage) }
+        | disallowed_in_operator_pending @{ entry_point << AbortedCommand.new(@stage.commit) }
       );
 
     charwise_visual = 'v' >H @T @{ @stage.add(:switch, strokes) };
     start_visual_mode =
       (charwise_visual) @{
-      @eventlist << VisualSwitch.new(@stage.commit)
+      entry_point << (switch = VisualSwitch.new(@stage.commit))
+      @modestack.push(switch.commands)
       fcall visual;
     };
 
     stop_visual_mode =
-      abort @{ @eventlist << Terminator.new(@stage.commit) };
+      abort @{
+        entry_point << Terminator.new(@stage.commit)
+        @modestack.pop
+      };
 
     visual := (
       stop_visual_mode @{ fret; }
@@ -109,6 +113,7 @@ module Vimprint
 
     def initialize(listener=[])
       @eventlist = listener
+      @modestack = [@eventlist]
       @stage = Stage.new
       %% write data;
     end
@@ -119,6 +124,10 @@ module Vimprint
       %% write init;
       %% write exec;
       @eventlist
+    end
+
+    def entry_point
+      @modestack.last
     end
 
     def strokes

@@ -170,7 +170,11 @@ module Vimprint
   end
 
   class VisualSwitch < BaseCommand
-    attr_reader :switch
+    attr_reader :switch, :commands
+    def initialize(config={})
+      super
+      @commands = VisualMode.new
+    end
     def signature
       super.merge({ switch: switch })
     end

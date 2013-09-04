@@ -182,9 +182,12 @@ module Vimprint
 
       it 'detects visual mode start, switch, and exit' do
         assert_equal [
-          ["v", "start Visual mode charwise"],
-          ["<Esc>", "pop to Normal mode"],
-        ], Vimprint.explain("v\e")
+          [
+            ["v", "start Visual mode charwise"],
+            ["<Esc>", "pop to Normal mode"],
+          ],
+          ["w", "move forward to start of next word"],
+        ], Vimprint.explain("v\ew")
       end
 
   end
