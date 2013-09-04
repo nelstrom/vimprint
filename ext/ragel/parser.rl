@@ -60,7 +60,7 @@ module Vimprint
       count_register_prefix
       motion @{ @eventlist << MotionCommand.new(@stage.commit) };
 
-    operator = [d>] >H @T @{ @stage.add(:operator, strokes) };
+    operator = ('g?' | [d>]) >H @T @{ @stage.add(:operator, strokes) };
     disallowed_in_operator_pending = (escape| tabkey | '"') >H @T @{ @stage.add(:trigger, strokes) };
     operation =
       count_register_prefix

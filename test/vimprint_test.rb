@@ -133,9 +133,9 @@ module Vimprint
       assert_equal [
         ['dd', 'delete a line'],
         ['2>>', 'indent 2 lines'],
-        ['d3d', 'delete 3 lines'],
+        ['g?3g?', 'rot13 encode 3 lines'],
         ['3d2d', 'delete 6 lines'],
-      ], Vimprint.explain('dd2>>d3d3d2d')
+      ], Vimprint.explain('dd2>>g?3g?3d2d')
     end
 
     it 'aborts operator pending mode on encountering non-self operator' do

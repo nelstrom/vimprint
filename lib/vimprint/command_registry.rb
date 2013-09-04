@@ -116,5 +116,6 @@ module Vimprint
 
   Registry.create_operator({trigger: 'd'}, 'delete')
   Registry.create_operator({trigger: '>'}, 'indent')
+  Registry.create_operator({trigger: 'g?'}, 'rot13 encode')
 
 end
