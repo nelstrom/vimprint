@@ -15,6 +15,10 @@ module Vimprint
 
   class Registry
 
+    def self.lookup(mode, signature)
+      Registry.get_mode(mode).get_command(signature)
+    end
+
     def self.get_mode(name)
       @modes.fetch(name) {
         raise NoModeError.new("Vimprint doesn't know about #{name} mode")

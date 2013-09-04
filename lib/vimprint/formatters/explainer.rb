@@ -19,7 +19,7 @@ module Vimprint
     end
 
     def lookup(context)
-      Registry.get_mode(context).get_command(signature).render(binding)
+      Registry.lookup(context, signature).render(binding)
     end
   end
 
@@ -27,7 +27,7 @@ module Vimprint
     def lookup(context)
       [
         verb,
-        Registry.get_mode("normal").get_command(signature).render(binding).strip
+        Registry.lookup("normal", signature).render(binding).strip
       ].compact.join(" ")
     end
   end
