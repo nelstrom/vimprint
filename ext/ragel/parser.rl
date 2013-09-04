@@ -112,7 +112,7 @@ module Vimprint
     )*;
 
     visual_linewise_mode := (
-      abort  @{
+      (abort | linewise_visual)  @{
         entry_point << Terminator.new(@stage.commit)
         @modestack.pop
         fret;
