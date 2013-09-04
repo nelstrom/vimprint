@@ -150,7 +150,7 @@ module Vimprint
     attr_accessor :operator, :extent
 
     def self.build(stage)
-      if stage.echo_is_true?
+      if stage.echo_is_true? || stage.motion != ''
         Operation.new(stage.commit)
       else
         AbortedCommand.new(stage.commit)

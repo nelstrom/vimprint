@@ -72,7 +72,7 @@ module Vimprint
       operator
       count?
       (
-        motion @{ @eventlist << Operation.new(@stage.commit) }
+        motion @{ @eventlist << Operation.build(@stage) }
         | operator_echo @{ @eventlist << Operation.build(@stage) }
         | disallowed_in_operator_pending @{ @eventlist << AbortedCommand.new(@stage.commit) }
       );
