@@ -60,7 +60,12 @@ module Vimprint
       count_register_prefix
       motion @{ @eventlist << MotionCommand.new(@stage.commit) };
 
-    operator = ('g?' | [d>]) >H @T @{ @stage.add(:operator, strokes) };
+    onestroke_operator = [d>];
+    prefixed_operator = [?U];
+    twostroke_operator = 'g' prefixed_operator;
+    operator = (onestroke_operator | twostroke_operator) >H @T @{ @stage.add(:operator, strokes) };
+    operator_echo = (onestroke_operator | twostroke_operator | prefixed_operator) >H @T @{ @stage.add(:operator, strokes) };
+
     disallowed_in_operator_pending = (escape| tabkey | '"') >H @T @{ @stage.add(:trigger, strokes) };
     operation =
       count_register_prefix
@@ -68,8 +73,8 @@ module Vimprint
       count?
       (
         motion @{ @eventlist << Operation.new(@stage.commit) }
-        | operator @{
-          if @stage.operator == @stage.echo
+        | operator_echo @{
+          if @stage.echo_is_true?
             @eventlist << Operation.new(@stage.commit)
           else
             @eventlist << AbortedCommand.new(@stage.commit)

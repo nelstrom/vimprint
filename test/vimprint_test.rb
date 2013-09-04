@@ -130,12 +130,14 @@ module Vimprint
     end
 
     it 'explains linewise operations' do
+      commands = %w{dd 2>> g?3g? gUU 3d2d}.join
       assert_equal [
         ['dd', 'delete a line'],
         ['2>>', 'indent 2 lines'],
         ['g?3g?', 'rot13 encode 3 lines'],
+        ['gUU', 'upcase a line'],
         ['3d2d', 'delete 6 lines'],
-      ], Vimprint.explain('dd2>>g?3g?3d2d')
+      ], Vimprint.explain(commands)
     end
 
     it 'aborts operator pending mode on encountering non-self operator' do
