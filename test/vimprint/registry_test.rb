@@ -100,5 +100,38 @@ module Vimprint
       end
     end
 
+    describe '#create_operator' do
+
+      it 'overwrites existing entries' do
+        @op1 = Registry.create_operator('d', 'delete')
+        @op2 = Registry.create_operator('d', 'cut')
+        assert_equal 'cut', Registry.get_operator('d')
+      end
+
+    end
+
+    describe '#get_operator' do
+
+      before do
+        @cut = Registry.create_operator('d', 'cut')
+        @rot13 = Registry.create_operator('g?', 'rot13')
+      end
+
+      it 'returns the cut registry' do
+        mode = Registry.get_operator('d')
+        assert_equal @cut, mode
+      end
+
+      it 'returns the rot13 registry' do
+        mode = Registry.get_operator('g?')
+        assert_equal @rot13, mode
+      end
+
+      it 'explodes informatively when asked for a non-existant mode' do
+        assert_raises(NoOperatorError) {Registry.get_operator('sparkles')}
+      end
+
+    end
+
   end
 end

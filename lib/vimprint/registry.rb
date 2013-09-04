@@ -5,6 +5,7 @@ module Vimprint
 
   class NoModeError < NameError; end
   class NoCommandError < NameError; end
+  class NoOperatorError < NameError; end
 
   class Explanation < Struct.new(:template)
     def render(context)
@@ -25,16 +26,15 @@ module Vimprint
       @modes[name] ||= new
     end
 
-
     def self.get_operator(name)
       @operators.fetch(name) {
-        raise NoModeError.new("Vimprint doesn't know about #{name} operator")
+        raise NoOperatorError.new("no match found for operator: #{name}")
       }
     end
 
     def self.create_operator(name, verb)
       @operators       ||= {}
-      @operators[name] ||= verb
+      @operators[name] = verb
     end
 
     def create_command(signature, template)
