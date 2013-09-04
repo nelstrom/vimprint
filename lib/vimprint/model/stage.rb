@@ -47,6 +47,10 @@ module Vimprint
       @operators[0]
     end
 
+    def echo_is_true?
+      operator == echo || operator[-1] == echo
+    end
+
     def effective_count
       @counts.map { |digit| digit.to_i }.inject(:*)
     end

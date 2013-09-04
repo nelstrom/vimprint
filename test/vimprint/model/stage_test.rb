@@ -106,6 +106,23 @@ module Vimprint
       assert_equal({raw_keystrokes: 'dd', operator: 'd', echo: 'd'}, stage.to_hash)
     end
 
+    def test_echo_is_true
+      stage = Stage.new
+      stage.add :operator, 'd'
+      stage.add :operator, 'd'
+      assert stage.echo_is_true?
+
+      stage = Stage.new
+      stage.add :operator, 'gU'
+      stage.add :operator, 'gU'
+      assert stage.echo_is_true?
+
+      stage = Stage.new
+      stage.add :operator, 'gU'
+      stage.add :operator, 'U'
+      assert stage.echo_is_true?
+    end
+
   end
 
 end
