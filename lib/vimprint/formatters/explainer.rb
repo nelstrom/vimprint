@@ -13,6 +13,12 @@ module Vimprint
     end
   end
 
+  class VisualMode
+    def explain(context)
+      map { |o| o.explain("visual") }
+    end
+  end
+
   class BaseCommand
     def explain(context)
       [raw_keystrokes, lookup(context)]
@@ -50,6 +56,12 @@ module Vimprint
   class Operation
     def lookup(context)
       [operator.lookup(context), extent.lookup(context)].join(" ")
+    end
+  end
+
+  class Terminator
+    def lookup(context)
+      Registry.lookup("visual", signature).render(binding).strip
     end
   end
 

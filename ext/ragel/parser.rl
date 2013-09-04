@@ -77,13 +77,28 @@ module Vimprint
         | disallowed_in_operator_pending @{ @eventlist << AbortedCommand.new(@stage.commit) }
       );
 
+    charwise_visual = 'v' >H @T @{ @stage.add(:switch, strokes) };
+    start_visual_mode =
+      (charwise_visual) @{
+      @eventlist << VisualSwitch.new(@stage.commit)
+      fcall visual;
+    };
+
+    stop_visual_mode =
+      abort @{ @eventlist << Terminator.new(@stage.commit) };
+
+    visual := (
+      stop_visual_mode @{ fret; }
+    );
+
     normal  := (
       cut_command |
       mark_command |
       history_command |
       replace_command |
       motion_command |
-      operation
+      operation |
+      start_visual_mode
     )*;
 
   }%%

@@ -3,6 +3,7 @@ require_relative 'registry'
 module Vimprint
 
   @normal_mode = Registry.create_mode("normal")
+  @visual_mode = Registry.create_mode("visual")
 
   # Sample DSL for generating these explanations:
   # command {
@@ -118,5 +119,13 @@ module Vimprint
   Registry.create_operator({trigger: '>'}, 'indent')
   Registry.create_operator({trigger: 'g?'}, 'rot13 encode')
   Registry.create_operator({trigger: 'gU'}, 'upcase')
+
+  @normal_mode.create_command(
+    {switch: 'v'},
+    'start Visual mode charwise')
+
+  @visual_mode.create_command(
+    {trigger: '<Esc>'},
+    'pop to Normal mode')
 
 end

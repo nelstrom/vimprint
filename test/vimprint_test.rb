@@ -180,6 +180,13 @@ module Vimprint
       #  2dj - cut 3 lines
       #  dvj - cut from cursor same position on line below
 
+      it 'detects visual mode start, switch, and exit' do
+        assert_equal [
+          ["v", "start Visual mode charwise"],
+          ["<Esc>", "pop to Normal mode"],
+        ], Vimprint.explain("v\e")
+      end
+
   end
 
 end

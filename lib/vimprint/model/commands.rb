@@ -16,6 +16,7 @@ module Vimprint
       @register       = config[:register]
       @motion         = config[:motion]
       @mark           = config[:mark]
+      @switch         = config[:switch]
       @operator       = config[:operator]
       @raw_keystrokes = config[:raw_keystrokes]
       @printable_char = config[:printable_char]
@@ -165,6 +166,19 @@ module Vimprint
         register:   config[:register]
       })
       @extent = Extent.build(config)
+    end
+  end
+
+  class VisualSwitch < BaseCommand
+    attr_reader :switch
+    def signature
+      super.merge({ switch: switch })
+    end
+  end
+
+  class Terminator < BaseCommand
+    def signature
+      super.merge({ trigger: trigger })
     end
   end
 
