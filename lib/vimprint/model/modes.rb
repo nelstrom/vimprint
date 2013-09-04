@@ -6,4 +6,7 @@ module Vimprint
   class NormalMode < BaseMode
   end
 
+  class VisualMode < BaseMode
+  end
+
 end

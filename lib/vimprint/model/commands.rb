@@ -97,8 +97,9 @@ module Vimprint
 
   class MotionCommand < BareMotion
     def verb
-      if @invocation_context == "normal"
-        "move forward"
+      case @invocation_context
+      when "visual" then "select"
+      when "normal" then "move forward"
       end
     end
   end

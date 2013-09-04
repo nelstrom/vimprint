@@ -32,7 +32,15 @@ module Vimprint
     end
 
     it 'knows when it\'s being called from Visual mode' do
-      skip
+      motion = VisualMode[
+        MotionCommand.new({
+          raw_keystrokes: 'w',
+          motion: 'w',
+          invocation_context: 'visual'
+        })
+      ].first
+      assert_equal 'visual', motion.invocation_context
+      assert_equal 'select', motion.verb
     end
 
 
