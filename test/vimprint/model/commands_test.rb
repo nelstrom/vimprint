@@ -18,26 +18,23 @@ module Vimprint
     end
   end
 
-  describe Motion do
+  describe MotionCommand do
 
     it 'assumes it\'s being called from Normal mode' do
       motion = NormalMode[
-        Motion.new({
+        MotionCommand.new({
           raw_keystrokes: 'w',
           motion: 'w'
         })
       ].first
       assert_equal 'normal', motion.invocation_context
+      assert_equal 'move forward', motion.verb
     end
 
-    it 'knows when it\'s being called after an operation' do
-      motion = Operation.new({
-        raw_keystrokes: 'dw',
-        operator: 'd',
-        motion: 'w'
-      }).extent
-      assert_equal 'operator_pending', motion.invocation_context
+    it 'knows when it\'s being called from Visual mode' do
+      skip
     end
+
 
   end
 
@@ -51,7 +48,7 @@ module Vimprint
   describe Extent do
     it 'creates a motion from config' do
       extent = Extent.build({motion: 'w', count: '2'})
-      assert_equal Motion.new({motion: 'w', count: '2'}), extent
+      assert_equal BareMotion.new({motion: 'w', count: '2'}), extent
     end
     it 'creates an echo from config' do
       extent = Extent.build({echo: 'd'})
@@ -72,7 +69,7 @@ module Vimprint
         count: '2'
       })
       assert_equal Operator.new({trigger:'d'}), operation.operator
-      assert_equal Motion.new({motion: 'w', count: '2'}), operation.extent
+      assert_equal BareMotion.new({motion: 'w', count: '2'}), operation.extent
     end
 
     it 'can be constructed from operator + operator' do

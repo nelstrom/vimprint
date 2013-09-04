@@ -23,12 +23,15 @@ module Vimprint
     end
   end
 
-  class Motion
+  class BareMotion
     def lookup(context)
-      [
-        verb,
-        Registry.lookup("normal", signature).render(binding).strip
-      ].compact.join(" ")
+      Registry.get_motion(signature).render(binding).strip
+    end
+  end
+
+  class MotionCommand
+    def lookup(context)
+      [verb, super].compact.join(" ")
     end
   end
 

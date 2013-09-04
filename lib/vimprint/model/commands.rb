@@ -80,7 +80,7 @@ module Vimprint
     end
   end
 
-  class Motion < BaseCommand
+  class BareMotion < BaseCommand
     include ReceivesCount
     attr_accessor :motion, :invocation_context
     def initialize(config={})
@@ -93,14 +93,13 @@ module Vimprint
         motion: motion
       })
     end
+  end
 
+  class MotionCommand < BareMotion
     def verb
       if @invocation_context == "normal"
         "move forward"
       end
-    end
-    def nature
-      'motion'
     end
   end
 
@@ -127,7 +126,7 @@ module Vimprint
           count: config[:count]
         })
       else
-        Motion.new({
+        BareMotion.new({
           motion: config[:motion],
           count: config[:count],
           invocation_context: 'operator_pending'
@@ -141,9 +140,6 @@ module Vimprint
     def initialize(config={})
       @trigger = config[:trigger]
       @count = config.fetch(:count, 1).to_i
-    end
-    def nature
-      "echo"
     end
     def ==(other)
       @trigger == other.trigger

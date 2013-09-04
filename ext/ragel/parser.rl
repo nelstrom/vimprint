@@ -58,7 +58,7 @@ module Vimprint
     motion = [we] >H @T @{ @stage.add(:motion, strokes) };
     motion_command =
       count_register_prefix
-      motion @{ @eventlist << Motion.new(@stage.commit) };
+      motion @{ @eventlist << MotionCommand.new(@stage.commit) };
 
     operator = [d>] >H @T @{ @stage.add(:operator, strokes) };
     disallowed_in_operator_pending = (escape| tabkey | '"') >H @T @{ @stage.add(:trigger, strokes) };

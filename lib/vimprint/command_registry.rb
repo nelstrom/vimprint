@@ -101,16 +101,16 @@ module Vimprint
     {aborted: true},
     '[aborted command]')
 
-  @normal_mode.create_command(
+  Registry.create_motion(
     {motion: 'w', number: 'singular'},
     'to start of next word')
-  @normal_mode.create_command(
+  Registry.create_motion(
     {motion: 'w', number: 'plural'},
     'to start of #{count.ordinalize} word')
-  @normal_mode.create_command(
+  Registry.create_motion(
     {motion: 'e', number: 'singular'},
     'to end of word')
-  @normal_mode.create_command(
+  Registry.create_motion(
     {motion: 'e', number: 'plural'},
     'to end of #{count.ordinalize} word')
 

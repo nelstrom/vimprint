@@ -6,6 +6,7 @@ module Vimprint
   class NoModeError < NameError; end
   class NoCommandError < NameError; end
   class NoOperatorError < NameError; end
+  class NoMotionError < NameError; end
 
   class Explanation < Struct.new(:template)
     def render(context)
@@ -39,6 +40,17 @@ module Vimprint
     def self.create_operator(name, verb)
       @operators       ||= {}
       @operators[name] = verb
+    end
+
+    def self.get_motion(signature)
+      @motions.fetch(signature) {
+        raise NoMotionError.new("no match found for motion: #{signature}")
+      }
+    end
+
+    def self.create_motion(signature, template)
+      @motions       ||= {}
+      @motions[signature] = Explanation.new(template)
     end
 
     def create_command(signature, template)
