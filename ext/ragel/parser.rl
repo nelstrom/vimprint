@@ -61,14 +61,20 @@ module Vimprint
       motion @{ @eventlist << Motion.new(@stage.commit) };
 
     operator = [d>] >H @T @{ @stage.add(:operator, strokes) };
-    echo = [d>] >H @T @{ @stage.add(:echo, strokes) };
     disallowed_in_operator_pending = (escape| tabkey | '"') >H @T @{ @stage.add(:trigger, strokes) };
     operation =
       count_register_prefix
       operator
       count?
       (
-        (echo | motion) @{ @eventlist << Operation.new(@stage.commit) }
+        motion @{ @eventlist << Operation.new(@stage.commit) }
+        | operator @{
+          if @stage.operator == @stage.echo
+            @eventlist << Operation.new(@stage.commit)
+          else
+            @eventlist << AbortedCommand.new(@stage.commit)
+          end
+        }
         | disallowed_in_operator_pending @{ @eventlist << AbortedCommand.new(@stage.commit) }
       );
 
