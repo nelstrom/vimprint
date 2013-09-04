@@ -78,8 +78,9 @@ module Vimprint
       );
 
     charwise_visual = 'v' >H @T @{ @stage.add(:switch, strokes) };
+    linewise_visual = 'V' >H @T @{ @stage.add(:switch, strokes) };
     start_visual_mode =
-      (charwise_visual) @{
+      (charwise_visual | linewise_visual) @{
       entry_point << (switch = VisualSwitch.new(@stage.commit))
       @modestack.push(switch.commands)
       fcall visual;

@@ -124,6 +124,10 @@ module Vimprint
     {switch: 'v'},
     'start Visual mode charwise')
 
+  @normal_mode.create_command(
+    {switch: 'V'},
+    'start Visual mode linewise')
+
   @visual_mode.create_command(
     {trigger: '<Esc>'},
     'pop to Normal mode')

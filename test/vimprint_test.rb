@@ -186,8 +186,11 @@ module Vimprint
             ["v", "start Visual mode charwise"],
             ["<Esc>", "pop to Normal mode"],
           ],
-          ["w", "move forward to start of next word"],
-        ], Vimprint.explain("v\ew")
+          [
+            ["V", "start Visual mode linewise"],
+            ["<Esc>", "pop to Normal mode"],
+          ],
+        ], Vimprint.explain("v\eV\e")
       end
 
   end
