@@ -6,7 +6,13 @@ module Vimprint
   describe Vimprint do
 
     def ctrl_R
+      #  - ascii: 18
       "\x12" # Ruby string notation for ctrl_R
+    end
+
+    def ctrl_V
+      #  - ascii: 22
+      "\x16" # Ruby string notation for ctrl_V
     end
 
     it 'prints consecutive commands with spaces to pad' do
@@ -180,7 +186,7 @@ module Vimprint
       #  2dj - cut 3 lines
       #  dvj - cut from cursor same position on line below
 
-      it 'detects visual mode start, switch, and exit' do
+      it 'detects Visual mode start, switch, and exit' do
         assert_equal [
           [
             ["v", "start Visual mode charwise"],
@@ -190,7 +196,11 @@ module Vimprint
             ["V", "start Visual mode linewise"],
             ["<Esc>", "pop to Normal mode"],
           ],
-        ], Vimprint.explain("v\eV\e")
+          [
+            ["<C-v>", "start Visual mode blockwise"],
+            ["<Esc>", "pop to Normal mode"],
+          ],
+        ], Vimprint.explain("v\eV\e#{ctrl_V}\e")
       end
 
   end

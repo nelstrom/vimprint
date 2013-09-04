@@ -12,6 +12,7 @@ module Vimprint
     tabkey = 9;
     enter  = 13;
     ctrl_r = 18;
+    ctrl_v = 22;
     escape = 27;
 
     abort = escape >H @T @{ @stage.add(:trigger, strokes) };
@@ -79,8 +80,9 @@ module Vimprint
 
     charwise_visual = 'v' >H @T @{ @stage.add(:switch, strokes) };
     linewise_visual = 'V' >H @T @{ @stage.add(:switch, strokes) };
+    blockwise_visual = ctrl_v >H @T @{ @stage.add(:switch, '<C-v>') };
     start_visual_mode =
-      (charwise_visual | linewise_visual) @{
+      (charwise_visual | linewise_visual | blockwise_visual) @{
       entry_point << (switch = VisualSwitch.new(@stage.commit))
       @modestack.push(switch.commands)
       fcall visual;

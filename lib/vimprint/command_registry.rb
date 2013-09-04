@@ -123,10 +123,12 @@ module Vimprint
   @normal_mode.create_command(
     {switch: 'v'},
     'start Visual mode charwise')
-
   @normal_mode.create_command(
     {switch: 'V'},
     'start Visual mode linewise')
+  @normal_mode.create_command(
+    {switch: '<C-v>'},
+    'start Visual mode blockwise')
 
   @visual_mode.create_command(
     {trigger: '<Esc>'},
