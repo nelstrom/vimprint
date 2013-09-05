@@ -237,7 +237,8 @@ module Vimprint
         assert_equal [
           ["v", "start Visual mode charwise"],
           ['w', 'select to start of next word'],
-        ], Vimprint.explain('vw')
+          ['2w', 'select to start of 2nd word'],
+        ], Vimprint.explain('vw2w')
       end
 
   end

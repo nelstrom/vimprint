@@ -116,7 +116,7 @@ module Vimprint
 
     visual_charwise_mode := (
       (
-        motion @{
+        (count? motion) @{
           entry_point << MotionCommand.new(@stage.commit.merge(invocation_context: 'visual'))
         }
       )*
