@@ -215,6 +215,7 @@ module Vimprint
         keystrokes = [
           "v\egvv",
           "V\egvV",
+          "#{ctrl_V}\egv#{ctrl_V}",
         ].join
         assert_equal [
           ["v", "start Visual mode charwise"],
@@ -225,6 +226,10 @@ module Vimprint
           ["<Esc>", "pop to Normal mode"],
           ["gv", "start Visual mode and reselect previous selection"],
           ["V", "pop to Normal mode"],
+          ["<C-v>", "start Visual mode blockwise"],
+          ["<Esc>", "pop to Normal mode"],
+          ["gv", "start Visual mode and reselect previous selection"],
+          ["<C-v>", "pop to Normal mode"],
         ], Vimprint.explain(keystrokes)
       end
 
