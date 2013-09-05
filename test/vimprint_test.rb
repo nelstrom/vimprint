@@ -214,12 +214,17 @@ module Vimprint
       it 'starts up lastwise visual mode with gv' do
         keystrokes = [
           "v\egvv",
+          "V\egvV",
         ].join
         assert_equal [
           ["v", "start Visual mode charwise"],
           ["<Esc>", "pop to Normal mode"],
-          ["gv", "start Visual mode charwise"],
+          ["gv", "start Visual mode and reselect previous selection"],
           ["v", "pop to Normal mode"],
+          ["V", "start Visual mode linewise"],
+          ["<Esc>", "pop to Normal mode"],
+          ["gv", "start Visual mode and reselect previous selection"],
+          ["V", "pop to Normal mode"],
         ], Vimprint.explain(keystrokes)
       end
 

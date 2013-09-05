@@ -131,7 +131,7 @@ module Vimprint
     'start Visual mode blockwise')
   @normal_mode.create_command(
     {switch: 'gv'},
-    'start Visual mode charwise')
+    'start Visual mode and reselect previous selection')
 
   @visual_mode.create_command(
     {pop: true},

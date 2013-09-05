@@ -95,6 +95,7 @@ module Vimprint
       linewise_visual @{
         entry_point << (switch = VisualSwitch.new(@stage.commit))
         @modestack.push(switch.commands)
+        lastvisual = fentry(visual_linewise_mode);
         fcall visual_linewise_mode;
       };
 
