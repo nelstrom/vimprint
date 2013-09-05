@@ -196,30 +196,18 @@ module Vimprint
           "#{ctrl_V}#{ctrl_V}",
         ].join
         assert_equal [
-          [
-            ["v", "start Visual mode charwise"],
-            ["<Esc>", "pop to Normal mode"],
-          ],
-          [
-            ["V", "start Visual mode linewise"],
-            ["<Esc>", "pop to Normal mode"],
-          ],
-          [
-            ["<C-v>", "start Visual mode blockwise"],
-            ["<Esc>", "pop to Normal mode"],
-          ],
-          [
-            ["v", "start Visual mode charwise"],
-            ["v", "pop to Normal mode"],
-          ],
-          [
-            ["V", "start Visual mode linewise"],
-            ["V", "pop to Normal mode"],
-          ],
-          [
-            ["<C-v>", "start Visual mode blockwise"],
-            ["<C-v>", "pop to Normal mode"],
-          ],
+          ["v", "start Visual mode charwise"],
+          ["<Esc>", "pop to Normal mode"],
+          ["V", "start Visual mode linewise"],
+          ["<Esc>", "pop to Normal mode"],
+          ["<C-v>", "start Visual mode blockwise"],
+          ["<Esc>", "pop to Normal mode"],
+          ["v", "start Visual mode charwise"],
+          ["v", "pop to Normal mode"],
+          ["V", "start Visual mode linewise"],
+          ["V", "pop to Normal mode"],
+          ["<C-v>", "start Visual mode blockwise"],
+          ["<C-v>", "pop to Normal mode"],
         ], Vimprint.explain(keystrokes)
       end
 

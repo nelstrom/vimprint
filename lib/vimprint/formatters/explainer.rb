@@ -1,6 +1,15 @@
 require 'vimprint/formatters/base_formatter'
+require 'vimprint/model/modes'
+require 'vimprint/model/commands'
 
 module Vimprint
+
+  class Couple < Struct.new(:keystrokes, :explanation)
+    def to_a
+      [keystrokes, explanation]
+    end
+  end
+
   class Explainer < BaseFormatter
     def explain
       commands.explain
@@ -9,7 +18,7 @@ module Vimprint
 
   class NormalMode
     def explain
-      map { |o| o.explain("normal") }
+      map { |o| o.explain("normal") }.flatten.map(&:to_a)
     end
   end
 
@@ -21,7 +30,7 @@ module Vimprint
 
   class BaseCommand
     def explain(context)
-      [raw_keystrokes, lookup(context)]
+      Couple.new(raw_keystrokes, lookup(context))
     end
 
     def lookup(context)
