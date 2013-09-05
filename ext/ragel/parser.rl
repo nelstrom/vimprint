@@ -137,12 +137,19 @@ module Vimprint
     );
 
     visual_linewise_mode := (
-      (abort | linewise_visual)  @{
-        entry_point << Terminator.new(@stage.commit)
-        @modestack.pop
-        fret;
-      }
-    )*;
+      (
+        visual_operator @{
+          entry_point << VisualOperation.new(@stage.commit)
+          @modestack.pop
+          fret;
+        }
+        | (abort | linewise_visual)  @{
+          entry_point << Terminator.new(@stage.commit)
+          @modestack.pop
+          fret;
+        }
+      )
+    );
 
     visual_blockwise_mode := (
       (abort | blockwise_visual)  @{

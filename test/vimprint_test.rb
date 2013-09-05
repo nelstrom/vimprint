@@ -245,7 +245,9 @@ module Vimprint
         assert_equal [
           ["v", "start Visual mode charwise"],
           ["d", "delete selection"],
-        ], Vimprint.explain('vd')
+          ["V", "start Visual mode linewise"],
+          ["d", "delete selection"],
+        ], Vimprint.explain('vdVd')
       end
 
   end
