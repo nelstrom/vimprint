@@ -83,4 +83,10 @@ module Vimprint
     end
   end
 
+  class VisualOperation
+    def lookup(context)
+      [operator.lookup(context), selection].join(" ")
+    end
+  end
+
 end

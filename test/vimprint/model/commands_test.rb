@@ -3,6 +3,15 @@ require 'vimprint/model/commands'
 
 module Vimprint
 
+  describe BaseCommand do
+    it 'can set/get :container' do
+      command = BaseCommand.new
+      assert_equal nil, command.container
+      command.container = (list = [])
+      assert_equal list, command.container
+    end
+  end
+
   describe NormalCommand do
     it 'can describe its plurality' do
       assert_equal 'singular', NormalCommand.new.plurality
@@ -90,5 +99,16 @@ module Vimprint
       assert_equal Echo.new({trigger: 'd'}), operation.extent
     end
 
+  end
+
+  describe VisualOperation do
+    it '#selection is aware of the nature of the containing instance of VisualMode' do
+      operation = VisualOperation.new
+      commandlist = VisualMode.new
+      commandlist << operation
+      assert_equal 'selected characters', operation.selection
+      commandlist.nature = 'linewise'
+      assert_equal 'selected lines', operation.selection
+    end
   end
 end

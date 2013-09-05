@@ -8,6 +8,7 @@ module Vimprint
   end
 
   class BaseCommand
+    attr_accessor :container
     attr_reader :trigger, :count, :raw_keystrokes, :register, :mark
 
     def initialize(config={})
@@ -188,8 +189,21 @@ module Vimprint
 
   class VisualOperation < Terminator
     attr_accessor :operator
+    def initialize(config={})
+      super
+      @operator = Operator.new({
+        trigger:    config[:operator],
+      })
+    end
     def signature
       super.merge({operator: operator})
+    end
+    def selection
+      case container.nature
+      when 'charwise' then 'selected characters'
+      when 'linewise' then 'selected lines'
+      else "selection"
+      end
     end
   end
 

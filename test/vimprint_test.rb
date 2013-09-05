@@ -244,9 +244,9 @@ module Vimprint
       it 'explains visual operations' do
         assert_equal [
           ["v", "start Visual mode charwise"],
-          ["d", "delete selection"],
+          ["d", "delete selected characters"],
           ["V", "start Visual mode linewise"],
-          ["d", "delete selection"],
+          ["d", "delete selected lines"],
         ], Vimprint.explain('vdVd')
       end
 

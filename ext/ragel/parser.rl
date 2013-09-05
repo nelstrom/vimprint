@@ -87,6 +87,7 @@ module Vimprint
       charwise_visual @{
         entry_point << (switch = VisualSwitch.new(@stage.commit))
         @modestack.push(switch.commands)
+        entry_point.nature = 'charwise'
         lastvisual = fentry(visual_charwise_mode);
         fcall visual_charwise_mode;
       };
@@ -95,6 +96,7 @@ module Vimprint
       linewise_visual @{
         entry_point << (switch = VisualSwitch.new(@stage.commit))
         @modestack.push(switch.commands)
+        entry_point.nature = 'linewise'
         lastvisual = fentry(visual_linewise_mode);
         fcall visual_linewise_mode;
       };
@@ -103,6 +105,7 @@ module Vimprint
       blockwise_visual @{
         entry_point << (switch = VisualSwitch.new(@stage.commit))
         @modestack.push(switch.commands)
+        entry_point.nature = 'blockwise'
         lastvisual = fentry(visual_blockwise_mode);
         fcall visual_blockwise_mode;
       };
