@@ -241,6 +241,13 @@ module Vimprint
         ], Vimprint.explain('vw2w')
       end
 
+      it 'explains visual operations' do
+        assert_equal [
+          ["v", "start Visual mode charwise"],
+          ["d", "delete selection"],
+        ], Vimprint.explain('vd')
+      end
+
   end
 
 end

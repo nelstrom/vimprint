@@ -114,17 +114,26 @@ module Vimprint
         fcall *lastvisual;
       };
 
+    visual_operator = (onestroke_operator) >H @T @{ @stage.add(:operator, strokes) };
+
     visual_charwise_mode := (
       (
         (count? motion) @{
           entry_point << MotionCommand.new(@stage.commit.merge(invocation_context: 'visual'))
         }
       )*
-      (abort | charwise_visual)  @{
-        entry_point << Terminator.new(@stage.commit)
-        @modestack.pop
-        fret;
-      }
+      (
+        visual_operator @{
+          entry_point << VisualOperation.new(@stage.commit)
+          @modestack.pop
+          fret;
+        }
+        | (abort | charwise_visual)  @{
+          entry_point << Terminator.new(@stage.commit)
+          @modestack.pop
+          fret;
+        }
+      )
     );
 
     visual_linewise_mode := (

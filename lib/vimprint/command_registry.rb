@@ -136,5 +136,8 @@ module Vimprint
   @visual_mode.create_command(
     {pop: true},
     'pop to Normal mode')
+  @visual_mode.create_command(
+    {pop: true, operator: 'd'},
+    'delete selection')
 
 end

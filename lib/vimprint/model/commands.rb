@@ -186,4 +186,11 @@ module Vimprint
     end
   end
 
+  class VisualOperation < Terminator
+    attr_accessor :operator
+    def signature
+      super.merge({operator: operator})
+    end
+  end
+
 end
