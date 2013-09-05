@@ -233,6 +233,13 @@ module Vimprint
         ], Vimprint.explain(keystrokes)
       end
 
+      it 'explains motions used in Visual mode' do
+        assert_equal [
+          ["v", "start Visual mode charwise"],
+          ['w', 'select to start of next word'],
+        ], Vimprint.explain('vw')
+      end
+
   end
 
 end

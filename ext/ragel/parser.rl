@@ -115,12 +115,17 @@ module Vimprint
       };
 
     visual_charwise_mode := (
+      (
+        motion @{
+          entry_point << MotionCommand.new(@stage.commit.merge(invocation_context: 'visual'))
+        }
+      )*
       (abort | charwise_visual)  @{
         entry_point << Terminator.new(@stage.commit)
         @modestack.pop
         fret;
       }
-    )*;
+    );
 
     visual_linewise_mode := (
       (abort | linewise_visual)  @{
