@@ -129,6 +129,9 @@ module Vimprint
   @normal_mode.create_command(
     {switch: '<C-v>'},
     'start Visual mode blockwise')
+  @normal_mode.create_command(
+    {switch: 'gv'},
+    'start Visual mode charwise')
 
   @visual_mode.create_command(
     {pop: true},

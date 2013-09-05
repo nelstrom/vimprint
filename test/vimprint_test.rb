@@ -186,7 +186,7 @@ module Vimprint
       #  2dj - cut 3 lines
       #  dvj - cut from cursor same position on line below
 
-      it 'detects Visual mode start, switch, and exit' do
+      it 'detects Visual mode start and exit' do
         keystrokes = [
           "v\e",
           "V\e",
@@ -208,6 +208,18 @@ module Vimprint
           ["V", "pop to Normal mode"],
           ["<C-v>", "start Visual mode blockwise"],
           ["<C-v>", "pop to Normal mode"],
+        ], Vimprint.explain(keystrokes)
+      end
+
+      it 'starts up lastwise visual mode with gv' do
+        keystrokes = [
+          "v\egvv",
+        ].join
+        assert_equal [
+          ["v", "start Visual mode charwise"],
+          ["<Esc>", "pop to Normal mode"],
+          ["gv", "start Visual mode charwise"],
+          ["v", "pop to Normal mode"],
         ], Vimprint.explain(keystrokes)
       end
 

@@ -81,11 +81,13 @@ module Vimprint
     charwise_visual = 'v' >H @T @{ @stage.add(:switch, strokes) };
     linewise_visual = 'V' >H @T @{ @stage.add(:switch, strokes) };
     blockwise_visual = ctrl_v >H @T @{ @stage.add(:switch, '<C-v>') };
+    lastwise_visual = 'gv' >H @T @{ @stage.add(:switch, strokes) };
 
     start_charwise_visual_mode =
       charwise_visual @{
         entry_point << (switch = VisualSwitch.new(@stage.commit))
         @modestack.push(switch.commands)
+        lastvisual = fentry(visual_charwise_mode);
         fcall visual_charwise_mode;
       };
 
@@ -101,6 +103,13 @@ module Vimprint
         entry_point << (switch = VisualSwitch.new(@stage.commit))
         @modestack.push(switch.commands)
         fcall visual_blockwise_mode;
+      };
+
+    start_lastwise_visual_mode =
+      lastwise_visual @{
+        entry_point << (switch = VisualSwitch.new(@stage.commit))
+        @modestack.push(switch.commands)
+        fcall *lastvisual;
       };
 
     visual_charwise_mode := (
@@ -136,7 +145,8 @@ module Vimprint
       operation |
       start_charwise_visual_mode |
       start_linewise_visual_mode |
-      start_blockwise_visual_mode
+      start_blockwise_visual_mode |
+      start_lastwise_visual_mode
     )*;
 
   }%%
