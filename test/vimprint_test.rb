@@ -247,7 +247,11 @@ module Vimprint
           ["d", "delete selected characters"],
           ["V", "start Visual mode linewise"],
           ["d", "delete selected lines"],
-        ], Vimprint.explain('vdVd')
+          ["V", "start Visual mode linewise"],
+          ["U", "upcase selected lines"],
+          ["v", "start Visual mode charwise"],
+          ["u", "downcase selected characters"],
+        ], Vimprint.explain('vdVdVUvu')
       end
 
   end

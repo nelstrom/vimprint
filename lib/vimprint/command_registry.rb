@@ -120,6 +120,10 @@ module Vimprint
   Registry.create_operator({trigger: 'g?'}, 'rot13 encode')
   Registry.create_operator({trigger: 'gU'}, 'upcase')
 
+  # NOTE: these operators only occur in Visual mode
+  Registry.create_operator({trigger: 'u'}, 'downcase')
+  Registry.create_operator({trigger: 'U'}, 'upcase')
+
   @normal_mode.create_command(
     {switch: 'v'},
     'start Visual mode charwise')
