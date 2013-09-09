@@ -13,7 +13,7 @@ task :visualize do
 end
 
 desc "Compile each .rl file to executable .rb"
-task :ragel do
+task :ragel => :clean do
   out_dir = File.expand_path('../lib/vimprint/ragel', __FILE__)
   Dir.mkdir(out_dir) unless Dir.exist?(out_dir)
   Dir.chdir('ext/ragel') do
