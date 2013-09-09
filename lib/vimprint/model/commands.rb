@@ -84,24 +84,23 @@ module Vimprint
 
   class BareMotion < BaseCommand
     include ReceivesCount
-    attr_accessor :motion, :invocation_context
-    def initialize(config={})
-      super
-      @invocation_context = config[:invocation_context] || 'normal'
-    end
+    attr_accessor :motion
     def signature
       super.merge({
         number: plurality,
         motion: motion
       })
     end
+    def invocation_context
+      container.class.name.split('::').last
+    end
   end
 
   class MotionCommand < BareMotion
     def verb
-      case @invocation_context
-      when "visual" then "select"
-      when "normal" then "move forward"
+      case invocation_context
+      when "VisualMode" then "select"
+      when "NormalMode" then "move forward"
       end
     end
   end
@@ -132,7 +131,6 @@ module Vimprint
         BareMotion.new({
           motion: config[:motion],
           count: config[:count],
-          invocation_context: 'operator_pending'
         })
       end
     end

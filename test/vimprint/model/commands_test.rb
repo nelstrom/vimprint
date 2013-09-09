@@ -30,25 +30,24 @@ module Vimprint
   describe MotionCommand do
 
     it 'assumes it\'s being called from Normal mode' do
-      motion = NormalMode[
-        MotionCommand.new({
-          raw_keystrokes: 'w',
-          motion: 'w'
-        })
-      ].first
-      assert_equal 'normal', motion.invocation_context
+      motion = MotionCommand.new({
+        raw_keystrokes: 'w',
+        motion: 'w'
+      })
+      normal = NormalMode.new
+      normal << motion
+      assert_equal 'NormalMode', motion.invocation_context
       assert_equal 'move forward', motion.verb
     end
 
     it 'knows when it\'s being called from Visual mode' do
-      motion = VisualMode[
-        MotionCommand.new({
-          raw_keystrokes: 'w',
-          motion: 'w',
-          invocation_context: 'visual'
-        })
-      ].first
-      assert_equal 'visual', motion.invocation_context
+      motion = MotionCommand.new({
+        raw_keystrokes: 'w',
+        motion: 'w'
+      })
+      visual = VisualMode.new
+      visual << motion
+      assert_equal 'VisualMode', motion.invocation_context
       assert_equal 'select', motion.verb
     end
 
