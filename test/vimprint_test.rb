@@ -251,7 +251,9 @@ module Vimprint
           ["U", "upcase selected lines"],
           ["v", "start Visual mode charwise"],
           ["u", "downcase selected characters"],
-        ], Vimprint.explain('vdVdVUvu')
+          ["v", "start Visual mode charwise"],
+          [">", "indent selection"],
+        ], Vimprint.explain('vdVdVUvuv>')
       end
 
   end

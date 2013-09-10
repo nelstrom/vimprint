@@ -117,7 +117,7 @@ module Vimprint
         fcall *lastvisual;
       };
 
-    visual_only_operator = [uU];
+    visual_only_operator = [uU>];
     visual_operator = (onestroke_operator | visual_only_operator) >H @T @{ @stage.add(:operator, strokes) };
 
     visual_charwise_mode := (

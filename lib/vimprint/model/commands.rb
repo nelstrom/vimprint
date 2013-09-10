@@ -197,6 +197,9 @@ module Vimprint
       super.merge({operator: operator})
     end
     def selection
+      if @operator.trigger == '>'
+        return "selection"
+      end
       case container.nature
       when 'charwise' then 'selected characters'
       when 'linewise' then 'selected lines'
