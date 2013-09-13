@@ -1,7 +1,7 @@
 module Vimprint
   class Stage
 
-    attr_reader :register, :trigger, :operator, :motion, :counts, :mark, :switch, :printable_char
+    attr_reader :register, :motion, :counts
 
     def initialize()
       reset
@@ -24,19 +24,23 @@ module Vimprint
       to_hash.tap { reset }
     end
 
+    def string_instance_variables
+      [:register, :trigger, :mark, :switch, :motion, :printable_char]
+    end
+
+    def hash_of_string_instance_variables
+      Hash[string_instance_variables.map { |name|
+        [name, instance_variable_get("@#{name}")]
+      }]
+    end
+
     def to_hash
-      {
+      hash_of_string_instance_variables.merge({
         raw_keystrokes: raw_keystrokes,
         count: effective_count,
         operator: operator,
         echo: echo,
-        register: @register,
-        trigger: @trigger,
-        mark: @mark,
-        switch: @switch,
-        motion: @motion,
-        printable_char: @printable_char
-      }.reject do |k,v|
+      }).reject do |k,v|
         v.nil? || v == [] || v == ""
       end
     end
