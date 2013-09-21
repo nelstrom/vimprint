@@ -11,13 +11,9 @@ module Vimprint
       @buffer = []
       @counts = []
       @operators = []
-      @register = ""
-      @operator = ""
-      @motion = ""
-      @mark = ""
-      @switch = ""
-      @trigger = ""
-      @printable_char = ""
+      string_instance_variables.each do |name|
+        instance_variable_set("@#{name}", "")
+      end
     end
 
     def commit
