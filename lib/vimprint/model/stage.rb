@@ -11,6 +11,11 @@ module Vimprint
         }]
       end
 
+      define_method :reset_string_vars do
+        string_instance_variables.each do |name|
+          instance_variable_set("@#{name}", "")
+        end
+      end
     end
   end
 
@@ -28,9 +33,7 @@ module Vimprint
       @buffer = []
       @counts = []
       @operators = []
-      string_instance_variables.each do |name|
-        instance_variable_set("@#{name}", "")
-      end
+      reset_string_vars
     end
 
     def commit
