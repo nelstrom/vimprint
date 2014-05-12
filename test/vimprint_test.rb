@@ -211,6 +211,23 @@ module Vimprint
         ], Vimprint.explain(keystrokes)
       end
 
+      it 'can switch between different Visual modes' do
+        keystrokes = [
+          "vV#{ctrl_V}v#{ctrl_V}Vv\e",
+        ].join
+        assert_equal [
+          ["v", "start Visual mode charwise"],
+          ["V", "change to Visual mode linewise"],
+          ["<C-v>", "change to Visual mode blockwise"],
+          ["v", "change to Visual mode charwise"],
+          ["<C-v>", "change to Visual mode blockwise"],
+          ["V", "change to Visual mode linewise"],
+          ["v", "change to Visual mode charwise"],
+          ["<Esc>", "pop to Normal mode"],
+          # ["<Esc>", "beep!"],
+        ], Vimprint.explain(keystrokes)
+      end
+
       it 'starts up lastwise visual mode with gv' do
         keystrokes = [
           "v\egvv",

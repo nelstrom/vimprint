@@ -140,5 +140,14 @@ module Vimprint
   @visual_mode.create_command(
     {pop: true},
     'pop to Normal mode')
+  @visual_mode.create_command(
+    {switch: 'v'},
+    'change to Visual mode charwise')
+  @visual_mode.create_command(
+    {switch: 'V'},
+    'change to Visual mode linewise')
+  @visual_mode.create_command(
+    {switch: '<C-v>'},
+    'change to Visual mode blockwise')
 
 end

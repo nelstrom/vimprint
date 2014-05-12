@@ -132,6 +132,18 @@ module Vimprint
           @modestack.pop
           fret;
         }
+        | linewise_visual @{
+          entry_point << VisualSwitch.new(@stage.commit)
+          entry_point.nature = 'linewise'
+          lastvisual = fentry(visual_linewise_mode);
+          fcall visual_linewise_mode;
+        }
+        | blockwise_visual @{
+          entry_point << VisualSwitch.new(@stage.commit)
+          entry_point.nature = 'blockwise'
+          lastvisual = fentry(visual_blockwise_mode);
+          fcall visual_blockwise_mode;
+        }
         | (abort | charwise_visual)  @{
           entry_point << Terminator.new(@stage.commit)
           @modestack.pop
@@ -147,6 +159,18 @@ module Vimprint
           @modestack.pop
           fret;
         }
+        | charwise_visual @{
+          entry_point << VisualSwitch.new(@stage.commit)
+          entry_point.nature = 'charwise'
+          lastvisual = fentry(visual_charwise_mode);
+          fcall visual_charwise_mode;
+        }
+        | blockwise_visual @{
+          entry_point << VisualSwitch.new(@stage.commit)
+          entry_point.nature = 'blockwise'
+          lastvisual = fentry(visual_blockwise_mode);
+          fcall visual_blockwise_mode;
+        }
         | (abort | linewise_visual)  @{
           entry_point << Terminator.new(@stage.commit)
           @modestack.pop
@@ -156,7 +180,19 @@ module Vimprint
     );
 
     visual_blockwise_mode := (
-      (abort | blockwise_visual)  @{
+      charwise_visual @{
+        entry_point << VisualSwitch.new(@stage.commit)
+        entry_point.nature = 'charwise'
+        lastvisual = fentry(visual_charwise_mode);
+        fcall visual_charwise_mode;
+      }
+      | linewise_visual @{
+        entry_point << VisualSwitch.new(@stage.commit)
+        entry_point.nature = 'linewise'
+        lastvisual = fentry(visual_linewise_mode);
+        fcall visual_linewise_mode;
+      }
+      | (abort | blockwise_visual)  @{
         entry_point << Terminator.new(@stage.commit)
         @modestack.pop
         fret;
