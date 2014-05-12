@@ -1,28 +1,6 @@
 module Vimprint
-  module StringVariables
-    def string_vars(*vars)
-      define_method :string_instance_variables do
-        vars
-      end
-
-      define_method :hash_of_string_instance_variables do
-        Hash[string_instance_variables.map { |name|
-          [name, instance_variable_get("@#{name}")]
-        }]
-      end
-
-      define_method :reset_string_vars do
-        string_instance_variables.each do |name|
-          instance_variable_set("@#{name}", "")
-        end
-      end
-    end
-  end
-
   class Stage
-    extend StringVariables
 
-    string_vars :register, :trigger, :mark, :switch, :motion, :printable_char
     attr_reader :register, :motion, :counts
 
     def initialize()
@@ -33,11 +11,23 @@ module Vimprint
       @buffer = []
       @counts = []
       @operators = []
-      reset_string_vars
+      string_instance_variables.each do |name|
+        instance_variable_set("@#{name}", "")
+      end
     end
 
     def commit
       to_hash.tap { reset }
+    end
+
+    def string_instance_variables
+      [:register, :trigger, :mark, :switch, :motion, :printable_char]
+    end
+
+    def hash_of_string_instance_variables
+      Hash[string_instance_variables.map { |name|
+        [name, instance_variable_get("@#{name}")]
+      }]
     end
 
     def to_hash
